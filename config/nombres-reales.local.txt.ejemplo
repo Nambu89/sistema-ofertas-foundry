@@ -1,0 +1,24 @@
+# Plantilla de config/nombres-reales.local.txt, la lista LOCAL de nombres reales de clientes.
+#
+# Para qué sirve: las pruebas comprueban que ningún nombre de cliente real aparece en los datos
+# sintéticos del banco de modelos (tests/test_modelos_datos.py) ni en los pasos manuales versionados
+# (tests/test_pasos_fernando.py). Esa lista revela relaciones comerciales, así que no puede estar en
+# el repositorio: vive en config/nombres-reales.local.txt, que git ignora (regla 4 del README).
+#
+# Cómo se usa:
+#   1. Copia este fichero como config/nombres-reales.local.txt (sin «.ejemplo»).
+#   2. Sustituye los nombres ficticios de abajo por los reales, uno por línea.
+#   3. Comprueba que git lo ignora: git check-ignore -v config/nombres-reales.local.txt
+#
+# Formato: UTF-8, un nombre por línea. Se ignoran las líneas vacías y las que empiezan por «#»; los
+# comentarios van en línea propia, nunca detrás de un nombre. No distingue mayúsculas. En el banco se
+# busca cada nombre como palabra completa; en los pasos manuales, también dentro de otras palabras.
+#
+# Sin el fichero local, esas comprobaciones se omiten y lo dicen en el resumen de pytest
+# («NO COMPROBADO»). Si existe pero no trae ningún nombre, o conserva estos nombres ficticios, las
+# pruebas fallan: una lista inservible no puede dar verde.
+#
+# Este fichero sí se versiona: aquí solo puede haber nombres ficticios.
+empresa-ejemplo-uno
+empresa-ejemplo-dos
+empresa-ejemplo-tres

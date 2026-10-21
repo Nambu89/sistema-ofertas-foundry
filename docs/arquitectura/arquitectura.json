@@ -1,0 +1,235 @@
+{
+  "version": 2,
+  "fecha": "2026-10-19",
+  "lienzo": {"ancho": 1920, "alto": 1080, "leyenda_y": 1024, "pie_y": 1042},
+  "titulo": {
+    "es": "Sistema multiagente de preventa y arquitectura de IA en Microsoft Foundry",
+    "en": "Multi-agent presales & AI architecture system on Microsoft Foundry"
+  },
+  "subtitulo": {
+    "es": "Arquitectura de referencia: el arquitecto o la arquitecta de soluciones solo habla con el coordinador y todo se ejecuta en Azure.",
+    "en": "Reference architecture: the solutions architect talks only to the coordinator, and everything runs in Azure."
+  },
+  "pie": {
+    "es": "Iconos: Microsoft Azure Architecture Icons (V24) y Microsoft Entra architecture icons (oct. 2023), usados según sus términos (ver ICONOS.md)",
+    "en": "Icons: Microsoft Azure Architecture Icons (V24) and Microsoft Entra architecture icons (Oct 2023), used under their terms (see ICONOS.md)"
+  },
+  "pie_derecha": {
+    "es": "Arquitectura de referencia con buenas prácticas · documentación técnica",
+    "en": "Reference architecture with best practices · technical documentation"
+  },
+  "juegos": {
+    "azure_v24": {
+      "nombre": "Microsoft Azure Architecture Icons V24",
+      "variable": "ICONOS_AZURE",
+      "carpeta_en_el_zip": "Azure_Public_Service_Icons/Icons"
+    },
+    "entra_oct2023": {
+      "nombre": "Microsoft Entra architecture icons - Oct 2023",
+      "variable": "ICONOS_ENTRA",
+      "carpeta_en_el_zip": "Microsoft Entra architecture icons - Oct 2023"
+    }
+  },
+  "iconos": {
+    "foundry": {"juego": "azure_v24", "ruta": "ai + machine learning/035746832-icon-service-AI-Foundry.svg", "sha256": "fab039a771f72780ae34e59065d61c66a02d3c347d50923ef2956f34912ea02c"},
+    "proyecto": {"juego": "azure_v24", "ruta": "ai + machine learning/036509415-icon-service-Foundry-Project.svg", "sha256": "152187174d7d632cd91fd7d17b37316c423e008a84a889241163af832c8c3dec"},
+    "agente": {"juego": "azure_v24", "ruta": "ai + machine learning/038470523-icon-service-Foundry-Agent-Service.svg", "sha256": "aedb65eeb06c1d4f3d57568edd2e8e7205065589ae8ceba4513a2fd21b4053ca"},
+    "modelos": {"juego": "azure_v24", "ruta": "ai + machine learning/038470614-icon-service-Foundry-Models.svg", "sha256": "9c671f141cb0e19b62e004628183ed8711ad16ec3b2e56b14c3cd035d5fac711"},
+    "foundry_iq": {"juego": "azure_v24", "ruta": "ai + machine learning/038470497-icon-service-Azure-AI-Foundry-IQ.svg", "sha256": "245e33416ecc1c745bfff6f72ebf1ffa04cfee1cdd0c1b1b8970d0844409c9c7"},
+    "content_safety": {"juego": "azure_v24", "ruta": "ai + machine learning/03390-icon-service-Content-Safety.svg", "sha256": "b684188aefa0eaacc079d7f428f32edcf560fd48bb0b572774910a5f8ff81f20"},
+    "ai_search": {"juego": "azure_v24", "ruta": "ai + machine learning/10044-icon-service-Cognitive-Search.svg", "sha256": "f7af1213ce089236593835cb5564d6d3f01358cba6488fe562aa8bbc8adc3b38"},
+    "storage": {"juego": "azure_v24", "ruta": "storage/10086-icon-service-Storage-Accounts.svg", "sha256": "7190d3bb14ce30ce74bd0af873915830fe821e8c5f6ef6f3149e6f7cfb2aa4f7"},
+    "key_vault": {"juego": "azure_v24", "ruta": "security/10245-icon-service-Key-Vaults.svg", "sha256": "712b426f54f0fc50d0816dc79df709daa7ac5f93ccaf4e9b3527f627f6e9ad97"},
+    "app_insights": {"juego": "azure_v24", "ruta": "monitor/00012-icon-service-Application-Insights.svg", "sha256": "36c73dea8b1598fbfff84890a2b409600f1339eec8c1bf1a896439e9da8f9dca"},
+    "log_analytics": {"juego": "azure_v24", "ruta": "monitor/00009-icon-service-Log-Analytics-Workspaces.svg", "sha256": "7a244a8d7260e84be5c904185db7b04994fe6ed345e2b224163bc5f7e3d97ce0"},
+    "cost_budgets": {"juego": "azure_v24", "ruta": "general/10793-icon-service-Cost-Budgets.svg", "sha256": "6a008c26c89270871396f87249d9827846882811e49bc0073b82023e9a2bcafc"},
+    "grupo_recursos": {"juego": "azure_v24", "ruta": "general/10007-icon-service-Resource-Groups.svg", "sha256": "4d2b2eacb37735849d2e556074ac8564f92fada70672b40985c77ea666e82977"},
+    "suscripcion": {"juego": "azure_v24", "ruta": "general/10002-icon-service-Subscriptions.svg", "sha256": "d69843a70bd38eefa5b70a4d0b803502f95cdf061c59aed48b435170a15919b4"},
+    "bot_service": {"juego": "azure_v24", "ruta": "ai + machine learning/10165-icon-service-Bot-Services.svg", "sha256": "df1d3d5d84d2f1fa27ccbbd5198cec7e67834b3cd1d7a58d7e4343f128a55ea8"},
+    "usuarios": {"juego": "azure_v24", "ruta": "identity/10230-icon-service-Users.svg", "sha256": "7c08aa6365b41e7f0b74833bfd420f174081f6e90ba278e0c01cd988027eb3ca"},
+    "learn": {"juego": "azure_v24", "ruta": "general/10816-icon-service-Learn.svg", "sha256": "d62e05813c849bec72c8a9c7640a090b4961a1ec14e762c0b20cbffcdb6fcf23"},
+    "busqueda": {"juego": "azure_v24", "ruta": "general/10834-icon-service-Search.svg", "sha256": "694ee70fea9eb355ee1c742dd517589ef23f7d0d74dfabcadff58992d8a92e0a"},
+    "entra_id": {"juego": "entra_oct2023", "ruta": "Microsoft Entra color icons SVG/Microsoft Entra ID color icon.svg", "sha256": "efd9f54562bfb78bf3c77aecdd5fc31b61fce8a1cec78c4370b41fc470e54eda"}
+  },
+  "nombre_servicio": {
+    "foundry": {"es": "Microsoft Foundry", "en": "Microsoft Foundry"},
+    "proyecto": {"es": "Proyecto de Foundry", "en": "Foundry project"},
+    "agente": {"es": "Foundry Agent Service", "en": "Foundry Agent Service"},
+    "modelos": {"es": "Foundry Models", "en": "Foundry Models"},
+    "foundry_iq": {"es": "Foundry IQ", "en": "Foundry IQ"},
+    "content_safety": {"es": "Azure AI Content Safety", "en": "Azure AI Content Safety"},
+    "ai_search": {"es": "Azure AI Search", "en": "Azure AI Search"},
+    "storage": {"es": "Azure Storage", "en": "Azure Storage"},
+    "key_vault": {"es": "Azure Key Vault", "en": "Azure Key Vault"},
+    "app_insights": {"es": "Application Insights", "en": "Application Insights"},
+    "log_analytics": {"es": "Log Analytics", "en": "Log Analytics"},
+    "cost_budgets": {"es": "Microsoft Cost Management", "en": "Microsoft Cost Management"},
+    "grupo_recursos": {"es": "Grupo de recursos", "en": "Resource group"},
+    "suscripcion": {"es": "Suscripción de Azure", "en": "Azure subscription"},
+    "bot_service": {"es": "Azure Bot Service", "en": "Azure Bot Service"},
+    "usuarios": null,
+    "learn": {"es": "Microsoft Learn", "en": "Microsoft Learn"},
+    "busqueda": {"es": "Web Search", "en": "Web Search"},
+    "entra_id": {"es": "Microsoft Entra", "en": "Microsoft Entra"}
+  },
+  "grupos": [
+    {"id": "canales", "nivel": 1, "caja": [114, 88, 178, 368], "titulo": {"es": "Canales", "en": "Channels"}},
+    {"id": "desarrollo", "nivel": 1, "caja": [114, 468, 178, 374], "titulo": {"es": "Desarrollo y CI/CD", "en": "Build & release"}},
+    {"id": "tenant", "nivel": 1, "limite": "tenant", "icono": "entra_id", "caja": [360, 88, 1544, 754], "titulo": {"es": "Tenant de Microsoft Entra", "en": "Microsoft Entra tenant"}},
+    {"id": "suscripcion", "nivel": 1, "limite": "suscripcion", "padre": "tenant", "icono": "suscripcion", "caja": [372, 116, 1356, 716], "titulo": {"es": "Suscripción de Azure", "en": "Azure subscription"}},
+    {"id": "grupo_recursos", "nivel": 1, "limite": "grupo_recursos", "padre": "suscripcion", "icono": "grupo_recursos", "caja": [380, 144, 1196, 678], "titulo": {"es": "Grupo de recursos · desplegado con azd y Bicep", "en": "Resource group · deployed with azd and Bicep"}},
+    {"id": "region", "nivel": 1, "limite": "region", "padre": "grupo_recursos", "caja": [396, 172, 1168, 640], "titulo": {"es": "Región de la UE · modelos en Data Zone UE", "en": "EU region · models in the EU Data Zone"}},
+    {"id": "foundry", "nivel": 1, "padre": "region", "caja": [408, 200, 968, 602], "acento": true, "titulo": {"es": "Microsoft Foundry · recurso y proyecto", "en": "Microsoft Foundry · resource and project"}},
+    {"id": "modelos", "nivel": 2, "padre": "foundry", "caja": [750, 340, 320, 134], "titulo": {"es": "Modelos · Foundry Models", "en": "Models · Foundry Models"}},
+    {"id": "especialistas", "nivel": 2, "padre": "foundry", "caja": [750, 482, 320, 274], "titulo": {"es": "Especialistas · Foundry Agent Service", "en": "Specialists · Foundry Agent Service"}, "subtitulo": {"es": "seis prompt agents", "en": "six prompt agents"}},
+    {"id": "herramientas", "nivel": 2, "padre": "foundry", "caja": [1140, 346, 224, 410], "titulo": {"es": "Herramientas y conocimiento", "en": "Tools & knowledge"}}
+  ],
+  "nodos": [
+    {"id": "arquitecto_soluciones", "tipo": "icono", "icono": "usuarios", "grupo": null, "pos": [51, 262], "lado": 48, "estado": "previsto", "practicas": ["REF-14"], "etiqueta": {"es": ["Arquitecto/a", "de soluciones"], "en": ["Solutions", "architect"]}},
+    {"id": "opencode", "tipo": "neutro", "icono": null, "texto_neutro": "CLI", "grupo": "canales", "pos": [205, 150], "lado": 40, "estado": "validado", "etiqueta": {"es": ["OpenCode (cliente)", "token de Entra", "y api-version=v1"], "en": ["OpenCode (client)", "Entra token", "and api-version=v1"]}},
+    {"id": "portal", "tipo": "icono", "icono": "foundry", "grupo": "canales", "pos": [205, 262], "lado": 40, "estado": "previsto", "nombre_lineas": 2, "etiqueta": {"es": ["Portal de", "Microsoft Foundry", "playground"], "en": ["Microsoft", "Foundry portal", "playground"]}},
+    {"id": "teams", "tipo": "icono", "icono": "bot_service", "grupo": "canales", "pos": [205, 370], "lado": 32, "estado": "futuro", "etiqueta": {"es": ["Azure Bot Service", "canal Teams (futuro)", "en el grupo de recursos"], "en": ["Azure Bot Service", "Teams channel (future)", "in the resource group"]}},
+    {"id": "github", "tipo": "neutro", "icono": null, "texto_neutro": "Git", "grupo": "desarrollo", "pos": [205, 516], "lado": 40, "estado": "previsto", "practicas": ["DES-04"], "etiqueta": {"es": ["GitHub", "repositorio público"], "en": ["GitHub", "public repository"]}},
+    {"id": "github_actions", "tipo": "neutro", "icono": null, "texto_neutro": "CI/CD", "grupo": "desarrollo", "pos": [205, 626], "lado": 44, "estado": "previsto", "practicas": ["DES-04", "MAN-05", "REF-06", "REF-08"], "etiqueta": {"es": ["GitHub Actions", "CI/CD con evaluaciones", "OIDC de Entra, sin secretos"], "en": ["GitHub Actions", "CI/CD with evaluations", "Entra OIDC, no secrets"]}},
+    {"id": "iac", "tipo": "neutro", "icono": null, "texto_neutro": "IaC", "grupo": "desarrollo", "pos": [205, 752], "lado": 36, "estado": "previsto", "practicas": ["DES-03"], "etiqueta": {"es": ["azd y Bicep", "infraestructura", "como código"], "en": ["azd and Bicep", "infrastructure", "as code"]}},
+    {"id": "entra", "tipo": "icono", "icono": "entra_id", "grupo": "tenant", "pos": [1816, 262], "lado": 44, "estado": "previsto", "practicas": ["SEG-03", "REF-03", "REF-04", "REF-06"], "etiqueta": {"es": ["Microsoft Entra ID", "una identidad por agente", "RBAC de mínimo privilegio", "acceso sin claves", "OIDC para CI/CD"], "en": ["Microsoft Entra ID", "one identity per agent", "least-privilege RBAC", "keyless access", "OIDC for CI/CD"]}},
+    {"id": "presupuestos", "tipo": "icono", "icono": "cost_budgets", "grupo": "suscripcion", "pos": [1652, 450], "lado": 44, "estado": "previsto", "practicas": ["COS-01", "COS-02", "REF-09"], "nombre_lineas": 2, "etiqueta": {"es": ["Microsoft Cost", "Management", "presupuestos y", "alertas de coste"], "en": ["Microsoft Cost", "Management", "budgets and", "cost alerts"]}},
+    {"id": "coordinador", "tipo": "contenedor", "icono": "agente", "grupo": "foundry", "caja": [420, 236, 240, 562], "pos": [540, 258], "lado": 36, "estado": "previsto", "practicas": ["FIA-01", "DES-05", "ESC-04", "REF-13", "REF-15"], "etiqueta": {"es": ["Coordinador", "Foundry Agent Service", "hosted agent · Python", "escala a cero", "versiones con vuelta atrás"], "en": ["Coordinator", "Foundry Agent Service", "hosted agent · Python", "scales to zero", "versions with rollback"]}},
+    {"id": "interprete", "tipo": "pieza", "dentro": "coordinador", "grupo": "foundry", "caja": [432, 370, 216, 48], "estado": "previsto", "etiqueta": {"es": ["Intérprete", "gramática cerrada · Decision-1"], "en": ["Interpreter", "closed grammar · Decision-1"]}},
+    {"id": "estados", "tipo": "pieza", "dentro": "coordinador", "grupo": "foundry", "caja": [432, 448, 216, 48], "estado": "previsto", "practicas": ["MAN-02", "REF-14"], "etiqueta": {"es": ["Máquina de estados", "por proyecto · pide «SÍ»"], "en": ["State machine", "per project · asks “YES”"]}},
+    {"id": "generadores", "tipo": "pieza", "dentro": "coordinador", "grupo": "foundry", "caja": [432, 544, 216, 48], "estado": "previsto", "etiqueta": {"es": ["Generadores", "estimación XLSX y diagrama"], "en": ["Generators", "XLSX estimate and diagram"]}},
+    {"id": "puerta", "tipo": "pieza", "dentro": "coordinador", "grupo": "foundry", "caja": [432, 640, 216, 48], "estado": "previsto", "etiqueta": {"es": ["Puerta", "recalcula todo; solo pasa con 0"], "en": ["Gate", "recomputes all; passes on 0"]}},
+    {"id": "escriba", "tipo": "pieza", "dentro": "coordinador", "grupo": "foundry", "caja": [432, 736, 216, 48], "estado": "previsto", "practicas": ["FIA-01"], "etiqueta": {"es": ["Escriba", "único escritor · If-Match"], "en": ["Scribe", "single writer · If-Match"]}},
+    {"id": "proyecto", "tipo": "icono", "icono": "proyecto", "grupo": "foundry", "pos": [822, 262], "lado": 40, "estado": "previsto", "etiqueta": {"es": ["Proyecto de Foundry", "agentes, conexiones, trazas"], "en": ["Foundry project", "agents, connections, traces"]}},
+    {"id": "foundry_recurso", "tipo": "icono", "icono": "foundry", "grupo": "foundry", "pos": [978, 262], "lado": 40, "estado": "previsto", "etiqueta": {"es": ["Microsoft Foundry", "recurso de la UE"], "en": ["Microsoft Foundry", "EU resource"]}},
+    {"id": "guardarrailes", "tipo": "icono", "icono": "content_safety", "grupo": "foundry", "pos": [1255, 262], "lado": 40, "estado": "previsto", "practicas": ["REF-01", "REF-02"], "etiqueta": {"es": ["Azure AI Content Safety", "guardarraíles de Foundry", "con Prompt Shields"], "en": ["Azure AI Content Safety", "Foundry guardrails", "with Prompt Shields"]}},
+    {"id": "decision1", "tipo": "icono", "icono": "modelos", "grupo": "modelos", "pos": [838, 392], "lado": 40, "estado": "validado", "etiqueta": {"es": ["Microsoft-Decision-1", "clasifica; nunca aprueba", "en preview · sustituible"], "en": ["Microsoft-Decision-1", "classifies; never approves", "in preview · replaceable"]}},
+    {"id": "gpt6", "tipo": "icono", "icono": "modelos", "grupo": "modelos", "pos": [1000, 392], "lado": 40, "estado": "previsto", "practicas": ["ESC-03", "REF-10"], "etiqueta": {"es": ["Modelos GPT-6", "Data Zone UE"], "en": ["GPT-6 models", "EU Data Zone"]}},
+    {"id": "facilitador", "tipo": "icono", "icono": "agente", "grupo": "especialistas", "pos": [830, 541], "lado": 32, "estado": "previsto", "etiqueta": {"es": ["Facilitador", "requisitos y preguntas"], "en": ["Facilitator", "requirements & questions"]}},
+    {"id": "investigador", "tipo": "icono", "icono": "agente", "grupo": "especialistas", "pos": [990, 541], "lado": 32, "estado": "previsto", "etiqueta": {"es": ["Investigador", "Learn · Web · Foundry IQ"], "en": ["Researcher", "Learn · Web · Foundry IQ"]}},
+    {"id": "experto_azure", "tipo": "icono", "icono": "agente", "grupo": "especialistas", "pos": [830, 618], "lado": 32, "estado": "previsto", "etiqueta": {"es": ["Experto en Azure", "Learn · precios de Azure"], "en": ["Azure expert", "Learn · Azure prices"]}},
+    {"id": "arquitecto_ia", "tipo": "icono", "icono": "agente", "grupo": "especialistas", "pos": [990, 618], "lado": 32, "estado": "previsto", "etiqueta": {"es": ["Arquitecto de IA", "Learn · Foundry IQ"], "en": ["AI architect", "Learn · Foundry IQ"]}},
+    {"id": "verificador", "tipo": "icono", "icono": "agente", "grupo": "especialistas", "pos": [830, 695], "lado": 32, "estado": "previsto", "etiqueta": {"es": ["Verificador", "otro modelo · contrasta"], "en": ["Verifier", "another model · checks"]}},
+    {"id": "estimador", "tipo": "icono", "icono": "agente", "grupo": "especialistas", "pos": [990, 695], "lado": 32, "estado": "previsto", "etiqueta": {"es": ["Estimador", "horas por tarea y fase"], "en": ["Estimator", "hours per task & phase"]}},
+    {"id": "mcp_learn", "tipo": "icono", "icono": "learn", "grupo": "herramientas", "pos": [1255, 398], "lado": 36, "estado": "validado", "etiqueta": {"es": ["MCP de Microsoft Learn", "documentación oficial"], "en": ["Microsoft Learn MCP", "official documentation"]}},
+    {"id": "web_search", "tipo": "icono", "icono": "busqueda", "grupo": "herramientas", "pos": [1255, 492], "lado": 36, "estado": "validado", "etiqueta": {"es": ["Web Search", "solo consultas genéricas"], "en": ["Web Search", "generic queries only"]}},
+    {"id": "retail_prices", "tipo": "neutro", "icono": null, "texto_neutro": "API", "grupo": "herramientas", "pos": [1255, 680], "lado": 36, "estado": "previsto", "etiqueta": {"es": ["Azure Retail Prices API", "OpenAPI · precios de catálogo"], "en": ["Azure Retail Prices API", "OpenAPI · list prices"]}},
+    {"id": "foundry_iq", "tipo": "icono", "icono": "foundry_iq", "grupo": "herramientas", "pos": [1255, 586], "lado": 36, "estado": "previsto", "practicas": ["ESC-05"], "etiqueta": {"es": ["Foundry IQ", "conocimiento corporativo"], "en": ["Foundry IQ", "corporate knowledge"]}},
+    {"id": "app_insights", "tipo": "icono", "icono": "app_insights", "grupo": "region", "pos": [1470, 262], "lado": 40, "estado": "previsto", "practicas": ["MAN-03", "REF-08"], "etiqueta": {"es": ["Application Insights", "trazas y evaluaciones"], "en": ["Application Insights", "traces and evaluations"]}},
+    {"id": "log_analytics", "tipo": "icono", "icono": "log_analytics", "grupo": "region", "pos": [1470, 372], "lado": 40, "estado": "previsto", "practicas": ["MAN-03", "REF-07"], "etiqueta": {"es": ["Log Analytics", "área de trabajo", "de Azure Monitor"], "en": ["Log Analytics", "Azure Monitor", "workspace"]}},
+    {"id": "key_vault", "tipo": "icono", "icono": "key_vault", "grupo": "region", "pos": [1470, 482], "lado": 40, "estado": "previsto", "practicas": ["SEG-05", "REF-05"], "etiqueta": {"es": ["Azure Key Vault", "solo secretos", "que lo exijan"], "en": ["Azure Key Vault", "only for secrets", "that need it"]}},
+    {"id": "ai_search", "tipo": "icono", "icono": "ai_search", "grupo": "region", "pos": [1470, 586], "lado": 40, "estado": "previsto", "practicas": ["ESC-05"], "etiqueta": {"es": ["Azure AI Search", "índice de conocimiento"], "en": ["Azure AI Search", "knowledge index"]}},
+    {"id": "storage", "tipo": "icono", "icono": "storage", "grupo": "region", "pos": [1470, 715], "lado": 40, "estado": "previsto", "practicas": ["FIA-04", "REF-11", "REF-12"], "etiqueta": {"es": ["Azure Storage", "versiones y", "borrado temporal"], "en": ["Azure Storage", "versioning and", "soft delete"]}}
+  ],
+  "aristas": [
+    {"id": "arquitecto_opencode", "origen": "arquitecto_soluciones", "destino": "opencode", "estilo": "flujo", "paso": 1, "puntos": [[75, 262], [104, 262], [104, 150], [185, 150]], "etiqueta": {"es": ["pide"], "en": ["asks"]}, "paso_xy": [104, 210], "etiqueta_xy": [96, 196], "ancla": "end"},
+    {"id": "arquitecto_portal", "origen": "arquitecto_soluciones", "destino": "portal", "estilo": "normal", "puntos": [[75, 262], [185, 262]]},
+    {"id": "arquitecto_teams", "origen": "arquitecto_soluciones", "destino": "teams", "estilo": "futuro", "puntos": [[75, 262], [104, 262], [104, 370], [187, 370]]},
+    {"id": "opencode_coordinador", "origen": "opencode", "destino": "coordinador", "estilo": "normal", "puntos": [[225, 150], [340, 150], [340, 250], [420, 250]], "etiqueta": {"es": ["Responses", "API"], "en": ["Responses", "API"]}, "etiqueta_xy": [326, 128]},
+    {"id": "portal_coordinador", "origen": "portal", "destino": "coordinador", "estilo": "normal", "puntos": [[225, 262], [420, 262]]},
+    {"id": "teams_coordinador", "origen": "teams", "destino": "coordinador", "estilo": "futuro", "puntos": [[223, 370], [420, 370]]},
+    {"id": "github_actions_repo", "origen": "github", "destino": "github_actions", "estilo": "normal", "puntos": [[205, 577], [205, 602]]},
+    {"id": "iac_actions", "origen": "iac", "destino": "github_actions", "estilo": "normal", "puntos": [[205, 732], [205, 708]]},
+    {"id": "actions_grupo_recursos", "origen": "github_actions", "destino": "grupo_recursos", "estilo": "normal", "puntos": [[227, 626], [390, 626]], "etiqueta": {"es": ["despliega"], "en": ["deploys"]}, "etiqueta_xy": [326, 616]},
+    {"id": "interprete_decision1", "origen": "interprete", "destino": "decision1", "estilo": "flujo", "paso": 2, "puntos": [[648, 392], [818, 392]], "etiqueta": {"es": ["clasifica", "la orden"], "en": ["classifies", "the command"]}, "paso_xy": [705, 392], "etiqueta_xy": [705, 362]},
+    {"id": "coordinador_especialistas", "origen": "estados", "destino": "especialistas", "estilo": "flujo", "paso": 3, "puntos": [[648, 488], [750, 488]], "etiqueta": {"es": ["delega por", "A2A v1.0"], "en": ["delegates", "via A2A v1.0"]}, "paso_xy": [705, 488], "etiqueta_xy": [705, 452]},
+    {"id": "especialistas_herramientas", "origen": "especialistas", "destino": "herramientas", "estilo": "flujo", "paso": 4, "puntos": [[1070, 620], [1140, 620]], "etiqueta": {"es": ["investigan", "Learn, Web", "y precios"], "en": ["research", "Learn, Web", "and prices"]}, "paso_xy": [1105, 620], "etiqueta_xy": [1105, 568]},
+    {"id": "coordinador_verificador", "origen": "coordinador", "destino": "verificador", "estilo": "flujo", "paso": 5, "puntos": [[660, 695], [812, 695]], "etiqueta": {"es": ["contrasta", "los hechos"], "en": ["checks", "the facts"]}, "paso_xy": [705, 695], "etiqueta_xy": [705, 665]},
+    {"id": "puerta_escriba", "origen": "puerta", "destino": "escriba", "estilo": "flujo", "paso": 6, "puntos": [[480, 688], [480, 736]], "etiqueta": {"es": ["con 0 fallos,", "pasa al escriba"], "en": ["on 0 failures,", "hands to the scribe"]}, "paso_xy": [480, 712], "etiqueta_xy": [500, 707], "ancla": "start"},
+    {"id": "escriba_storage", "origen": "escriba", "destino": "storage", "estilo": "flujo", "paso": 7, "puntos": [[648, 768], [1420, 768], [1420, 715], [1450, 715]], "etiqueta": {"es": ["guarda estado, memoria y lecciones con versiones"], "en": ["stores state, memory and lessons with versions"]}, "paso_xy": [705, 768], "etiqueta_xy": [1000, 791]},
+    {"id": "coordinador_arquitecto", "origen": "coordinador", "destino": "arquitecto_soluciones", "estilo": "flujo", "paso": 8, "puntos": [[420, 450], [51, 450], [51, 327]], "etiqueta": {"es": ["revisa y", "aprueba"], "en": ["reviews,", "approves"]}, "paso_xy": [330, 450], "etiqueta_xy": [330, 414]},
+    {"id": "guardarrailes_modelos", "origen": "guardarrailes", "destino": "modelos", "estilo": "normal", "puntos": [[1235, 262], [1112, 262], [1112, 410], [1070, 410]], "etiqueta": {"es": ["filtra", "entradas", "y salidas"], "en": ["filters", "input and", "output"]}, "etiqueta_xy": [1104, 300], "ancla": "end"},
+    {"id": "foundry_iq_ai_search", "origen": "foundry_iq", "destino": "ai_search", "estilo": "normal", "puntos": [[1273, 586], [1450, 586]]},
+    {"id": "foundry_key_vault", "origen": "foundry", "destino": "key_vault", "estilo": "normal", "puntos": [[1376, 482], [1450, 482]], "etiqueta": {"es": ["conexiones"], "en": ["connections"]}, "etiqueta_xy": [1413, 470]},
+    {"id": "proyecto_app_insights", "origen": "proyecto", "destino": "app_insights", "estilo": "traza", "puntos": [[822, 242], [822, 232], [1470, 232], [1470, 242]], "etiqueta": {"es": ["trazas y evaluaciones de todos los agentes"], "en": ["traces and evaluations from every agent"]}, "etiqueta_xy": [1180, 224]},
+    {"id": "app_insights_log_analytics", "origen": "app_insights", "destino": "log_analytics", "estilo": "normal", "puntos": [[1470, 323], [1470, 350]]},
+    {"id": "entra_foundry", "origen": "entra", "destino": "foundry", "estilo": "normal", "puntos": [[1816, 378], [1816, 670], [1376, 670]], "etiqueta": {"es": ["identidad de agente", "y RBAC, sin claves"], "en": ["agent identity", "and RBAC, keyless"]}, "etiqueta_xy": [1652, 641]}
+  ],
+  "limites": {
+    "descripcion": {
+      "es": "Límites anidados de fuera adentro: tenant de Microsoft Entra, suscripción de Azure, grupo de recursos y región de la UE con los modelos en Data Zone UE. Microsoft Entra ID es un servicio global del tenant y Cost Management actúa en el ámbito de la suscripción; por eso quedan fuera del grupo de recursos.",
+      "en": "Nested boundaries from the outside in: Microsoft Entra tenant, Azure subscription, resource group, and EU region with the models in the EU Data Zone. Microsoft Entra ID is a global, tenant-wide service and Cost Management works at subscription scope, so both sit outside the resource group."
+    },
+    "orden": ["tenant", "suscripcion", "grupo_recursos", "region"],
+    "fuera_de_los_limites": {
+      "es": "Canales (OpenCode en el puesto del arquitecto, portal de Foundry) y desarrollo (GitHub, GitHub Actions, azd y Bicep) quedan fuera del tenant; GitHub Actions entra por federación OIDC con Microsoft Entra.",
+      "en": "Channels (OpenCode on the architect's workstation, the Foundry portal) and build & release (GitHub, GitHub Actions, azd and Bicep) sit outside the tenant; GitHub Actions comes in through OIDC federation with Microsoft Entra."
+    }
+  },
+  "validado": {
+    "titulo": {"es": "Validado en Azure", "en": "Validated in Azure"},
+    "elementos": [
+      {"es": "Microsoft-Decision-1", "en": "Microsoft-Decision-1"},
+      {"es": "MCP de Learn en prompt agent", "en": "Learn MCP in a prompt agent"},
+      {"es": "Web Search en prompt agent", "en": "Web Search in a prompt agent"},
+      {"es": "Salida HTTP del hosted agent", "en": "Outbound HTTP from the hosted agent"},
+      {"es": "Turno largo de 6 minutos", "en": "6-minute long-running turn"},
+      {"es": "api-version=v1 en el endpoint", "en": "api-version=v1 on the endpoint"},
+      {"es": "OpenCode como cliente", "en": "OpenCode as a client"}
+    ],
+    "caja": [16, 852, 1888, 34]
+  },
+  "practicas": {
+    "titulo": {"es": "Buenas prácticas aplicadas (Well-Architected)", "en": "Best practices applied (Well-Architected)"},
+    "caja": [16, 894, 1888, 112],
+    "fuente": {
+      "catalogo": "catálogo verificado de buenas prácticas, versión 2026-10-18 (catalogo_practicas.json del banco de modelos)",
+      "sha256_catalogo": "2dae60937aa13b67134335ae380da75686cd23b6065b4273d4748719bf8ebff3",
+      "evidencia": "catalogo_evidencia.json: HTTP 200 y cita encontrada en las 30 prácticas, 2026-10-18T17:23:57Z",
+      "referencia": "prácticas adicionales comprobadas en learn.microsoft.com el 2026-10-19 (HTTP 200 y cita literal encontrada en el texto visible)"
+    },
+    "pilares": [
+      {"id": "desarrollo", "es": "Desarrollo", "en": "Development", "waf": "Operational Excellence"},
+      {"id": "mantenibilidad", "es": "Mantenibilidad", "en": "Maintainability", "waf": "Operational Excellence"},
+      {"id": "escalado", "es": "Escalado", "en": "Scalability", "waf": "Performance Efficiency"},
+      {"id": "seguridad", "es": "Seguridad", "en": "Security", "waf": "Security"},
+      {"id": "coste", "es": "Coste", "en": "Cost", "waf": "Cost Optimization"},
+      {"id": "fiabilidad", "es": "Fiabilidad", "en": "Reliability", "waf": "Reliability"}
+    ],
+    "catalogo": [
+      {"id": "DES-03", "pilar": "desarrollo", "waf": "OE:05", "texto": {"es": "IaC con azd y Bicep", "en": "IaC with azd and Bicep"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist", "cita": "Use a standardized infrastructure as code (IaC) approach to prepare resources and configurations."},
+      {"id": "DES-04", "pilar": "desarrollo", "waf": "OE:06", "texto": {"es": "CI/CD con evaluaciones como puerta", "en": "CI/CD with evaluations as a gate"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist", "cita": "Ensure these pipelines test and promote changes across all environments and quality gates."},
+      {"id": "DES-05", "pilar": "desarrollo", "waf": "OE:11", "texto": {"es": "Versiones pequeñas con vuelta atrás", "en": "Small versions with rollback"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist", "cita": "Focus on small, incremental releases with quality gates."},
+      {"id": "MAN-02", "pilar": "mantenibilidad", "waf": "OE:02", "texto": {"es": "Máquina de estados predecible", "en": "Predictable state machine"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist", "cita": "Use standardization as a way to make routine, ad-hoc, and emergency operations consistent and predictable."},
+      {"id": "MAN-03", "pilar": "mantenibilidad", "waf": "OE:07", "texto": {"es": "Trazas de cada agente", "en": "Traces from every agent"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist", "cita": "Design a monitoring stack that captures operational telemetry, metrics, and logs"},
+      {"id": "MAN-05", "pilar": "mantenibilidad", "waf": "OE:10", "texto": {"es": "Automatización con OIDC, sin secretos", "en": "Automation with OIDC, no secrets"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist", "cita": "Design automation to be reliable, secure, and maintainable across the workload lifecycle."},
+      {"id": "ESC-03", "pilar": "escalado", "waf": "PE:03", "texto": {"es": "Modelo adecuado a cada función", "en": "The right model for each role"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/checklist", "cita": "The services, infrastructure, and tier selections must support your ability to reach the workload's performance targets"},
+      {"id": "ESC-04", "pilar": "escalado", "waf": "PE:05", "texto": {"es": "Escala por proyecto y hasta cero", "en": "Scales per project, down to zero"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/checklist", "cita": "The scale unit design of the workload is the basis of the scaling and partitioning strategy."},
+      {"id": "ESC-05", "pilar": "escalado", "waf": "PE:08", "texto": {"es": "Índice en Azure AI Search", "en": "Index in Azure AI Search"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/checklist", "cita": "Optimize data stores, partitions, and indexes for their intended and actual use in the workload."},
+      {"id": "SEG-02", "pilar": "seguridad", "waf": "SE:04", "texto": {"es": "Segmentación por suscripción y región", "en": "Subscription and region segmentation"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/checklist", "cita": "Create intentional segmentation and perimeters in your architecture design"},
+      {"id": "SEG-03", "pilar": "seguridad", "waf": "SE:05", "texto": {"es": "Identidad por agente, RBAC mínimo", "en": "Per-agent identity, least privilege"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/checklist", "cita": "Implement strict, conditional, and auditable identity and access management (IAM)"},
+      {"id": "SEG-05", "pilar": "seguridad", "waf": "SE:09", "texto": {"es": "Secretos en Azure Key Vault", "en": "Secrets in Azure Key Vault"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/security/checklist", "cita": "Protect application secrets by hardening their storage and restricting access and manipulation"},
+      {"id": "COS-01", "pilar": "coste", "waf": "CO:02", "texto": {"es": "Modelo de costes con presupuesto", "en": "Cost model with a budget"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/checklist", "cita": "A cost model should estimate the initial cost, run rates, and ongoing costs."},
+      {"id": "COS-02", "pilar": "coste", "waf": "CO:03", "texto": {"es": "Alertas de coste real y previsto", "en": "Actual and forecast cost alerts"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/checklist", "cita": "Automate alerts to trigger notifications at key thresholds"},
+      {"id": "FIA-01", "pilar": "fiabilidad", "waf": "RE:01", "texto": {"es": "Un coordinador y un único escritor", "en": "One coordinator, one single writer"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist", "cita": "Focus your workload design on simplicity and efficiency."},
+      {"id": "FIA-04", "pilar": "fiabilidad", "waf": "RE:07", "texto": {"es": "Versiones y borrado temporal nativos", "en": "Native versioning and soft delete"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist", "cita": "Use built-in features and well-established cloud patterns to help your workload remain functional"}
+    ],
+    "referencia": [
+      {"id": "REF-01", "pilar": "seguridad", "tema": {"es": "Guardarraíles de contenido de Foundry sobre Azure AI Content Safety", "en": "Foundry content guardrails built on Azure AI Content Safety"}, "url": "https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview", "cita": "Guardrails leverage classification models from Azure AI Content Safety to detect harmful content across supported risk categories.", "sha256_cuerpo": "2da04c04dca148845f3b2efa008f750d5ee5a6501837df16774dbdbaa8f481d1", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-02", "pilar": "seguridad", "tema": {"es": "Prompt Shields contra ataques de instrucciones", "en": "Prompt Shields against prompt attacks"}, "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection", "cita": "Prompt Shields detect attempts to manipulate your model's behavior through adversarial inputs.", "sha256_cuerpo": "f028e42a2636ce188438a94af8c0a74ff8de541535533c2f447d50be18d8f4a9", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-03", "pilar": "seguridad", "tema": {"es": "Identidad de agente de Microsoft Entra para cada agente", "en": "Microsoft Entra agent identity for every agent"}, "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity", "cita": "An agent identity is a specialized identity type in Microsoft Entra ID that's designed specifically for AI agents.", "sha256_cuerpo": "9c473bdad7fb9e24410cab7c58479dff815cc080f5433a50e0a26918f0dc518d", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-04", "pilar": "seguridad", "tema": {"es": "Azure RBAC de mínimo privilegio", "en": "Least-privilege Azure RBAC"}, "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/best-practices", "cita": "it's a best practice to grant users the least privilege to get their work done.", "sha256_cuerpo": "a43c20f68f0200bceb6469c50323402b80cf3fc397d0f15cc721a609dce54357", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-05", "pilar": "seguridad", "tema": {"es": "Conexión de Azure Key Vault propio en Foundry", "en": "Own Azure Key Vault connected to Foundry"}, "url": "https://learn.microsoft.com/en-us/azure/foundry/how-to/set-up-key-vault-connection", "cita": "To manage your own secrets, connect your Azure Key Vault to Foundry.", "sha256_cuerpo": "37a35cf382068c3a06914120e7956850c0750e6bb67e20ea1b13f18886e482f6", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-06", "pilar": "desarrollo", "tema": {"es": "GitHub Actions con OIDC y credencial federada de Entra", "en": "GitHub Actions with OIDC and an Entra federated credential"}, "url": "https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect", "cita": "To use Azure Login action with OIDC, you need to configure a federated identity credential on a Microsoft Entra application or a user-assigned managed identity.", "sha256_cuerpo": "f7915ca079b2592d9d01573b69095aef6c07fa2c74961a9b4ddbc2a3a4f42c59", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-07", "pilar": "mantenibilidad", "tema": {"es": "Application Insights sobre un área de trabajo de Log Analytics", "en": "Application Insights on a Log Analytics workspace"}, "url": "https://learn.microsoft.com/en-us/azure/azure-monitor/app/create-workspace-resource", "cita": "Application Insights integrates with Log Analytics and sends telemetry to a common Log Analytics workspace.", "sha256_cuerpo": "0c35e27331afa156b5251968f1712cdf1a3a492c50bd644a2defb7767a935b47", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-08", "pilar": "mantenibilidad", "tema": {"es": "Trazas, evaluaciones y puertas de calidad en CI/CD", "en": "Tracing, evaluations and quality gates in CI/CD"}, "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/observability", "cita": "You can trace, evaluate, integrate automated quality gates into CI/CD pipelines", "sha256_cuerpo": "d520dd0e6f66e1653ffd676ca3fb015a15a3f69716a4685424f6f643dced9e9d", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-09", "pilar": "coste", "tema": {"es": "Presupuestos con alertas de coste real y previsto (avisan; no detienen el consumo)", "en": "Budgets with actual and forecast cost alerts (they notify; they don't stop consumption)"}, "url": "https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets", "cita": "You can configure alerts based on your actual cost or forecasted cost to ensure that your spending is within your organizational spending limit.", "sha256_cuerpo": "75c034e663674a387e512bb7669d2d8563b023cdff9a5de4a6c9f139051b2b7e", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-10", "pilar": "seguridad", "tema": {"es": "Residencia de datos: despliegues Data Zone en la UE", "en": "Data residency: EU Data Zone deployments"}, "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types", "cita": "Data Zone types: The service processes data only within the Microsoft-specified data zone (US, EU, or Asia Pacific (APAC)).", "sha256_cuerpo": "db22816feaaf4f4b4d5724dbc0bd0d280d2822f251c848e115a72dfc60c1fafb", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-11", "pilar": "fiabilidad", "tema": {"es": "Versiones de blobs para recuperar datos", "en": "Blob versioning to recover data"}, "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/versioning-overview", "cita": "When you enable blob versioning, you can access earlier versions of a blob to recover your data if it's modified or deleted.", "sha256_cuerpo": "fefc3c6369504ca20392b733ff17ef30ce949775fe5b749cbec5cf1ac2b7ef76", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-12", "pilar": "fiabilidad", "tema": {"es": "Borrado temporal de blobs", "en": "Blob soft delete"}, "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview", "cita": "Blob soft delete protects an individual blob, snapshot, or version from accidental deletes or overwrites by keeping the deleted data in the system for a specified period of time.", "sha256_cuerpo": "1753c197a37ccb4398b96c68c0d97ec02d1196761c38a39741bded708a8a82ef", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-13", "pilar": "desarrollo", "tema": {"es": "Versiones de hosted agent con vuelta atrás", "en": "Hosted agent versions with rollback"}, "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents", "cita": "containerization, web server setup, security, memory persistence, scaling, instrumentation, and version rollbacks", "sha256_cuerpo": "ecda0824297bb1f10b9103a46bccee32e4c223ac1032cb74f08ae353eda3602e", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-14", "pilar": "seguridad", "tema": {"es": "Humano en el bucle antes de acciones de alto impacto", "en": "Human in the loop before high-impact actions"}, "url": "https://learn.microsoft.com/en-us/azure/well-architected/ai/responsible-ai", "cita": "Human-in-the-loop checkpoints where agents pause execution for validation before proceeding with high-risk or high-impact actions.", "sha256_cuerpo": "54d68111145d56f17ea09215bf24ad03038f53f4fff8ef187c33fbe9d6c0180a", "fecha_consulta": "2026-10-19"},
+      {"id": "REF-15", "pilar": "escalado", "tema": {"es": "Hosted agent con sesiones aisladas que escala a cero", "en": "Hosted agent with isolated sessions that scales to zero"}, "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents", "cita": "enabling scale-to-zero with stateful resume and predictable cold starts.", "sha256_cuerpo": "ecda0824297bb1f10b9103a46bccee32e4c223ac1032cb74f08ae353eda3602e", "fecha_consulta": "2026-10-19"}
+    ]
+  },
+  "leyenda": [
+    {"simbolo": "paso", "es": "Paso del flujo (1 a 8)", "en": "Flow step (1 to 8)"},
+    {"simbolo": "normal", "es": "Llamada o datos", "en": "Call or data"},
+    {"simbolo": "futuro", "es": "Previsto a futuro", "en": "Planned for later"},
+    {"simbolo": "traza", "es": "Trazas y evaluaciones", "en": "Traces and evaluations"},
+    {"simbolo": "validado", "es": "Validado en Azure (no la marca del icono de Content Safety)", "en": "Validated in Azure (not the Content Safety icon's own check)"},
+    {"simbolo": "limite", "es": "Límites anidados (tenant a región)", "en": "Nested boundaries (tenant to region)"},
+    {"simbolo": "pieza", "es": "Código del coordinador", "en": "Coordinator code"},
+    {"simbolo": "neutro", "es": "Tercero o sin icono oficial", "en": "Third party or no official icon"}
+  ]
+}

@@ -1,0 +1,17 @@
+# Identificadores NO secretos que los pasos 04a, 04c y 04d necesitan y que no deben ir al repositorio
+# (nombres de recursos y rutas de otros proyectos). Copia este fichero a local.conf (que no se versiona) y
+# rellena los valores. Formato: CLAVE=valor, una por línea, sin comillas. Nunca pongas aquí una clave.
+
+# 04a: ficheros de configuración adicionales donde buscar AZURE_FOUNDRY_KEY, separados por punto y coma.
+ROT_FICHEROS_CONFIG=
+
+# 04c: id de ARM de la cuenta de Cognitive Services cuya clave se filtró, quién la consume y dónde está la
+# copia de seguridad del repositorio con el histórico antiguo (para borrarla tras rotar).
+ROT_AZ_RECURSO_ID=
+ROT_AZ_CONSUMIDORES=
+ROT_AZ_COPIA_ANTIGUA=
+
+# 04d: proyecto de GCP de la cuenta de servicio, ruta del fichero de la clave antigua y quién la consume.
+ROT_GCP_PROYECTO=
+ROT_GCP_CLAVE_ANTIGUA=
+ROT_GCP_CONSUMIDORES=

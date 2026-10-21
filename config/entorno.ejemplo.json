@@ -1,0 +1,100 @@
+{
+  "descripcion": "Plantilla del entorno del sistema de ofertas y arquitectura en Microsoft Foundry. Copia este fichero a config/entorno.local.json (no se versiona) y sustituye los valores ficticios por los de tu tenant, suscripción, recurso y proyecto. Sin secretos: las claves viven en conexiones del proyecto.",
+  "tenant_id": "00000000-0000-0000-0000-000000000000",
+  "suscripcion_id": "00000000-0000-0000-0000-000000000000",
+  "grupo_recursos": "rg-ejemplo",
+  "region": "swedencentral",
+  "recurso": "mi-recurso-foundry",
+  "proyecto": "mi-proyecto-foundry",
+  "endpoints": {
+    "proyecto": "https://mi-recurso-foundry.services.ai.azure.com/api/projects/mi-proyecto-foundry",
+    "recurso": "https://mi-recurso-foundry.services.ai.azure.com",
+    "arm": "https://management.azure.com"
+  },
+  "audiencias": {
+    "datos": "https://ai.azure.com",
+    "arm": "https://management.azure.com"
+  },
+  "api_versions": {
+    "datos_proyecto": "v1",
+    "arm_conexiones": "2025-04-01-preview",
+    "arm_cuenta_proyecto": "2025-06-01",
+    "arm_roles": "2022-04-01"
+  },
+  "prefijo_agentes": "ofa-",
+  "prefijo_agentes_prueba": "ofa-prueba-",
+  "protegidos": {
+    "agentes": [
+      "agente-de-otro-proyecto",
+      "otro-agente-protegido"
+    ],
+    "prefijos_agentes": [
+      "otro-proyecto-"
+    ],
+    "toolboxes": [
+      "toolbox-de-otro-proyecto"
+    ]
+  },
+  "roles": {
+    "foundry_user": "53ca6127-db72-4b80-b1b0-d745d6d5456d",
+    "foundry_agent_consumer": "eed3b665-ab3a-47b6-8f48-c9382fb1dad6"
+  },
+  "despliegues": {
+    "gpt-5.6-luna": {
+      "modelo": "gpt-5.6-luna",
+      "sku": "DataZoneStandard"
+    },
+    "gpt-6-luna": {
+      "modelo": "gpt-6-luna",
+      "version": "2026-09-22",
+      "sku": "DataZoneStandard"
+    },
+    "gpt-5.6-terra": {
+      "modelo": "gpt-5.6-terra",
+      "sku": "GlobalStandard"
+    },
+    "gpt-5.6-sol": {
+      "modelo": "gpt-5.6-sol",
+      "sku": "GlobalStandard"
+    },
+    "Decision-1": {
+      "modelo": "Microsoft-Decision-1",
+      "version": "1",
+      "sku": "DataZoneStandard"
+    },
+    "text-embedding-3-large": {
+      "modelo": "text-embedding-3-large",
+      "sku": "DataZoneStandard"
+    }
+  },
+  "agentes": {
+    "coordinador": {
+      "nombre": "ofa-coordinador",
+      "tipo": "hosted"
+    },
+    "facilitador": {
+      "nombre": "ofa-facilitador",
+      "tipo": "prompt"
+    },
+    "investigador": {
+      "nombre": "ofa-investigador",
+      "tipo": "prompt"
+    },
+    "experto_ms": {
+      "nombre": "ofa-experto-ms",
+      "tipo": "prompt"
+    },
+    "arquitecto": {
+      "nombre": "ofa-arquitecto",
+      "tipo": "prompt"
+    },
+    "estimador": {
+      "nombre": "ofa-estimador",
+      "tipo": "prompt"
+    },
+    "verificador": {
+      "nombre": "ofa-verificador",
+      "tipo": "prompt"
+    }
+  }
+}

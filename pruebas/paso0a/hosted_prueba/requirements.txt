@@ -1,0 +1,4 @@
+# Dependencias del hosted agent de prueba (runtime python_3_13, bundled en packages/).
+# Versiones EXACTAS como en el MVP de preventa (LES-G-013).
+azure-ai-agentserver-responses==2.2.0
+azure-ai-agentserver-core==2.2.0

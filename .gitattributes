@@ -1,0 +1,6 @@
+# Finales de línea LF en el repositorio y en la copia de trabajo, también en Windows.
+# Los scripts .sh con CRLF fallan en Git Bash y un \r invisible rompe comparaciones (LES-G-099).
+* text=auto eol=lf
+*.xlsx binary
+*.zip binary
+*.png binary

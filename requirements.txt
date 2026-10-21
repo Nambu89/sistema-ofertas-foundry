@@ -1,0 +1,5 @@
+# Herramientas de construcción y despliegue del portátil. Versiones EXACTAS (LES-G-013),
+# comprobadas en pypi.org el 18-10-2026. Nada de esto se ejecuta en local en producción.
+azure-identity==1.26.0
+requests==2.34.2
+pytest==9.1.1
