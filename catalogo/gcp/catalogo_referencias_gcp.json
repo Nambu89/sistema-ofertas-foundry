@@ -1,0 +1,97 @@
+{
+  "schema": "preventa-catalogo-referencias-gcp/1",
+  "fecha": "2026-11-04",
+  "fuente": "Google Cloud Architecture Center (https://docs.cloud.google.com/architecture), comprobado con GET sin credenciales",
+  "referencias": [
+    {
+      "id": "centro-arquitectura",
+      "url": "https://docs.cloud.google.com/architecture",
+      "titulo": "Cloud Architecture Guidance and Topologies",
+      "titulo_pagina": "Cloud Architecture Guidance and Topologies | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "Punto de entrada del Cloud Architecture Center: se busca aquí primero."
+    },
+    {
+      "id": "rag-agent-platform-alloydb",
+      "url": "https://docs.cloud.google.com/architecture/rag-capable-gen-ai-app-using-vertex-ai",
+      "titulo": "RAG infrastructure for generative AI using Agent Platform and AlloyDB for PostgreSQL",
+      "titulo_pagina": "RAG infrastructure for generative AI using Agent Platform and AlloyDB for PostgreSQL | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "RAG con base vectorial en AlloyDB para PostgreSQL."
+    },
+    {
+      "id": "rag-gemini-enterprise",
+      "url": "https://docs.cloud.google.com/architecture/rag-genai-gemini-enterprise-vertexai",
+      "titulo": "RAG infrastructure for generative AI using Gemini Enterprise and Agent Platform",
+      "titulo_pagina": "RAG infrastructure for generative AI using Gemini Enterprise and Agent Platform | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "RAG gestionado con Gemini Enterprise y Agent Platform."
+    },
+    {
+      "id": "rag-vector-search",
+      "url": "https://docs.cloud.google.com/architecture/gen-ai-rag-vertex-ai-vector-search",
+      "titulo": "RAG infrastructure for generative AI using Agent Platform and Vector Search",
+      "titulo_pagina": "RAG infrastructure for generative AI using Agent Platform and Vector Search | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "RAG con Vector Search para grandes volúmenes de vectores."
+    },
+    {
+      "id": "rag-conectividad-privada",
+      "url": "https://docs.cloud.google.com/architecture/private-connectivity-rag-capable-gen-ai",
+      "titulo": "Private connectivity for RAG-capable generative AI applications",
+      "titulo_pagina": "Private connectivity for RAG-capable generative AI applications | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "RAG con conectividad privada."
+    },
+    {
+      "id": "rag-indice",
+      "url": "https://docs.cloud.google.com/architecture/rag-reference-architectures",
+      "titulo": "Generative AI with RAG",
+      "titulo_pagina": "Generative AI with RAG | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "Índice de arquitecturas de IA generativa con RAG."
+    },
+    {
+      "id": "agente-unico-adk-cloud-run",
+      "url": "https://docs.cloud.google.com/architecture/single-agent-ai-system-adk-cloud-run",
+      "titulo": "Single-agent AI system using ADK and Cloud Run",
+      "titulo_pagina": "Single-agent AI system using ADK and Cloud Run | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "Sistema de un solo agente con ADK en Cloud Run."
+    },
+    {
+      "id": "patron-agentico",
+      "url": "https://docs.cloud.google.com/architecture/choose-design-pattern-agentic-ai-system",
+      "titulo": "Choose a design pattern for your agentic AI system",
+      "titulo_pagina": "Choose a design pattern for your agentic AI system | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "Elegir el patrón de diseño de un sistema agéntico."
+    },
+    {
+      "id": "soporte-cliente-genai",
+      "url": "https://docs.cloud.google.com/architecture/genai-customer-support",
+      "titulo": "Generative AI use case: Generate solutions for customer-support questions",
+      "titulo_pagina": "Generative AI use case: Generate solutions for customer-support questions | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "Caso de uso: soluciones a preguntas de soporte al cliente."
+    },
+    {
+      "id": "well-architected-ia-ml",
+      "url": "https://docs.cloud.google.com/architecture/framework/perspectives/ai-ml",
+      "titulo": "Well-Architected Framework: AI and ML perspective",
+      "titulo_pagina": "Well-Architected Framework: AI and ML perspective | Cloud Architecture Center | Google Cloud Documentation",
+      "http": 200,
+      "consultado": "2026-11-04",
+      "cuando_usar": "Well-Architected Framework, perspectiva de IA y ML."
+    }
+  ]
+}

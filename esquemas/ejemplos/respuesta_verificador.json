@@ -1,0 +1,134 @@
+{
+  "agente": "preventa-verificador",
+  "consolidado_id": "CNS-OF-KELVARA-001-A-R1",
+  "entrada_recibida_inicio": "CONSOLIDADO-PREVENTA/1\nconsolidado_id: CNS-OF-KELVARA-001-A-R1\nbrief_id: BRF-OF-KELVARA-001-A-AZ-R1",
+  "elementos": [
+    {
+      "id": "REF-01",
+      "tipo": "referencia",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "REF-02",
+      "tipo": "referencia",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "REF-03",
+      "tipo": "referencia",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "REF-04",
+      "tipo": "referencia",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "REF-05",
+      "tipo": "referencia",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "REF-06",
+      "tipo": "referencia",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "REF-07",
+      "tipo": "referencia",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "C-01",
+      "tipo": "componente",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "C-02",
+      "tipo": "componente",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "C-03",
+      "tipo": "componente",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "C-04",
+      "tipo": "componente",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "C-05",
+      "tipo": "componente",
+      "veredicto": "OK",
+      "campo": "ninguno",
+      "detalle": "Comprobado contra la fuente oficial.",
+      "valor_correcto": null,
+      "fuente_url": "https://learn.microsoft.com/azure/search/search-sku-tier"
+    },
+    {
+      "id": "C-06",
+      "tipo": "componente",
+      "veredicto": "NO VERIFICABLE",
+      "campo": "ninguno",
+      "detalle": "microsoft_docs_search no devolvió la página del punto de conexión privado en la región indicada; no se puede confirmar la disponibilidad.",
+      "valor_correcto": null,
+      "fuente_url": null
+    }
+  ],
+  "resumen": {
+    "ok": 12,
+    "discrepa": 0,
+    "observacion": 0,
+    "no_verificable": 1
+  },
+  "herramientas_usadas": {
+    "microsoft_docs_search": 3,
+    "microsoft_docs_fetch": 3
+  }
+}

@@ -1,0 +1,626 @@
+{
+  "schema": "preventa-catalogo/1",
+  "version": 1,
+  "fecha": "2026-11-04",
+  "factores_estandar": [
+    {
+      "id": "asistente_rag.tokens_entrada_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 5656,
+      "unidad": "tokens de entrada por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-10-13",
+      "justificacion": "Mismo factor que el catálogo de Azure (tabla de Learn medida con modelos GPT). Con Gemini el recuento cambia con el tokenizador: NO VERIFICADO para Gemini; se mide en el piloto.",
+      "desglose": [
+        {
+          "parte": "petición de generación: pregunta, historial, fragmentos recuperados e instrucciones",
+          "valor": 4422,
+          "origen": "Learn: media de 4 modelos GPT"
+        },
+        {
+          "parte": "petición de intención: pregunta, historial e instrucciones",
+          "valor": 1234,
+          "origen": "Learn: media de 4 modelos GPT"
+        }
+      ]
+    },
+    {
+      "id": "asistente_rag.tokens_salida_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 1171,
+      "unidad": "tokens de salida por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-10-13",
+      "justificacion": "Mismo factor que el catálogo de Azure: respuesta e intención medidas en Learn más 1.024 tokens de razonamiento. Para Gemini 3.8 Flash (razonamiento admitido): NO VERIFICADO; se mide en el piloto.",
+      "desglose": [
+        {
+          "parte": "respuesta visible",
+          "valor": 120,
+          "origen": "Learn (On Your Data)"
+        },
+        {
+          "parte": "intención de búsqueda",
+          "valor": 27,
+          "origen": "Learn (On Your Data)"
+        },
+        {
+          "parte": "razonamiento (se factura como salida)",
+          "valor": 1024,
+          "origen": "supuesto heredado del catálogo de Azure; NO VERIFICADO"
+        }
+      ]
+    },
+    {
+      "id": "asistente_rag.busquedas_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 1,
+      "unidad": "consultas de búsqueda por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-10-13",
+      "justificacion": "Una consulta a Agent Search por pregunta del usuario; si la aplicación lanza una por intención, el experto lo cambia citando el requisito.",
+      "desglose": [
+        {
+          "parte": "búsqueda de la pregunta",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    }
+  ],
+  "modelo_por_defecto": {
+    "componente": "gcp-vertex-ai",
+    "modelo": "gemini-3.8-flash",
+    "plantillas": [
+      "gemini-3.8-flash-entrada",
+      "gemini-3.8-flash-salida"
+    ],
+    "region": "eu",
+    "despliegue": "Standard PayGo multirregión eu",
+    "motivo": "Modelo GA (lanzado el 2026-09-02) con procesamiento de ML en la multirregión eu y sin contexto largo con precio aparte. Google publica su retirada como «September 2, 2027 or later»: es la fecha más temprana posible, no una retirada programada; un proyecto cuya explotación pase de esa fecha lo declara como riesgo (ver DESVIACIONES.md).",
+    "fuente_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-8-flash",
+    "region_fuente_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+    "consultado": "2026-11-04"
+  },
+  "computo_por_defecto": {
+    "componente": "gcp-cloud-run",
+    "nivel": "Instancia 1 vCPU y 512 MiB",
+    "plantillas": [
+      "instancia-vcpu",
+      "instancia-memoria"
+    ],
+    "motivo": "La arquitectura de referencia de un sistema de un solo agente del Cloud Architecture Center corre en Cloud Run; valores por defecto de 1 vCPU y 512 MiB, una instancia.",
+    "fuente_url": "https://docs.cloud.google.com/architecture/single-agent-ai-system-adk-cloud-run",
+    "consultado": "2026-11-04",
+    "filas": [
+      "gcp-cloud-run"
+    ]
+  },
+  "arquitecturas_referencia": [
+    {
+      "id": "rag-agent-platform-alloydb",
+      "titulo": "RAG infrastructure for generative AI using Agent Platform and AlloyDB for PostgreSQL",
+      "url": "https://docs.cloud.google.com/architecture/rag-capable-gen-ai-app-using-vertex-ai",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Asistente con RAG sobre documentos propios con base vectorial en AlloyDB."
+    },
+    {
+      "id": "rag-gemini-enterprise",
+      "titulo": "RAG infrastructure for generative AI using Gemini Enterprise and Agent Platform",
+      "url": "https://docs.cloud.google.com/architecture/rag-genai-gemini-enterprise-vertexai",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Asistente con RAG gestionado (búsqueda empresarial) sin construir la recuperación a mano."
+    },
+    {
+      "id": "rag-vector-search",
+      "titulo": "RAG infrastructure for generative AI using Agent Platform and Vector Search",
+      "url": "https://docs.cloud.google.com/architecture/gen-ai-rag-vertex-ai-vector-search",
+      "consultado": "2026-11-04",
+      "cuando_usar": "RAG con grandes volúmenes de vectores y recuperación de baja latencia."
+    },
+    {
+      "id": "rag-conectividad-privada",
+      "titulo": "Private connectivity for RAG-capable generative AI applications",
+      "url": "https://docs.cloud.google.com/architecture/private-connectivity-rag-capable-gen-ai",
+      "consultado": "2026-11-04",
+      "cuando_usar": "RAG con red privada y sin exposición pública de los servicios."
+    },
+    {
+      "id": "agente-unico-adk-cloud-run",
+      "titulo": "Single-agent AI system using ADK and Cloud Run",
+      "url": "https://docs.cloud.google.com/architecture/single-agent-ai-system-adk-cloud-run",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Piloto o prueba de concepto de un agente con herramientas sobre Cloud Run."
+    }
+  ],
+  "componentes": [
+    {
+      "id": "gcp-vertex-ai",
+      "nombre_oficial": "Gemini Enterprise Agent Platform",
+      "capa": "ia",
+      "service_name_precios": "Vertex AI",
+      "referencia_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/overview",
+      "referencia_titulo": "Agent Platform overview",
+      "alias": [
+        "Vertex AI",
+        "Agent Platform",
+        "Gemini en Vertex AI"
+      ],
+      "region_ue": "eu",
+      "plantillas_precio": [
+        {
+          "id": "gemini-3.8-flash-entrada",
+          "filtro": "serviceId eq 'C7E2-9256-1C43' and skuId eq '1C52-4B3A-E3E7' and serviceRegion eq 'eu'",
+          "concepto": "Gemini 3.8 Flash Regional Text Input - Predictions",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/gen-ai-gemini-models",
+          "por_defecto": true,
+          "modelo": "gemini-3.8-flash",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_entrada_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-02",
+            "retirada": null,
+            "retirada_no_antes_de": "2027-09-02",
+            "fuente": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions"
+          }
+        },
+        {
+          "id": "gemini-3.8-flash-salida",
+          "filtro": "serviceId eq 'C7E2-9256-1C43' and skuId eq '8C46-0EC8-54F9' and serviceRegion eq 'eu'",
+          "concepto": "Gemini 3.8 Flash Regional Text Output - Predictions",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/gen-ai-gemini-models",
+          "por_defecto": true,
+          "modelo": "gemini-3.8-flash",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_salida_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-02",
+            "retirada": null,
+            "retirada_no_antes_de": "2027-09-02",
+            "fuente": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions"
+          }
+        },
+        {
+          "id": "gemini-3.8-flash-entrada-cache",
+          "filtro": "serviceId eq 'C7E2-9256-1C43' and skuId eq '59CA-8986-F33C' and serviceRegion eq 'eu'",
+          "concepto": "Gemini 3.8 Flash Regional Text Input Caching",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/gen-ai-gemini-models",
+          "modelo": "gemini-3.8-flash",
+          "contexto": "corto",
+          "ciclo_vida": {
+            "ga": "2026-09-02",
+            "retirada": null,
+            "retirada_no_antes_de": "2027-09-02",
+            "fuente": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan la caché de contexto: los tokens en caché dependen del prefijo repetido de cada solución; factor_override citando ese requisito, y la entrada sin caché baja en la misma cantidad."
+        }
+      ],
+      "medidores_obligatorios": [
+        "gemini-3.8-flash-entrada",
+        "gemini-3.8-flash-salida"
+      ],
+      "disponibilidad": {
+        "gemini-3.8-flash": {
+          "regiones": [
+            "eu"
+          ],
+          "alcance": "nivel",
+          "fuente": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations",
+          "consultado": "2026-11-04",
+          "nota": "Disponible en global y en las multirregiones us y eu; en ninguna región europea suelta (tabla de ubicaciones, 2026-11-04)"
+        }
+      }
+    },
+    {
+      "id": "gcp-agent-search",
+      "nombre_oficial": "Agent Search",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "Vertex AI Search",
+      "referencia_url": "https://docs.cloud.google.com/generative-ai-app-builder/docs/locations",
+      "referencia_titulo": "Agent Search locations",
+      "alias": [
+        "Vertex AI Search",
+        "Vertex AI Agent Builder"
+      ],
+      "region_ue": "eu",
+      "region_precio": "global",
+      "plantillas_precio": [
+        {
+          "id": "consultas-standard",
+          "filtro": "serviceId eq '74B1-77CF-C302' and skuId eq 'BADA-EE26-7BDA' and serviceRegion eq 'global'",
+          "concepto": "Vertex AI Search: Search API Request Count - Standard",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/vertex-ai-search",
+          "factor_estandar": "asistente_rag.busquedas_por_consulta"
+        }
+      ],
+      "disponibilidad": {
+        "Standard": {
+          "regiones": [
+            "eu"
+          ],
+          "alcance": "servicio",
+          "fuente": "https://docs.cloud.google.com/generative-ai-app-builder/docs/locations",
+          "consultado": "2026-11-04",
+          "nota": "Multirregión eu con residencia de datos en reposo y procesamiento de ML en la UE"
+        }
+      }
+    },
+    {
+      "id": "gcp-cloud-run",
+      "nombre_oficial": "Cloud Run",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Cloud Run",
+      "referencia_url": "https://docs.cloud.google.com/run/docs/overview/what-is-cloud-run",
+      "referencia_titulo": "What is Cloud Run",
+      "alias": [
+        "Cloud Run services"
+      ],
+      "region_ue": "europe-southwest1",
+      "plantillas_precio": [
+        {
+          "id": "instancia-vcpu",
+          "filtro": "serviceId eq '152E-C115-5142' and skuId eq '9CE1-91CC-5746' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Services CPU (Instance-based billing) in europe-southwest1",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/cloud-run",
+          "por_instancia": {
+            "valor": 1,
+            "unidad": "vCPU por instancia",
+            "fuente_url": "https://docs.cloud.google.com/run/docs/configuring/services/cpu"
+          }
+        },
+        {
+          "id": "instancia-memoria",
+          "filtro": "serviceId eq '152E-C115-5142' and skuId eq '707E-670F-F8BA' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Services Memory (Instance-based billing) in europe-southwest1",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/cloud-run",
+          "por_instancia": {
+            "valor": 0.5,
+            "unidad": "GiB por instancia (512 MiB)",
+            "fuente_url": "https://docs.cloud.google.com/run/docs/configuring/services/memory-limits"
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Instancia 1 vCPU y 512 MiB",
+          "plantillas": [
+            "instancia-vcpu",
+            "instancia-memoria"
+          ],
+          "limites": [
+            "Por defecto, cada instancia está limitada a 1 vCPU («By default, each instance is limited to 1 vCPU»)",
+            "Por defecto, cada instancia tiene 512 MiB de memoria"
+          ],
+          "fuente_url": "https://docs.cloud.google.com/run/docs/configuring/services/cpu",
+          "consultado": "2026-11-04",
+          "medidores_obligatorios": [
+            "instancia-vcpu",
+            "instancia-memoria"
+          ]
+        }
+      ],
+      "medidores_obligatorios": [
+        "instancia-vcpu",
+        "instancia-memoria"
+      ],
+      "nivel_por_defecto": {
+        "nivel": "Instancia 1 vCPU y 512 MiB",
+        "fuente": "https://docs.cloud.google.com/run/docs/configuring/services/cpu",
+        "consultado": "2026-11-04",
+        "motivo": "Valores por defecto de Cloud Run (1 vCPU y 512 MiB por instancia) con facturación por instancia: una instancia siempre activa se valora por tiempo, como el cómputo por defecto de Azure."
+      }
+    },
+    {
+      "id": "gcp-cloud-run-functions",
+      "nombre_oficial": "Cloud Run functions",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Cloud Run Functions",
+      "referencia_url": "https://docs.cloud.google.com/functions/docs/concepts/overview",
+      "referencia_titulo": "Functions overview",
+      "alias": [
+        "Cloud Functions"
+      ],
+      "region_ue": "europe-southwest1",
+      "plantillas_precio": [
+        {
+          "id": "invocaciones",
+          "filtro": "serviceId eq '29E7-DA93-CA13' and skuId eq '92DF-0F0E-630F' and serviceRegion eq 'global'",
+          "concepto": "Cloud Run Functions Invocations",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/cloud-functions",
+          "region_precio": "global",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        },
+        {
+          "id": "cpu-peticiones",
+          "filtro": "serviceId eq '29E7-DA93-CA13' and skuId eq 'C7A8-0833-E5FE' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Cloud Run functions CPU (Request-based billing) in europe-southwest1",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/cloud-functions",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        },
+        {
+          "id": "memoria-peticiones",
+          "filtro": "serviceId eq '29E7-DA93-CA13' and skuId eq '5EBD-62E4-6BD2' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Cloud Run functions Memory (Request-based billing) in europe-southwest1",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/cloud-functions",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        }
+      ],
+      "medidores_obligatorios": [
+        "invocaciones",
+        "cpu-peticiones",
+        "memoria-peticiones"
+      ]
+    },
+    {
+      "id": "gcp-cloud-storage",
+      "nombre_oficial": "Cloud Storage",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "Cloud Storage",
+      "referencia_url": "https://docs.cloud.google.com/storage/docs/introduction",
+      "referencia_titulo": "Cloud Storage overview",
+      "alias": [
+        "GCS",
+        "Google Cloud Storage"
+      ],
+      "region_ue": "europe-southwest1",
+      "plantillas_precio": [
+        {
+          "id": "standard-almacenamiento",
+          "filtro": "serviceId eq '95FF-2EF5-5EA1' and skuId eq '5596-85FF-7F53' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Standard Storage Madrid",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/standard-storage-regional",
+          "sin_factor_motivo": "Sin factor estándar: los GB almacenados salen de la volumetría citada (documentos y su tamaño) con factor_override citando ese requisito."
+        }
+      ]
+    },
+    {
+      "id": "gcp-firestore",
+      "nombre_oficial": "Firestore",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "Cloud Firestore",
+      "referencia_url": "https://docs.cloud.google.com/firestore/native/docs/overview",
+      "referencia_titulo": "Firestore overview",
+      "alias": [
+        "Cloud Firestore",
+        "Firestore in Native mode"
+      ],
+      "region_ue": "europe-southwest1",
+      "plantillas_precio": [
+        {
+          "id": "lecturas",
+          "filtro": "serviceId eq 'EE2C-7FAC-5E08' and skuId eq '6386-B51E-8050' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Cloud Firestore Read Ops Madrid",
+          "impulsor": "volumen",
+          "divisor": 100000,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/firestore-ops",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        },
+        {
+          "id": "escrituras",
+          "filtro": "serviceId eq 'EE2C-7FAC-5E08' and skuId eq '56B3-DEDE-82DC' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Cloud Firestore Entity Writes Madrid",
+          "impulsor": "volumen",
+          "divisor": 100000,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/firestore-ops",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        },
+        {
+          "id": "almacenamiento",
+          "filtro": "serviceId eq 'EE2C-7FAC-5E08' and skuId eq '5299-7DA5-CC70' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Cloud Firestore Storage Madrid",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/firestore-storage",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        }
+      ],
+      "medidores_obligatorios": [
+        "lecturas",
+        "escrituras",
+        "almacenamiento"
+      ]
+    },
+    {
+      "id": "gcp-bigquery",
+      "nombre_oficial": "BigQuery",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "BigQuery",
+      "referencia_url": "https://docs.cloud.google.com/bigquery/docs/introduction",
+      "referencia_titulo": "BigQuery overview",
+      "alias": [
+        "Google BigQuery"
+      ],
+      "region_ue": "europe-southwest1",
+      "plantillas_precio": [
+        {
+          "id": "analisis-bajo-demanda",
+          "filtro": "serviceId eq '24E6-581D-38E5' and skuId eq '23E9-1D94-2168' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Analysis (europe-southwest1)",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/bigquery",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        },
+        {
+          "id": "almacenamiento-activo",
+          "filtro": "serviceId eq '24E6-581D-38E5' and skuId eq '5F70-D97A-B297' and serviceRegion eq 'europe-southwest1'",
+          "concepto": "Active Logical Storage (europe-southwest1)",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/bigquery-storage",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        }
+      ],
+      "medidores_obligatorios": [
+        "analisis-bajo-demanda",
+        "almacenamiento-activo"
+      ]
+    },
+    {
+      "id": "gcp-pubsub",
+      "nombre_oficial": "Pub/Sub",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Cloud Pub/Sub",
+      "referencia_url": "https://docs.cloud.google.com/pubsub/docs/overview",
+      "referencia_titulo": "What is Pub/Sub?",
+      "alias": [
+        "Cloud Pub/Sub",
+        "Google Cloud Pub/Sub"
+      ],
+      "region_ue": "europe-southwest1",
+      "region_precio": "global",
+      "plantillas_precio": [
+        {
+          "id": "entrega-mensajes",
+          "filtro": "serviceId eq 'A1E8-BE35-7EBC' and skuId eq '027D-B6C7-CCA2' and serviceRegion eq 'global'",
+          "concepto": "Message Delivery Basic",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/pub-sub",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        }
+      ]
+    },
+    {
+      "id": "gcp-secret-manager",
+      "nombre_oficial": "Secret Manager",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": null,
+      "referencia_url": "https://docs.cloud.google.com/secret-manager/docs/overview",
+      "referencia_titulo": "Secret Manager overview",
+      "alias": [
+        "Google Cloud Secret Manager"
+      ],
+      "region_ue": "europe-southwest1"
+    },
+    {
+      "id": "gcp-iam",
+      "nombre_oficial": "Identity and Access Management (IAM)",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": null,
+      "referencia_url": "https://docs.cloud.google.com/iam/docs/overview",
+      "referencia_titulo": "IAM overview",
+      "alias": [
+        "Cloud IAM",
+        "IAM"
+      ],
+      "region_ue": "global"
+    },
+    {
+      "id": "gcp-identity-platform",
+      "nombre_oficial": "Identity Platform",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": null,
+      "referencia_url": "https://docs.cloud.google.com/identity-platform/docs",
+      "referencia_titulo": "Identity Platform documentation",
+      "alias": [
+        "Google Cloud Identity Platform"
+      ],
+      "region_ue": "global"
+    },
+    {
+      "id": "gcp-cloud-logging",
+      "nombre_oficial": "Cloud Logging",
+      "capa": "operacion_observabilidad",
+      "service_name_precios": "Cloud Logging",
+      "referencia_url": "https://docs.cloud.google.com/logging/docs/overview",
+      "referencia_titulo": "Cloud Logging overview",
+      "alias": [
+        "Stackdriver Logging"
+      ],
+      "region_ue": "europe-southwest1",
+      "region_precio": "global",
+      "plantillas_precio": [
+        {
+          "id": "ingesta",
+          "filtro": "serviceId eq '5490-F7B7-8DF6' and skuId eq '143F-A1B0-E0BE' and serviceRegion eq 'global'",
+          "concepto": "Log Storage cost",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/cloud-logging",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        }
+      ]
+    },
+    {
+      "id": "gcp-cloud-monitoring",
+      "nombre_oficial": "Cloud Monitoring",
+      "capa": "operacion_observabilidad",
+      "service_name_precios": "Cloud Monitoring",
+      "referencia_url": "https://docs.cloud.google.com/monitoring/docs/monitoring-overview",
+      "referencia_titulo": "Cloud Monitoring overview",
+      "alias": [
+        "Stackdriver Monitoring"
+      ],
+      "region_ue": "europe-southwest1",
+      "region_precio": "global",
+      "plantillas_precio": [
+        {
+          "id": "volumen-metricas",
+          "filtro": "serviceId eq '58CD-E7C3-72CA' and skuId eq 'A924-09D0-8854' and serviceRegion eq 'global'",
+          "concepto": "Metric Volume",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "unidad_uso": null,
+          "fuente_sku": "https://cloud.google.com/skus/sku-groups/cloud-monitoring",
+          "sin_factor_motivo": "Sin factor estándar: la cantidad sale de la volumetría citada con factor_override citando el requisito que la da."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+Adjuntos guardados en la sesión: transcripcion_sintetica_I18_hostelia.txt
+
+$ iniciar → rc 0
+```
+ALTA: OK OF-HOSTELIA-001-A · fuente F1 transcripcion_sintetica_I18_hostelia.txt (2406 B, SHA-256 b11c0bea0e708dc0b9d1fd0b7c11263fe16a316355ac46a8c1809e7d8a5a28e9)
+Términos sensibles: 6 (hablantes añadidos: Responsable comercial, Marina Couto, Rodrigo Valcárcel)
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: BORRADOR
+version: A
+hash_contenido: 65da69fbc6bc966de8e492c44e56dd401421501a3e1c01faa2489d9d4ac97a19
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=PENDIENTE
+verificacion: ronda 0/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: Rellenar entrada/requisitos.json con citas literales y ejecutar: suficiencia --requisitos entrada/requisitos.json
+=== FIN ESTADO ===
+```
+
+Requisitos propuestos por gpt-6-luna (respuesta resp_ejemplo0000000000000000000000000000000000000000015); el código comprueba cada cita.
+
+$ suficiencia → rc 1
+```
+SUFICIENCIA: INCOMPLETA. Faltan: red_privada, tipo_suscripcion, presupuesto_orientativo
+=== PREGUNTAS PARA EL COMERCIAL ===
+red_privada: ¿Hace falta red privada?
+  a) Sí, entrada y salida privadas
+  b) Solo entrada privada
+  c) No, acceso público con autenticación
+  d) otra: indicarla (ASUMIR: red_privada = valor)
+tipo_suscripcion: ¿Qué tipo de suscripción de Azure tiene el cliente?
+  a) Enterprise Agreement o MCA-E directo
+  b) CSP a través de un revendedor
+  c) Pago por uso
+  d) otra: indicarla (ASUMIR: tipo_suscripcion = valor)
+presupuesto_orientativo: ¿Hay un presupuesto orientativo?
+  a) Menos de 25.000 euros
+  b) Entre 25.000 y 60.000 euros
+  c) Más de 60.000 euros
+  d) otra: indicarla (ASUMIR: presupuesto_orientativo = valor)
+=== FIN PREGUNTAS ===
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: INFORMACION_INSUFICIENTE
+version: A
+hash_contenido: 4c5a9f3aefd4ac51ce26cf4cd3da4ab75b62b6b6ae8e0051f15a1861b7907573
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=PENDIENTE
+verificacion: ronda 0/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...
+=== FIN ESTADO ===
+```
+
+```
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: INFORMACION_INSUFICIENTE
+version: A
+hash_contenido: 4c5a9f3aefd4ac51ce26cf4cd3da4ab75b62b6b6ae8e0051f15a1861b7907573
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=PENDIENTE
+verificacion: ronda 0/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...
+=== FIN ESTADO ===
+```
+
+SIGUIENTE PASO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:requisitos:1",
+  "title": "Requisitos de una solicitud de preventa (I1)",
+  "description": "Lo rellena el modelo en entrada/requisitos.json (canales_integraciones es ASUMIBLE pero no obligatorio en el esquema, para restaurar estados anteriores: si falta, suficiencia lo pregunta); suficiencia recalcula 'estado' de cada campo y comprueba cada cita contra las fuentes; fuera_de_alcance y ya_contratado_por_cliente son opcionales (I1.8). CONTRATOS.md §3.3 y docs/I1/CAMBIOS-I18-P.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "campos"],
+  "properties": {
+    "schema": {"const": "preventa-requisitos/1"},
+    "campos": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objetivo", "nubes", "alcance_funcional", "ubicacion_usuarios", "marco_normativo",
+        "volumetria", "identidad_acl_origen", "red_privada", "tipo_suscripcion", "plazo",
+        "presupuesto_orientativo", "idioma_oferta"
+      ],
+      "properties": {
+        "objetivo": {"$ref": "#/$defs/campo"},
+        "nubes": {"$ref": "#/$defs/campo"},
+        "alcance_funcional": {"$ref": "#/$defs/campo"},
+        "canales_integraciones": {"$ref": "#/$defs/campo"},
+        "ubicacion_usuarios": {"$ref": "#/$defs/campo"},
+        "marco_normativo": {"$ref": "#/$defs/campo"},
+        "volumetria": {"$ref": "#/$defs/campo"},
+        "identidad_acl_origen": {"$ref": "#/$defs/campo"},
+        "red_privada": {"$ref": "#/$defs/campo"},
+        "tipo_suscripcion": {"$ref": "#/$defs/campo"},
+        "plazo": {"$ref": "#/$defs/campo"},
+        "presupuesto_orientativo": {"$ref": "#/$defs/campo"},
+        "idioma_oferta": {"$ref": "#/$defs/campo"},
+        "fuera_de_alcance": {"$ref": "#/$defs/campo"},
+        "ya_contratado_por_cliente": {"$ref": "#/$defs/campo", "description": "REV17-3 (I1.8): servicios o licencias que el cliente ya tiene o paga por su cuenta, una entrada por servicio, siempre CITADO o ACLARACION con cita literal (no se asume). Opcional. Es la única cita que admite el motivo a_cargo_del_cliente del experto, y tiene que nombrar el servicio."}
+      }
+    }
+  },
+  "$defs": {
+    "campo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estado", "entradas"],
+      "properties": {
+        "estado": {"enum": ["CITADO", "ASUMIDO", "FALTA"]},
+        "entradas": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/entrada"}}
+      }
+    },
+    "entrada": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["valor", "cita", "fuente", "origen"],
+      "properties": {
+        "valor": {"type": "string", "minLength": 2, "maxLength": 600},
+        "cita": {"type": ["string", "null"], "minLength": 15, "maxLength": 1200},
+        "fuente": {"type": ["string", "null"], "pattern": "^F[0-9]{1,2}$"},
+        "origen": {"enum": ["CITADO", "ASUMIDO", "ACLARACION"]}
+      }
+    }
+  }
+}

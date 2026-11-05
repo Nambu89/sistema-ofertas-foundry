@@ -1,0 +1,34 @@
+{
+  "estado": "BORRADOR: no se despliega. Falta la conexión del proyecto con la clave de Developer Knowledge (ver notas).",
+  "agente": "preventa-experto-gcp",
+  "definicion": {
+    "kind": "prompt",
+    "model": "gpt-6-luna",
+    "instructions_desde": "agentes/gcp/instrucciones_experto_gcp.md",
+    "tools": [
+      {
+        "type": "mcp",
+        "server_label": "google_developer_knowledge",
+        "server_url": "https://developerknowledge.googleapis.com/mcp",
+        "project_connection_id": "preventa-gcp-developer-knowledge",
+        "allowed_tools": {"tool_names": ["search_documents", "get_documents"]},
+        "require_approval": "never"
+      }
+    ],
+    "text_format_desde": "agentes/esquemas/respuesta_experto.text_format.json"
+  },
+  "conexion": {
+    "nombre": "preventa-gcp-developer-knowledge",
+    "tipo": "custom-keys",
+    "cabecera": "X-Goog-Api-Key",
+    "valor_desde": "Key Vault (secreto con la clave de API de Google restringida a la Developer Knowledge API); nunca en el repositorio",
+    "comando_referencia": "azd ai connection create preventa-gcp-developer-knowledge --auth-type custom-keys --custom-key \"X-Goog-Api-Key=VALOR_LEIDO_DE_KEY_VAULT\""
+  },
+  "notas": [
+    "Modelo de Foundry: el mismo que el experto de Azure en agentes/despliegue.json (gpt-6-luna); el experto razona con un modelo de Azure y solo consulta documentación de Google.",
+    "La herramienta MCP con clave va por una conexión de proyecto de tipo custom-keys referenciada con project_connection_id (Learn, «Connect agents to Model Context Protocol servers», copia en _investigacion/F3/tools_model-context-protocol.md).",
+    "Developer Knowledge MCP: initialize y tools/list responden sin credenciales; tools/call exige la clave (comprobado con curl el 2026-11-04). answer_query queda fuera de allowed_tools por su cuota de 50 al día.",
+    "text_format_desde: el contrato de salida es el del experto de Azure salvo agente, URL de referencias y claves de herramientas_usadas (catalogo/gcp/DESVIACIONES.md); hace falta un text_format generalizado antes de desplegar.",
+    "instructions_desde y text_format_desde son rutas: el despliegue real lee los ficheros, como agentes/definiciones.py."
+  ]
+}

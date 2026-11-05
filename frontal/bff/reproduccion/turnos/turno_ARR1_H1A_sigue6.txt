@@ -1,0 +1,92 @@
+A2A SendMessage a preventa-verificador: HTTP 200 · 11.4 s · task_id resp_ejemplo0000000000000000000000000000000000000000006 · context_id ctxt_ejemplo0000000000000000000000006 · estado TASK_STATE_COMPLETED · enviado SHA-256 06e0b723d712069df8e68dcc0850f8b8b5b52483d8b73769c37e58cf7472252a · no bloqueante con 2 sondeo(s) GetTask
+
+Relectura GetTask de resp_ejemplo0000000000000000000000000000000000000000006: el texto coincide (SHA-256 b8cf46437a65a90d6d5b78433e61e77325d2f8453c0e76eb20614284a7a7f054).
+
+$ registrar-verificacion → rc 0
+```
+VERIFICACIÓN ronda 1: VERIFICADA · DISCREPA 0, NO VERIFICABLE 0, reparados 0
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: VERIFICADA
+version: A
+hash_contenido: 754d3b55c5fa3c0a6d4f3ab62d904eb498fb4d71fba3755a0840bbe19e518420
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=VALIDA
+verificacion: ronda 1/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: Terminar el turno. En el siguiente: anexo-consumo
+=== FIN ESTADO ===
+```
+
+$ anexo-consumo → rc 0
+```
+ANEXO DE CONSUMO: 7 líneas · 85.55 EUR/mes · 1026.60 EUR/año (orientativo; fuente Azure Retail Prices)
+  salida/OF-HOSTELIA-001-A-Anexo-Consumo.xlsx SHA-256 cfb0010ccfa2f80abfb31aebafa0e40911f1bcc7f0a09837cddc45104b7ee1fd
+  salida/OF-HOSTELIA-001-A-Anexo-Consumo.json SHA-256 6eb48861a69444b0e180d6aece65f6fd7c499077099bdefb9e5aeb7a9cb59a94
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: VERIFICADA
+version: A
+hash_contenido: 0cc73942505e02deb519247dac25dd6c095d056f826dc0cd7b075b960175bdba
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=VALIDA
+verificacion: ronda 1/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: estimar (el núcleo compone entrada/estimacion_entrada.json desde tareas_propuestas; no se escribe a mano)
+=== FIN ESTADO ===
+```
+
+$ estimar → rc 0
+```
+ENTRADA DE ESTIMACIÓN compuesta por el núcleo desde tareas_propuestas: entrada/estimacion_entrada.json SHA-256 c2f407400fad9d3254f8636ee242132e8523c14da78ed73e1a6afc4e98a43511 · 7 tareas · 9 semanas
+ESTIMACIÓN: precio cerrado 22776.25 EUR (IVA no incluido) · XLSX canónico salida/OF-HOSTELIA-001-A-Estimacion.xlsx SHA-256 5de28db734369f842f820edd903f3998c3a967b2c27f91189729262ac7fc4cc3
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: VERIFICADA
+version: A
+hash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=VALIDA
+verificacion: ronda 1/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: paquete
+=== FIN ESTADO ===
+```
+
+$ paquete → rc 0
+```
+PAQUETE: OK salida/OF-HOSTELIA-001-A-Paquete.zip (127626 B, SHA-256 88506f38db19b39dd539e92c6877ed7f391cd49262aba1e4fea153e9744a050d)
+Manifiesto: 9 ficheros · hash_contenido 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c · estado.json SHA-256 4e2d8a4003eb4d7570f84e6e88a3b2c5cba4d88da51647c09dbcd0fdd3dbf7b0
+Descargar el ZIP en este turno (el contenedor caduca a los 20 minutos) y citarlo en la respuesta.
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: LISTA_PARA_REVISION
+version: A
+hash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=VALIDA
+verificacion: ronda 1/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION
+=== FIN ESTADO ===
+```
+
+```
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: LISTA_PARA_REVISION
+version: A
+hash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=VALIDA
+verificacion: ronda 1/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION
+=== FIN ESTADO ===
+```
+
+PAQUETE: OF-HOSTELIA-001-A-Paquete.zip (127626 B, SHA-256 88506f38db19b39dd539e92c6877ed7f391cd49262aba1e4fea153e9744a050d), guardado en la carpeta persistente de la sesión (preventa/trabajo/salida/OF-HOSTELIA-001-A-Paquete.zip). Descárgalo en tu equipo con:
+python hosted/descargar_sesion.py descargar --sesion sesion-ejemplo-0001 --ruta preventa/trabajo/salida/OF-HOSTELIA-001-A-Paquete.zip
+y pasa verificar_paquete.py antes de enviar nada.
+
+SIGUIENTE PASO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION

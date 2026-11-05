@@ -1,0 +1,654 @@
+{
+  "schema": "preventa-precios-instantanea-aws/1",
+  "fecha_consulta": "2026-11-04T13:30:55Z",
+  "moneda": "EUR",
+  "moneda_origen": "USD",
+  "fuente": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/<servicecode>/current/<region>/index.json (USD, término OnDemand), convertido a EUR con el BCE",
+  "conversion": {
+    "fuente": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
+    "regla": "EUR = USD / tipo_bce",
+    "tipo_bce": 1.1179,
+    "fecha_tipo_bce": "2026-11-03"
+  },
+  "regiones_ue": [
+    "eu-central-1",
+    "eu-west-1",
+    "eu-west-3",
+    "eu-north-1",
+    "eu-south-1",
+    "eu-south-2"
+  ],
+  "catalogo_version": 1,
+  "publicaciones": {
+    "AWSLambda/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSLambda/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-30T23:42:55Z",
+      "version": "20261030234255"
+    },
+    "AWSQueueService/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSQueueService/current/eu-central-1/index.json",
+      "publicationDate": "2026-09-11T12:46:07Z",
+      "version": "20260911124607"
+    },
+    "AWSSecretsManager/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSSecretsManager/current/eu-central-1/index.json",
+      "publicationDate": "2026-09-11T12:46:10Z",
+      "version": "20260911124610"
+    },
+    "AmazonApiGateway/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonApiGateway/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-13T00:30:44Z",
+      "version": "20261013003044"
+    },
+    "AmazonBedrock/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/eu-central-1/index.json",
+      "publicationDate": "2026-11-02T16:50:15Z",
+      "version": "20261102165015"
+    },
+    "AmazonCloudWatch/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonCloudWatch/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-07T11:55:40Z",
+      "version": "20261007115540"
+    },
+    "AmazonCognito/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonCognito/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-20T23:38:14Z",
+      "version": "20261020233814"
+    },
+    "AmazonDynamoDB/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonDynamoDB/current/eu-central-1/index.json",
+      "publicationDate": "2026-11-04T00:07:05Z",
+      "version": "20261104000705"
+    },
+    "AmazonECS/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonECS/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-19T22:43:17Z",
+      "version": "20261019224317"
+    },
+    "AmazonES/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonES/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-26T17:31:53Z",
+      "version": "20261026173153"
+    },
+    "AmazonS3/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-15T17:35:40Z",
+      "version": "20261015173540"
+    },
+    "AmazonStates/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonStates/current/eu-central-1/index.json",
+      "publicationDate": "2026-09-11T12:45:11Z",
+      "version": "20260911124511"
+    },
+    "AmazonTextract/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonTextract/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-27T18:43:01Z",
+      "version": "20261027184301"
+    },
+    "awskms/eu-central-1": {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/awskms/current/eu-central-1/index.json",
+      "publicationDate": "2026-10-26T20:18:14Z",
+      "version": "20261026201814"
+    }
+  },
+  "aviso": "This pricing list is for informational purposes only. All prices are subject to the additional terms included in the pricing pages on http://aws.amazon.com.",
+  "plantillas": {
+    "aws-bedrock/nova-2-lite-entrada": {
+      "filtro": "servicecode eq 'AmazonBedrock' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Nova2.0Lite-input-tokens' and termType eq 'OnDemand'",
+      "precio_unitario": 0.00038375525539,
+      "moneda_origen": "USD",
+      "precio_origen": 0.000429,
+      "unidad": "1K tokens",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Nova2.0Lite-input-tokens",
+      "sku": "UVBGYBB2KWGTDYAS",
+      "rateCode": "UVBGYBB2KWGTDYAS.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "5d49fb17ebeca16e9a48df01cea09da8c463f11c0b5bbdf32bf081a9a9edad6e"
+    },
+    "aws-bedrock/nova-2-lite-salida": {
+      "filtro": "servicecode eq 'AmazonBedrock' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Nova2.0Lite-output-tokens' and termType eq 'OnDemand'",
+      "precio_unitario": 0.00321764021827,
+      "moneda_origen": "USD",
+      "precio_origen": 0.003597,
+      "unidad": "1K tokens",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Nova2.0Lite-output-tokens",
+      "sku": "2Q2KMPM6X7WRKD55",
+      "rateCode": "2Q2KMPM6X7WRKD55.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "d43d7e00c2eba76a40547768b25ffcfb31a9bb70beb307647034b16af2e8be3a"
+    },
+    "aws-bedrock/nova-2-lite-lectura-cache": {
+      "filtro": "servicecode eq 'AmazonBedrock' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Nova2.0Lite-cache-read-input-token-count' and termType eq 'OnDemand'",
+      "precio_unitario": 9.59388138474e-05,
+      "moneda_origen": "USD",
+      "precio_origen": 0.00010725,
+      "unidad": "1K tokens",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Nova2.0Lite-cache-read-input-token-count",
+      "sku": "7J3PSVH6GFHDA6QY",
+      "rateCode": "7J3PSVH6GFHDA6QY.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "c9968a6a283a4e8643a794e8474b4088d522550a405a0116ff63bd836ed5a66b"
+    },
+    "aws-bedrock/titan-embeddings-v2": {
+      "filtro": "servicecode eq 'AmazonBedrock' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-TitanEmbeddingV2-Text-input-tokens' and termType eq 'OnDemand'",
+      "precio_unitario": 0.000178906878969,
+      "moneda_origen": "USD",
+      "precio_origen": 0.0002,
+      "unidad": "1K tokens",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-TitanEmbeddingV2-Text-input-tokens",
+      "sku": "QRGS5WQKSZZ4QQKV",
+      "rateCode": "QRGS5WQKSZZ4QQKV.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "289f5a5b116883485ac6e1a0f05cfc02d9394e3662a0183025cb1b1798d497d8"
+    },
+    "aws-lambda/solicitudes": {
+      "filtro": "servicecode eq 'AWSLambda' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Request' and termType eq 'OnDemand'",
+      "precio_unitario": 1.78906878969e-07,
+      "moneda_origen": "USD",
+      "precio_origen": 2e-07,
+      "unidad": "Request",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Request",
+      "sku": "CKZQ3D25MV9ET243",
+      "rateCode": "CKZQ3D25MV9ET243.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "24c124802f7e08be3a25232d3be46bcd90c7bdb4fde5a30b8947ee484cfb16b3"
+    },
+    "aws-lambda/duracion-x86": {
+      "filtro": "servicecode eq 'AWSLambda' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Lambda-GB-Second' and termType eq 'OnDemand'",
+      "precio_unitario": 1.49089363986e-05,
+      "moneda_origen": "USD",
+      "precio_origen": 1.66667e-05,
+      "unidad": "Lambda-GB-Second",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Lambda-GB-Second",
+      "sku": "S4ZKFHQ6B28FBYVW",
+      "rateCode": "S4ZKFHQ6B28FBYVW.JRTCKXETXF.CUKFZ388N3",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "c873cadeb4457f0f982732d58f06442afa12d9a6194494a615c6b14650bd07a0",
+      "tramos": [
+        {
+          "desde": 0.0,
+          "precio_unitario": 1.49089363986e-05,
+          "precio_origen": 1.66667e-05
+        },
+        {
+          "desde": 6000000000.0,
+          "precio_unitario": 1.34180159227e-05,
+          "precio_origen": 1.5e-05
+        },
+        {
+          "desde": 15000000000.0,
+          "precio_unitario": 1.19271849003e-05,
+          "precio_origen": 1.33334e-05
+        }
+      ]
+    },
+    "aws-fargate/vcpu": {
+      "filtro": "servicecode eq 'AmazonECS' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Fargate-vCPU-Hours:perCPU' and termType eq 'OnDemand'",
+      "precio_unitario": 0.0416495214241,
+      "moneda_origen": "USD",
+      "precio_origen": 0.04656,
+      "unidad": "hours",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Fargate-vCPU-Hours:perCPU",
+      "sku": "CVZB3RCF48N5AH4A",
+      "rateCode": "CVZB3RCF48N5AH4A.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "bd3795629fabdf66c0e6a1990e985e75f82f908e2cd883465bd92e9c9829b2de"
+    },
+    "aws-fargate/memoria": {
+      "filtro": "servicecode eq 'AmazonECS' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Fargate-GB-Hours' and termType eq 'OnDemand'",
+      "precio_unitario": 0.00457107075767,
+      "moneda_origen": "USD",
+      "precio_origen": 0.00511,
+      "unidad": "hours",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Fargate-GB-Hours",
+      "sku": "X7HM34A7GZK89N7Y",
+      "rateCode": "X7HM34A7GZK89N7Y.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "51010eb2146a0ad803ca6f9491683f3b9e196057dc75118d1b8be7856a701926"
+    },
+    "aws-api-gateway/http-api": {
+      "filtro": "servicecode eq 'AmazonApiGateway' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-ApiGatewayHttpRequest' and termType eq 'OnDemand'",
+      "precio_unitario": 1.07344127382e-06,
+      "moneda_origen": "USD",
+      "precio_origen": 1.2e-06,
+      "unidad": "Requests",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-ApiGatewayHttpRequest",
+      "sku": "T5HBB5E3DWVQPUNF",
+      "rateCode": "T5HBB5E3DWVQPUNF.JRTCKXETXF.9NXBCPDZYR",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "6bad6f5b2080984a551d05058a2190ba2ef884c16ed5f911fcc09ac180f95d6f",
+      "tramos": [
+        {
+          "desde": 0.0,
+          "precio_unitario": 1.07344127382e-06,
+          "precio_origen": 1.2e-06
+        },
+        {
+          "desde": 300000000.0,
+          "precio_unitario": 9.66097146435e-07,
+          "precio_origen": 1.08e-06
+        }
+      ]
+    },
+    "aws-api-gateway/rest-api": {
+      "filtro": "servicecode eq 'AmazonApiGateway' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-ApiGatewayRequest' and termType eq 'OnDemand'",
+      "precio_unitario": 3.30977726094e-06,
+      "moneda_origen": "USD",
+      "precio_origen": 3.7e-06,
+      "unidad": "Requests",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-ApiGatewayRequest",
+      "sku": "TP3HG5T8AM3F676C",
+      "rateCode": "TP3HG5T8AM3F676C.JRTCKXETXF.QS4VQ8N7FD",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "dfe262762fb3464ab73b0dd9d4048471702cdca7f771a6e21483531fc99d5e3f",
+      "tramos": [
+        {
+          "desde": 0.0,
+          "precio_unitario": 3.30977726094e-06,
+          "precio_origen": 3.7e-06
+        },
+        {
+          "desde": 333000000.0,
+          "precio_unitario": 2.85356471956e-06,
+          "precio_origen": 3.19e-06
+        },
+        {
+          "desde": 1000000000.0,
+          "precio_unitario": 2.42418821004e-06,
+          "precio_origen": 2.71e-06
+        },
+        {
+          "desde": 20000000000.0,
+          "precio_unitario": 1.53859915914e-06,
+          "precio_origen": 1.72e-06
+        }
+      ]
+    },
+    "aws-step-functions/transiciones-estandar": {
+      "filtro": "servicecode eq 'AmazonStates' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-StateTransition' and termType eq 'OnDemand'",
+      "precio_unitario": 2.23633598712e-05,
+      "moneda_origen": "USD",
+      "precio_origen": 2.5e-05,
+      "unidad": "StateTransitions",
+      "effectiveDate": "2025-07-01T00:00:00Z",
+      "usagetype": "EUC1-StateTransition",
+      "sku": "58KUBWFAURJZRTNC",
+      "rateCode": "58KUBWFAURJZRTNC.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "df752e204b4d4844e8566ace610ca76c69631e53b1a627d31f8038f52a5b5d4e"
+    },
+    "aws-sqs/estandar": {
+      "filtro": "servicecode eq 'AWSQueueService' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Requests-Tier1' and termType eq 'OnDemand'",
+      "precio_unitario": 3.57813757939e-07,
+      "moneda_origen": "USD",
+      "precio_origen": 4e-07,
+      "unidad": "Requests",
+      "effectiveDate": "2025-08-01T00:00:00Z",
+      "usagetype": "EUC1-Requests-Tier1",
+      "sku": "ZSV7PSV36PVSDE32",
+      "rateCode": "ZSV7PSV36PVSDE32.JRTCKXETXF.VXGXCWQKTY",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "52024adc3479de486817567d3b7946b662988d9f6b8f6bebc03439842127bb51",
+      "tramos": [
+        {
+          "desde": 0.0,
+          "precio_unitario": 3.57813757939e-07,
+          "precio_origen": 4e-07
+        },
+        {
+          "desde": 100000000000.0,
+          "precio_unitario": 3.22032382145e-07,
+          "precio_origen": 3.6e-07
+        },
+        {
+          "desde": 200000000000.0,
+          "precio_unitario": 2.86251006351e-07,
+          "precio_origen": 3.2e-07
+        }
+      ]
+    },
+    "aws-s3/estandar-datos": {
+      "filtro": "servicecode eq 'AmazonS3' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-TimedStorage-ByteHrs' and termType eq 'OnDemand'",
+      "precio_unitario": 0.0219160926738,
+      "moneda_origen": "USD",
+      "precio_origen": 0.0245,
+      "unidad": "GB-Mo",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-TimedStorage-ByteHrs",
+      "sku": "NRYRNCXF5TWHB476",
+      "rateCode": "NRYRNCXF5TWHB476.JRTCKXETXF.PGHJ3S3EYE",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "16bf9b5f44a07dddb1c1a6f72ac16f8a5ce12923240b7385bbadfe9bfaefa108",
+      "tramos": [
+        {
+          "desde": 0.0,
+          "precio_unitario": 0.0219160926738,
+          "precio_origen": 0.0245
+        },
+        {
+          "desde": 51200.0,
+          "precio_unitario": 0.0210215582789,
+          "precio_origen": 0.0235
+        },
+        {
+          "desde": 512000.0,
+          "precio_unitario": 0.0201270238841,
+          "precio_origen": 0.0225
+        }
+      ]
+    },
+    "aws-s3/estandar-escrituras": {
+      "filtro": "servicecode eq 'AmazonS3' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Requests-Tier1' and termType eq 'OnDemand'",
+      "precio_unitario": 4.83048573218e-06,
+      "moneda_origen": "USD",
+      "precio_origen": 5.4e-06,
+      "unidad": "Requests",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Requests-Tier1",
+      "sku": "F5832W93RMW27RD7",
+      "rateCode": "F5832W93RMW27RD7.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "2e8b98683506efcc04164dab5592ec78850beb8700f83325299b73872f48a572"
+    },
+    "aws-s3/estandar-lecturas": {
+      "filtro": "servicecode eq 'AmazonS3' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Requests-Tier2' and termType eq 'OnDemand'",
+      "precio_unitario": 3.84649789784e-07,
+      "moneda_origen": "USD",
+      "precio_origen": 4.3e-07,
+      "unidad": "Requests",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-Requests-Tier2",
+      "sku": "TUSXZSTYY6YJH244",
+      "rateCode": "TUSXZSTYY6YJH244.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "3bfef87c6742b6639e4bbfc9b113d65751368063d518a96caba8f6688e2db351"
+    },
+    "aws-dynamodb/bajo-demanda-escrituras": {
+      "filtro": "servicecode eq 'AmazonDynamoDB' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-WriteRequestUnits' and termType eq 'OnDemand'",
+      "precio_unitario": 6.82082476071e-07,
+      "moneda_origen": "USD",
+      "precio_origen": 7.625e-07,
+      "unidad": "WriteRequestUnits",
+      "effectiveDate": "2026-11-01T00:00:00Z",
+      "usagetype": "EUC1-WriteRequestUnits",
+      "sku": "9G7XEGBNEMAXT6EE",
+      "rateCode": "9G7XEGBNEMAXT6EE.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "048c14b6e3075db501218642f1b7835a2413647c86bbe0b77f09e64d26d294f0"
+    },
+    "aws-dynamodb/bajo-demanda-lecturas": {
+      "filtro": "servicecode eq 'AmazonDynamoDB' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-ReadRequestUnits' and termType eq 'OnDemand'",
+      "precio_unitario": 1.36416495214e-07,
+      "moneda_origen": "USD",
+      "precio_origen": 1.525e-07,
+      "unidad": "ReadRequestUnits",
+      "effectiveDate": "2026-11-01T00:00:00Z",
+      "usagetype": "EUC1-ReadRequestUnits",
+      "sku": "GA5XQXTMQJ8CBEU4",
+      "rateCode": "GA5XQXTMQJ8CBEU4.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "0f3f1c2df0b7fe524a37c7216cb473153e620cce21e4ca01c8fae0d1d92df72d"
+    },
+    "aws-dynamodb/almacenamiento": {
+      "filtro": "servicecode eq 'AmazonDynamoDB' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-TimedStorage-ByteHrs' and termType eq 'OnDemand'",
+      "precio_unitario": 0.0,
+      "moneda_origen": "USD",
+      "precio_origen": 0.0,
+      "unidad": "GB-Mo",
+      "effectiveDate": "2026-11-01T00:00:00Z",
+      "usagetype": "EUC1-TimedStorage-ByteHrs",
+      "sku": "DC7NMEMXZPW6E4HE",
+      "rateCode": "DC7NMEMXZPW6E4HE.JRTCKXETXF.G2A93NZ7DT",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "3f917db7022b5b2c3ab05cfc05ce80efba73488f460b587a198b83df39a848d6",
+      "tramos": [
+        {
+          "desde": 0.0,
+          "precio_unitario": 0.0,
+          "precio_origen": 0.0
+        },
+        {
+          "desde": 25.0,
+          "precio_unitario": 0.273727524823,
+          "precio_origen": 0.306
+        }
+      ]
+    },
+    "aws-opensearch-serverless/ocu-indexacion": {
+      "filtro": "servicecode eq 'AmazonES' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-IndexingOCU' and termType eq 'OnDemand'",
+      "precio_unitario": 0.303247159853,
+      "moneda_origen": "USD",
+      "precio_origen": 0.339,
+      "unidad": "OCU-hours",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-IndexingOCU",
+      "sku": "HE6PXV34THN36YSM",
+      "rateCode": "HE6PXV34THN36YSM.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "72f30f213ec6650b9a4bcb2532bab98fd0515fdf9f814fcf91e360e4676b5c1e"
+    },
+    "aws-opensearch-serverless/ocu-busqueda": {
+      "filtro": "servicecode eq 'AmazonES' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-SearchOCU' and termType eq 'OnDemand'",
+      "precio_unitario": 0.303247159853,
+      "moneda_origen": "USD",
+      "precio_origen": 0.339,
+      "unidad": "OCU-hours",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-SearchOCU",
+      "sku": "KWPVC5GKQTBT87XV",
+      "rateCode": "KWPVC5GKQTBT87XV.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "dcbaf86c837a706fba54b4f502bf8177defc586f70f95cbc5685e3905bf2ea65"
+    },
+    "aws-textract/texto": {
+      "filtro": "servicecode eq 'AmazonTextract' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-SyncTextPagesProcessed' and termType eq 'OnDemand'",
+      "precio_unitario": 0.00134180159227,
+      "moneda_origen": "USD",
+      "precio_origen": 0.0015,
+      "unidad": "Pages",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-SyncTextPagesProcessed",
+      "sku": "8AFH29SBH8ANXPQD",
+      "rateCode": "8AFH29SBH8ANXPQD.JRTCKXETXF.SB2VSFF4TP",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "706e4e833b57140e91fbf9c243e4b905619afb0c5bc9eb165450e6f7bd5e7270",
+      "tramos": [
+        {
+          "desde": 0.0,
+          "precio_unitario": 0.00134180159227,
+          "precio_origen": 0.0015
+        },
+        {
+          "desde": 1000000.0,
+          "precio_unitario": 0.000536720636908,
+          "precio_origen": 0.0006
+        }
+      ]
+    },
+    "aws-textract/formularios": {
+      "filtro": "servicecode eq 'AmazonTextract' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-SyncFormsPagesProcessed' and termType eq 'OnDemand'",
+      "precio_unitario": 0.0447267197424,
+      "moneda_origen": "USD",
+      "precio_origen": 0.05,
+      "unidad": "Pages",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-SyncFormsPagesProcessed",
+      "sku": "RK2FUHFFZKK4T8Y2",
+      "rateCode": "RK2FUHFFZKK4T8Y2.JRTCKXETXF.SB2VSFF4TP",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "acf20b297947442c39d9be7223c08e4a2a1c1c51360e373f426cc152f9cce794",
+      "tramos": [
+        {
+          "desde": 0.0,
+          "precio_unitario": 0.0447267197424,
+          "precio_origen": 0.05
+        },
+        {
+          "desde": 1000000.0,
+          "precio_unitario": 0.0357813757939,
+          "precio_origen": 0.04
+        }
+      ]
+    },
+    "aws-cognito/essentials-mau": {
+      "filtro": "servicecode eq 'AmazonCognito' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-CognitoEssentialsMAU' and termType eq 'OnDemand'",
+      "precio_unitario": 0.0134180159227,
+      "moneda_origen": "USD",
+      "precio_origen": 0.015,
+      "unidad": "CognitoUserPoolsMAU",
+      "effectiveDate": "2026-09-01T00:00:00Z",
+      "usagetype": "EUC1-CognitoEssentialsMAU",
+      "sku": "Y8KDQDK39UDRG6XJ",
+      "rateCode": "Y8KDQDK39UDRG6XJ.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "35bd0a0bb696c2ab5d75a2e360178652ed02e336ee5b775fc045d1f3b7d8b5e3"
+    },
+    "aws-secrets-manager/secreto": {
+      "filtro": "servicecode eq 'AWSSecretsManager' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-AWSSecretsManager-Secrets' and termType eq 'OnDemand'",
+      "precio_unitario": 0.357813757939,
+      "moneda_origen": "USD",
+      "precio_origen": 0.4,
+      "unidad": "Secrets",
+      "effectiveDate": "2025-07-01T00:00:00Z",
+      "usagetype": "EUC1-AWSSecretsManager-Secrets",
+      "sku": "N7A3USAT9EUMXNZ4",
+      "rateCode": "N7A3USAT9EUMXNZ4.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "2daca36f4291c1ac6151bbb02d9bb0959b7b02eb562a51d07459567682fa08e8"
+    },
+    "aws-secrets-manager/llamadas-api": {
+      "filtro": "servicecode eq 'AWSSecretsManager' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-AWSSecretsManagerAPIRequest' and termType eq 'OnDemand'",
+      "precio_unitario": 4.47267197424e-06,
+      "moneda_origen": "USD",
+      "precio_origen": 5e-06,
+      "unidad": "API Requests",
+      "effectiveDate": "2025-07-01T00:00:00Z",
+      "usagetype": "EUC1-AWSSecretsManagerAPIRequest",
+      "sku": "PCHWRK792Y74NHFN",
+      "rateCode": "PCHWRK792Y74NHFN.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "74440ffb49c851924f12462ff97ec585a88d072947a49dc0e76b350252bcf944"
+    },
+    "aws-kms/clave": {
+      "filtro": "servicecode eq 'awskms' and regionCode eq 'eu-central-1' and usagetype eq 'eu-central-1-KMS-Keys' and termType eq 'OnDemand'",
+      "precio_unitario": 0.894534394847,
+      "moneda_origen": "USD",
+      "precio_origen": 1.0,
+      "unidad": "Keys",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "eu-central-1-KMS-Keys",
+      "sku": "PK7D6SUW8TP3XWZU",
+      "rateCode": "PK7D6SUW8TP3XWZU.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "439f91c77a2a5e1c73e8d37d551e5d4a3b9f55a606b1cabd4a482b51ef19f51f"
+    },
+    "aws-kms/solicitudes": {
+      "filtro": "servicecode eq 'awskms' and regionCode eq 'eu-central-1' and usagetype eq 'eu-central-1-KMS-Requests' and termType eq 'OnDemand'",
+      "precio_unitario": 2.68360318454e-06,
+      "moneda_origen": "USD",
+      "precio_origen": 3e-06,
+      "unidad": "Requests",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "eu-central-1-KMS-Requests",
+      "sku": "4H6XVYZMMD8MKVZD",
+      "rateCode": "4H6XVYZMMD8MKVZD.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "3148c4bf5a9f58a83715656248ba38775927a501fb81b741c786d7a259805968"
+    },
+    "aws-cloudwatch-logs/ingesta": {
+      "filtro": "servicecode eq 'AmazonCloudWatch' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-DataProcessing-Bytes' and termType eq 'OnDemand'",
+      "precio_unitario": 0.563556668754,
+      "moneda_origen": "USD",
+      "precio_origen": 0.63,
+      "unidad": "GB",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-DataProcessing-Bytes",
+      "sku": "XAE7GPNAZR6AWCQK",
+      "rateCode": "XAE7GPNAZR6AWCQK.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "41401f2ebc5624f88df8fe2f92d0d218bed3d5c051f71e0cef9f17f0c95093d0"
+    },
+    "aws-cloudwatch-logs/almacenamiento": {
+      "filtro": "servicecode eq 'AmazonCloudWatch' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-TimedStorage-ByteHrs' and termType eq 'OnDemand'",
+      "precio_unitario": 0.0289829143931,
+      "moneda_origen": "USD",
+      "precio_origen": 0.0324,
+      "unidad": "GB-Mo",
+      "effectiveDate": "2026-10-01T00:00:00Z",
+      "usagetype": "EUC1-TimedStorage-ByteHrs",
+      "sku": "4V9YKJHUP3C55Q2R",
+      "rateCode": "4V9YKJHUP3C55Q2R.JRTCKXETXF.6YS6EN2CT7",
+      "regionCode": "eu-central-1",
+      "productos_devueltos": 1,
+      "terminos_futuros_descartados": 0,
+      "sha256_articulo": "44c6d79b184e76fc9c49ae72dcab52d9fb0834ecb5b19b9bb8448740cbe9f819"
+    }
+  },
+  "sha256": "63e75cb0eb73f95a260139d65ff67c65b53b4e50d922e0241c55d430fdac5afd"
+}

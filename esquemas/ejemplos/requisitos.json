@@ -1,0 +1,183 @@
+{
+  "schema": "preventa-requisitos/1",
+  "campos": {
+    "objetivo": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Asistente de IA que responda en lenguaje natural a los técnicos y cite siempre el informe o la norma de origen",
+          "cita": "un asistente de IA que responda en lenguaje natural y cite siempre el informe o la norma",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "nubes": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Azure",
+          "cita": "Queremos que esto viva en Azure, no queremos abrir otra nube",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "alcance_funcional": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Búsqueda en informes de ensayo y procedimientos internos con cita al documento y a la página",
+          "cita": "buscar en los informes de ensayo y en los procedimientos internos y responder con la cita al documento y a la página",
+          "fuente": "F1",
+          "origen": "CITADO"
+        },
+        {
+          "valor": "Resumen de un informe largo en un párrafo comprensible para el equipo comercial",
+          "cita": "resumir un informe largo en un párrafo que entienda un comercial",
+          "fuente": "F1",
+          "origen": "CITADO"
+        },
+        {
+          "valor": "Comparación de dos ensayos del mismo material indicando qué ha cambiado",
+          "cita": "comparar dos ensayos del mismo material y decir qué ha cambiado entre ellos",
+          "fuente": "F1",
+          "origen": "CITADO"
+        },
+        {
+          "valor": "Respuesta explícita cuando no encuentra la información, sin inventar",
+          "cita": "diga claramente cuando no encuentra la respuesta, en vez de inventarse algo",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "canales_integraciones": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Microsoft Teams",
+          "cita": "Desde Microsoft Teams, que es donde trabaja todo el mundo",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "ubicacion_usuarios": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "España (laboratorios de Zaragoza y Tarragona)",
+          "cita": "todos están en España. No hay usuarios fuera",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "marco_normativo": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "RGPD, con datos en la Unión Europea",
+          "cita": "Por tanto aplica el RGPD. Y nos pedirán que los datos se queden en la Unión Europea",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "volumetria": {
+      "estado": "ASUMIDO",
+      "entradas": [
+        {
+          "valor": "150 técnicos usuarios y unos 20.000 documentos (informes, procedimientos y normas)",
+          "cita": null,
+          "fuente": null,
+          "origen": "ASUMIDO"
+        }
+      ]
+    },
+    "identidad_acl_origen": {
+      "estado": "ASUMIDO",
+      "entradas": [
+        {
+          "valor": "Documentos en SharePoint Online del tenant del cliente, con permisos por grupos de Entra ID que se respetan en las respuestas",
+          "cita": null,
+          "fuente": null,
+          "origen": "ASUMIDO"
+        }
+      ]
+    },
+    "red_privada": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Servicios sin exposición a internet, con acceso privado y puntos de conexión privados donde se pueda",
+          "cita": "los servicios no queden expuestos a internet: acceso privado desde nuestra red",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "tipo_suscripcion": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Enterprise Agreement directo con Microsoft",
+          "cita": "un contrato Enterprise Agreement directo con Microsoft, no a través de un revendedor",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "plazo": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Piloto funcionando en unos tres meses desde el arranque",
+          "cita": "tener el piloto funcionando en unos tres meses desde que arranquemos",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "presupuesto_orientativo": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Entre cuarenta y cincuenta mil euros para el piloto, sin consumo de Azure",
+          "cita": "una cifra orientativa de entre cuarenta y cincuenta mil euros, sin contar el consumo de Azure",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "idioma_oferta": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Castellano",
+          "cita": "Sí, la propuesta en castellano, por favor",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    },
+    "fuera_de_alcance": {
+      "estado": "CITADO",
+      "entradas": [
+        {
+          "valor": "Integración con el LIMS, el sistema de gestión del laboratorio",
+          "cita": "La integración con el LIMS, el sistema de gestión del laboratorio, queda fuera de esta fase",
+          "fuente": "F1",
+          "origen": "CITADO"
+        },
+        {
+          "valor": "Integración con SAP",
+          "cita": "Y nada de SAP por ahora. Eso sería, como mucho, una fase posterior",
+          "fuente": "F1",
+          "origen": "CITADO"
+        }
+      ]
+    }
+  }
+}

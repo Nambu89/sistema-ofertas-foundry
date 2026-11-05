@@ -1,115 +1,145 @@
-# Sistema de ofertas y arquitectura de IA en Microsoft Foundry
+# Preventa multinube en Microsoft Foundry
 
-Sistema de Fernando para preparar ofertas comerciales y arquitecturas de sistemas de IA del pilar
-Microsoft, nativo en Microsoft Foundry. Sustituye al sistema multiagente que hoy corre en local
-(Claude Code y OpenCode) por agentes desplegados en un proyecto de Foundry. Fernando solo habla
-con el coordinador; todo lo demás ocurre en la nube.
+Sistema de agentes que prepara la propuesta técnica y económica de una preventa a partir de la reunión con el cliente
+(la transcripción, las notas del comercial o las dos). Hay **una instancia independiente por pilar**: Microsoft, Google
+Cloud y AWS. Las tres se ejecutan en **Microsoft Foundry**; lo que cambia de un pilar a otro es el experto, su
+documentación y sus precios.
 
-El diseño aprobado está en [docs/diseno/diseno-final-v2.md](docs/diseno/diseno-final-v2.md)
-(copia saneada, sin nombres de clientes).
+El sistema **nunca envía nada al cliente**. Prepara un paquete de revisión que revisan y aprueban personas: lo revisa el
+responsable de preventa y lo aprueba el responsable de área. Todo lo que hay en este repositorio usa **datos
+sintéticos**: los clientes (Kelvara, Hostelia, Brezalia…) y las personas de las transcripciones son inventados.
 
-## Arquitectura
+![Preventa multinube en Microsoft Foundry: una instancia independiente por pilar](docs/arquitectura/arquitectura.es.png)
 
-![Arquitectura del sistema en Microsoft Foundry](docs/arquitectura/arquitectura.es.png)
+Versión en inglés, SVG, HTML y fichero editable de diagrams.net en [docs/arquitectura/](docs/arquitectura/README.md).
 
-Diagrama con los iconos oficiales de Microsoft (Azure Architecture Icons V24): en
-[español](docs/arquitectura/arquitectura.es.svg) y en [inglés](docs/arquitectura/arquitectura.en.svg),
-editable en [draw.io](docs/arquitectura/arquitectura.drawio). Cómo leerlo y cómo regenerarlo:
-[docs/arquitectura/README.md](docs/arquitectura/README.md).
+> El sistema anterior que había en este repositorio (ofertas y arquitectura de IA) sigue en la historia de git, en el
+> commit `82c1815`.
 
-Resumen en texto:
+## Cómo funciona
 
-```
-Fernando ── playground / POST /responses (OpenCode como cliente) ──> ofa-coordinador
-```
+1. **El comercial entra por un frontal web propio** de su pilar. Da de alta la solicitud: cliente, código, título,
+   términos sensibles, la transcripción de la reunión (`.txt`, `.vtt` o `.docx`) y su explicación.
+2. **El coordinador** recibe la solicitud. Es un *hosted agent* de Foundry que lleva dentro un **núcleo determinista**
+   (`sandbox/nucleo/`): una máquina de estados que decide cada paso. Los modelos proponen y el código comprueba; lo que
+   no se puede comprobar se declara en la nota de revisión.
+3. Si falta información, el coordinador **pregunta al comercial** con opciones cerradas y espera su respuesta.
+4. Con la información completa, el núcleo genera un **brief anonimizado** y lo envía por A2A al **experto de la nube**
+   del pilar. El experto propone la arquitectura con referencias a la documentación oficial. Los precios no los escribe
+   el modelo: el núcleo los pone desde una instantánea oficial de precios tomada al desplegar.
+5. **El verificador**, otro agente con un modelo distinto, contrasta cada referencia y cada componente.
+6. **La puerta** (`verificar_paquete.py`) recalcula el paquete en local con réplicas propias del núcleo. Solo deja
+   pasar un paquete con cero fallos.
+7. El resultado es un **paquete de revisión**: presentación para el cliente, nota de revisión interna, anexo de
+   consumo y estimación. Después llega la **revisión humana**, con las decisiones registradas contra la huella del
+   contenido.
 
-- **ofa-coordinador** (agente hosted, ZIP con dependencias fijadas, sin Microsoft Agent Framework).
-  Contiene, como código determinista:
-  - el **intérprete** de órdenes (gramática cerrada; Decision-1 solo para clasificar la cabecera);
-  - la **máquina de estados** por proyecto (`ALTA → SUFICIENCIA → … → CERRADO`, más `BLOQUEADO`);
-  - el **escriba**, único escritor de lo compartido (SAS del contenedor activo, `If-Match`);
-  - la **puerta**, módulo puro de solo lectura cuyo código de salida es el veredicto (0, 1 o 2).
-- **Especialistas** (prompt agents, llamados por A2A con un `contextId` nuevo por delegación):
-  `ofa-facilitador`, `ofa-investigador`, `ofa-experto-ms`, `ofa-arquitecto`, `ofa-estimador` y
-  `ofa-verificador` (este con un modelo distinto del de los generadores). Ninguno escribe nada.
-- **Memoria y estado** en Storage con versionado y borrado temporal: `sistema/`, `compartido/`,
-  `agentes/<a>/` y un contenedor por proyecto con su estado en JSON, su memoria y su historial.
-- **Foundry IQ** sobre AI Search como base de conocimiento interna, consultada con query key.
-- **Microsoft Decision-1** para clasificar y para bloquear o escalar; nunca aprueba.
-- Trazas en Application Insights, visibles para Fernando sin pedir nada a TI.
+## Qué está validado y qué está previsto
+
+| Pieza | Estado |
+|---|---|
+| Pilar Microsoft | **Funciona de punta a punta en Azure**: coordinador *hosted*, A2A con el experto de Azure y el verificador, MCP de Microsoft Learn, instantánea de Retail Prices, puerta, generador de la estimación y trazas en Application Insights. |
+| Pilar AWS | Catálogo y **precios reales en EUR** (de la AWS Price List, en USD y convertidos con el tipo del BCE). El experto de AWS **no está desplegado**. |
+| Pilar Google Cloud | Catálogo listo. Sus **precios están sin verificar**: no hay clave de la Cloud Billing Catalog API y la instantánea falla en alto mientras falte. |
+| Modelos por defecto de cada pilar | **Pendientes de elegir** entre los modelos de Foundry. Los agentes del sistema usan siempre modelos de Foundry, no los de Google ni los de AWS. |
+| Frontal | v1 **local y sin inicio de sesión**. Solo funciona el pilar Microsoft; Google Cloud y AWS aparecen deshabilitados. El inicio de sesión con Google está previsto para producción. |
+| Infraestructura | Escrita en **Bicep** y validada en local (compila y pasa el linter sin avisos). **No se ha desplegado** ni probado con `what-if`. El coste fijo mensual está calculado en [infra/COSTE-FIJO.md](infra/COSTE-FIJO.md). |
+
+## Decisiones
+
+- **AWS**: solo regiones de la UE (una lista blanca de seis) y siempre en EUR. AWS publica en USD; el código convierte
+  con el tipo del BCE y la oferta avisa de que la conversión es informativa.
+- **Google Cloud**: en EUR tal cual lo devuelve la Cloud Billing Catalog API con `currencyCode=EUR`, sin convertir.
+- **Notas del comercial**: cuentan como fuente, igual que la transcripción. Una solicitud puede llegar solo con
+  notas; en ese caso la nota interna y el mensaje al revisor dicen que no hubo grabación. La transcripción es opcional.
+- **Una instancia por pilar** en la misma suscripción, cada una en su grupo de recursos y con su red privada. Retirar
+  un pilar no toca a los otros.
 
 ## Estructura
 
-| Carpeta o fichero | Contenido |
+| Ruta | Qué hay |
 |---|---|
-| `config/entorno.ejemplo.json` | Plantilla con valores ficticios del entorno: tenant, suscripción, recurso, proyecto, endpoints, audiencias, versiones de API, prefijos, protegidos y despliegues con su SKU. Sin secretos. El fichero real es `config/entorno.local.json`, que git ignora |
-| `lib/azure_auth.py` | Tokens de Entra con tenant fijo, comprobación del `tid`, caché y renovación 5 minutos antes de caducar |
-| `lib/foundry.py` | Cliente REST del proyecto: listar, leer, crear agente o versión y borrar, con guardas que fallan cerrado |
-| `lib/redaccion.py` | Redacción de tokens, claves, cadenas de conexión y firmas SAS antes de guardar o imprimir |
-| `lib/config.py` | Carga y validación de la configuración |
-| `tests/` | Pruebas con pytest, sin red ni Azure |
-| `pruebas/paso0a/` | Arnés de las pruebas reales del paso 0a (P1 a P5), con modo `--simular` sin Azure. Ver su `LEEME.md` |
-| `docs/diseno/` | Diseño aprobado (saneado) |
+| `sandbox/nucleo/` | Núcleo determinista: estado, suficiencia, brief, experto, verificación, anexo, estimación, documentos y paquete. |
+| `sandbox/preventa_run.py`, `sandbox/preventa_api.py` | CLI y API del núcleo ([docs/I1/API-NUCLEO.md](docs/I1/API-NUCLEO.md)). |
+| `hosted/` | El coordinador como *hosted agent* de Foundry ([hosted/LEEME.md](hosted/LEEME.md)). |
+| `verificar_paquete.py` | La puerta local. |
+| `catalogo/` | Catálogo de servicios de Azure con plantillas de precio y su instantánea; `catalogo/aws/` y `catalogo/gcp/`, los de los otros pilares. |
+| `agentes/` | Instrucciones de los agentes (`agentes/aws/` y `agentes/gcp/`, borradores de los expertos) y guiones de roles. |
+| `esquemas/` | Contratos JSON con ejemplos sintéticos; [esquemas/MULTINUBE.md](esquemas/MULTINUBE.md) y [esquemas/NOTAS_COMERCIAL.md](esquemas/NOTAS_COMERCIAL.md). |
+| `frontal/` | Frontal web (BFF en Python y React) ([frontal/README.md](frontal/README.md)). |
+| `infra/` | Bicep de la plataforma y de cada pilar, y el cálculo del coste fijo ([infra/README.md](infra/README.md)). |
+| `lib/`, `observabilidad/` | Autenticación con tenant fijo, cliente REST de Foundry, trazas y consultas de Application Insights. |
+| `docs/` | Diagrama de arquitectura y contratos del núcleo ([docs/I1/CONTRATOS.md](docs/I1/CONTRATOS.md)). |
+| `tests/` | Batería de pruebas. `tests/insumos/` lleva una tarifa **sintética** y otros datos de prueba. |
+| `herramientas/barrido_publicacion.py` | Barrido previo a publicar (ver «Reglas»). |
+| `config/` | Plantillas de configuración (`*.ejemplo*`). Los valores reales van en ficheros locales que git ignora. |
 
-Las carpetas de los agentes (`agentes/<nombre>/`), del coordinador (`coordinador/`) y de `sistema/`
-se añaden en las fases siguientes de la hoja de ruta del diseño (§9).
+## Configuración
 
-## Puesta en marcha (portátil, solo para construir y desplegar)
+El código lee el entorno real de `config/entorno.local.json`, que no se versiona (o de la ruta que indique
+`PREVENTA_ENTORNO`). Créalo a partir de [config/entorno.ejemplo.json](config/entorno.ejemplo.json) con tu tenant,
+suscripción, recurso, proyecto e identidades. Si falta, el código falla en alto y no usa la plantilla.
 
-```bash
-py -3.13 -m venv .venv
-.venv/Scripts/python -m pip install -r requirements.txt
-.venv/Scripts/python -m pytest
-```
+Hay otros activos que tampoco se publican y que el código busca en local:
 
-Las pruebas no necesitan nada más: usan la plantilla `config/entorno.ejemplo.json`, con valores
-ficticios. Las que comprueban que no se cuela ningún nombre real de cliente leen una lista local que
-no se versiona (`config/nombres-reales.local.txt`, a partir de su plantilla `.ejemplo`); sin ella se
-omiten y el resumen de pytest lo dice con «NO COMPROBADO». Lo mismo las que validan
-`config/entorno.local.json`.
+- **La tarifa**: `salidas/rate-card.json` (o `PREVENTA_RATE_CARD`). Las pruebas usan la tarifa sintética de
+  `tests/insumos/rate-card.sintetica.json`, que no tiene relación con ninguna tarifa real.
+- **El generador y la plantilla de la estimación**: `PREVENTA_GENERADOR` y `PREVENTA_PLANTILLA`, o la carpeta de
+  `PREVENTA_PROYECTOS`.
+- **El registro del despliegue**: `manifiesto.json` (plantilla en [manifiesto.ejemplo.json](manifiesto.ejemplo.json))
+  y `agentes/despliegue.json`, que escribe `desplegar.py`.
 
-Para hablar con Azure, primero se crea la configuración local a partir de la plantilla y se
-sustituyen los valores ficticios por los de tu tenant, suscripción, recurso y proyecto
-(`config/entorno.local.json` no se versiona; sin él, `lib/config.py` falla en alto y dice qué copiar):
+## Pruebas en Mac
 
-```bash
-cp config/entorno.ejemplo.json config/entorno.local.json
-# edita config/entorno.local.json con los valores reales
-```
-
-Después hace falta una sesión de la CLI en ese tenant:
+Con Python 3.13 y [uv](https://docs.astral.sh/uv/), y un entorno virtual fuera del repositorio:
 
 ```bash
-az login --tenant <id-de-tu-tenant> --scope https://ai.azure.com/.default
-# o leyéndolo de la configuración local:
-az login --tenant "$(.venv/Scripts/python -c "import json; print(json.load(open('config/entorno.local.json', encoding='utf-8'))['tenant_id'])")" --scope https://ai.azure.com/.default
+uv venv /tmp/venv-preventa -p 3.13
+uv pip install -p /tmp/venv-preventa -r requirements.txt -r hosted/requirements.txt -r frontal/bff/requirements.txt
+/tmp/venv-preventa/bin/python -I -m pytest -q -p no:cacheprovider -rs
 ```
 
-## Despliegue
+Las pruebas que necesitan algo que no se publica **se omiten y dicen qué falta**. Salen en el resumen con `-rs`:
 
-- Los agentes se despliegan con el cliente de `lib/foundry.py`: solo se crea una versión nueva si
-  la definición cambia, y después se relee y se compara con lo enviado.
-- El coordinador se publica como agente hosted desde un ZIP con las dependencias incluidas y sus
-  hashes anotados en el manifiesto.
-- Las asignaciones de rol (Foundry User, Foundry Agent Consumer) y las conexiones con clave las
-  hace Fernando: el despliegue automático no asigna roles ni lee o escribe secretos.
-- Vuelta atrás: `version_selector` a la versión anterior del agente, el ZIP anterior por su SHA-256
-  y la versión anterior del blob.
+- `EVIDENCIA NO PUBLICADA`: comparan con paquetes y estados de ejecuciones reales (`pruebas/`, `_baseline/`) o con
+  notas de cambio por tanda (`docs/I1/CAMBIOS-*`).
+- `ACTIVO PRIVADO`: necesitan el generador canónico de la estimación o la tarifa real.
+- `FICHERO LOCAL NO PUBLICADO`: necesitan el registro de un despliegue real (`manifiesto.json`).
+
+Diagrama, frontal e infraestructura:
+
+```bash
+/tmp/venv-preventa/bin/python -I -m pytest -q -p no:cacheprovider docs/arquitectura/tests/test_diagrama.py
+npm --prefix frontal/web ci && npm --prefix frontal/web test
+(cd frontal/web && npx playwright install chromium && npx playwright test)   # recorrido en reproducción + axe
+bash infra/comprobar.sh                                                        # necesita la CLI de Bicep
+```
+
+## Arrancar el frontal
+
+```bash
+uv venv -q -p 3.13 frontal/.venv && uv pip install -q -p frontal/.venv/bin/python -r frontal/bff/requirements.txt
+npm --prefix frontal/web ci && npm --prefix frontal/web run build
+frontal/.venv/bin/python frontal/bff/servidor.py --reproduccion
+```
+
+Abre <http://127.0.0.1:8765>. Con `--reproduccion` no se llama a Foundry: el BFF devuelve en orden turnos ya
+guardados de una ejecución real con un cliente sintético, saneados, y un paquete reducido. La interfaz lo avisa en
+pantalla. Sin `--reproduccion` llama al coordinador desplegado: necesita `config/entorno.local.json` y una sesión de la
+CLI de Azure en ese tenant (`az login --tenant <tu tenant>`).
 
 ## Reglas
 
-1. **Nada se ejecuta en local en producción.** El portátil solo construye, prueba y despliega.
-2. **Prefijos.** Los agentes del sistema empiezan por `ofa-`; los desechables de prueba, por
-   `ofa-prueba-`. El cliente REST rechaza escribir o borrar cualquier otro agente, y borrar un
-   agente del sistema exige `permitir_sistema=True` explícito.
-3. **Protegidos.** No se tocan jamás los agentes y la toolbox de la lista `protegidos` de
-   `config/entorno.local.json` (agentes concretos, prefijos de agentes y toolboxes de otros
-   proyectos del mismo tenant). La guarda los rechaza antes de pedir un token.
-4. **Sin datos de clientes.** En el repositorio solo hay datos sintéticos y ningún nombre de
-   cliente real.
-5. **Sin secretos.** Ni tokens, ni claves, ni SAS en ficheros, salidas guardadas o logs. Todo texto
-   que vaya a disco o a consola pasa por `lib/redaccion.py`. Los ficheros `.env` no se versionan.
-6. **Tenant fijo** (el de la configuración local) en toda petición de token, con comprobación del
-   `tid` del token recibido.
-7. **Fallar en alto.** El código de salida es el veredicto; los reintentos se anotan siempre.
-8. **Versiones exactas** de todas las dependencias.
+- **Sin datos de clientes.** Todo cliente, persona y transcripción del repositorio es sintético.
+- **Sin secretos ni identificadores reales.** Ni claves, ni tokens, ni tenants, suscripciones, recursos o identidades
+  de un entorno concreto: van en ficheros locales que git ignora.
+- **Sin tarifas reales.** Ni horas, ni perfiles con su precio, ni tarifas: las pruebas usan una tarifa sintética.
+- **Barrido antes de publicar.** `herramientas/barrido_publicacion.py` busca en todo lo que git publicaría los
+  términos de una lista local que no se versiona (plantilla en
+  [config/terminos-prohibidos.local.txt.ejemplo](config/terminos-prohibidos.local.txt.ejemplo)), patrones de secreto
+  y cualquier GUID que no sea un identificador público de Azure. Su código de salida es el veredicto: 0 limpio,
+  1 hallazgos, 2 configuración inválida.
+
+```bash
+python3 -I herramientas/barrido_publicacion.py --terminos <lista local de términos>
+```

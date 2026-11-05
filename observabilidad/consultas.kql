@@ -1,0 +1,199 @@
+// Consultas KQL de observabilidad del MVP de preventa (proyecto proyecto-ejemplo, I0 e I1).
+// Se ejecutan contra el Application Insights appi-preventa-ejemplo (esquema clásico:
+// requests, dependencies, traces con customDimensions) con
+//   python -m observabilidad.probar_consultas [--offset 24h] [--solo 2,3]
+// que consulta por REST en UTF-8. No con az monitor app-insights query: en Windows az devuelve
+// cp1252 y las tildes llegan como U+FFFD (LES-G-090.8).
+// En el workspace recurso-ejemplo-logs las mismas filas están en AppRequests y
+// AppDependencies (columna Properties en lugar de customDimensions).
+//
+// Los nombres de atributo siguen las convenciones GenAI de OpenTelemetry que cita Learn
+// (invoke_agent, chat, execute_tool; gen_ai.agent.name, gen_ai.tool.name,
+// gen_ai.conversation.id, gen_ai.usage.input_tokens/output_tokens). Son HIPÓTESIS hasta el paso de
+// pruebas: la consulta 0 enseña qué claves emite de verdad el servicio y, si difieren, manda la
+// realidad y se corrigen las consultas 1 y 2.
+
+// ---------------------------------------------------------------------------------------------
+// 0. Descubrimiento (auxiliar): qué operaciones y qué claves gen_ai.* llegan realmente.
+// ---------------------------------------------------------------------------------------------
+union requests, dependencies
+| where timestamp > ago(1d)
+| extend op = tostring(customDimensions["gen_ai.operation.name"])
+| where isnotempty(op) or name startswith "invoke_agent" or name startswith "execute_tool"
+    or name startswith "chat"
+| mv-expand clave = bag_keys(customDimensions) to typeof(string)
+| where clave startswith "gen_ai." or clave startswith "az."
+| summarize filas = dcount(itemId), ejemplo = take_any(name) by itemType, op, clave
+| order by op asc, clave asc;
+
+// ---------------------------------------------------------------------------------------------
+// 1. Llamadas por agente y herramienta (incluido A2A), agrupadas por conversación.
+//    Una fila por conversación, agente y herramienta: número de llamadas, errores y duración.
+//    A2A se reconoce por el tipo o el nombre de la herramienta, o por un invoke_agent anidado
+//    (un agente que invoca a otro), que es como Learn describe la llamada entre agentes.
+// ---------------------------------------------------------------------------------------------
+let ventana = 1d;
+let spans = union requests, dependencies
+| where timestamp > ago(ventana)
+| extend op = coalesce(tostring(customDimensions["gen_ai.operation.name"]),
+                       tostring(split(name, " ")[0]))
+| where op in ("invoke_agent", "execute_tool", "chat")
+| extend conversacion = tostring(customDimensions["gen_ai.conversation.id"]),
+         agente = tostring(customDimensions["gen_ai.agent.name"]),
+         herramienta = tostring(customDimensions["gen_ai.tool.name"]),
+         tipo_herramienta = tostring(customDimensions["gen_ai.tool.type"]),
+         span_id = id, padre_id = operation_ParentId, traza = operation_Id;
+// El agente de cada span se hereda del invoke_agent padre cuando el span no lo trae.
+let agentes = spans | where op == "invoke_agent" | project span_id, agente_padre = agente;
+spans
+| join kind=leftouter (agentes) on $left.padre_id == $right.span_id
+| extend agente = iff(isempty(agente), agente_padre, agente)
+| extend es_a2a = tipo_herramienta has "a2a" or herramienta has "a2a"
+    or (op == "invoke_agent" and isnotempty(agente_padre))
+| extend herramienta = case(op == "execute_tool", coalesce(herramienta, name),
+                            op == "invoke_agent" and es_a2a, strcat("a2a→", agente),
+                            op == "chat", "modelo", "agente")
+// duration es real en milisegundos (comprobado con getschema). Los comentarios van en línea
+// propia: el servicio rechaza un comentario dentro de la lista de summarize.
+| summarize llamadas = count(), errores = countif(tostring(success) in~ ("false", "0")),
+            duracion_ms_total = sum(duration), primera = min(timestamp), ultima = max(timestamp),
+            a2a = max(toint(es_a2a))
+         by conversacion, traza, agente, op, herramienta
+| order by primera asc, conversacion asc;
+
+
+// ---------------------------------------------------------------------------------------------
+// 2. Tokens y coste en EUR por respuesta.
+//    Precios Data Zone estándar de _baseline/precios.json (EUR por millón de tokens, Sweden
+//    Central, consultados el 07-10-2026); test_observabilidad comprueba que esta tabla coincide con
+//    el fichero. Cada llamada (span) se valora en su tramo: «largo» si su entrada pasa de 272.000
+//    tokens (HIPÓTESIS, LES-G-074: la API de precios no publica el umbral) y «corto» si no.
+//    coste = (entrada - caché leída - caché escrita) x entrada + caché leída x caché entrada
+//            + caché escrita x escritura caché + salida x salida, como coste_eur de
+//    pruebas/I0/ejecutar_pruebas.py salvo el suelo a 0 de la parte sin caché (ver abajo). El modelo se compara sin la fecha de versión
+//    (gpt-6-luna-2026-09-22 pasa a gpt-6-luna). Sin precio, coste_eur queda vacío y
+//    spans_sin_precio dice cuántos: nunca se cuenta como 0 EUR.
+//    La parte sin caché no baja de 0: en una traza real la caché escrita superó a la entrada
+//    (20.332 frente a 20.188); spans_cache_incoherente cuenta esos spans.
+//    AVISO (medido el 08-10-2026 sobre 32 respuestas de I1, pruebas/I11/S/api_vs_traza.txt): los
+//    tokens de la traza NO coinciden con el usage que devuelve la API. La entrada coincide en las 32;
+//    la salida y la caché, en ninguna. El coste con los tokens de la traza fue el 30,8 % del coste
+//    con el usage de la API, y menor en las 32. Por eso fuente_tokens = "traza": es una cota
+//    baja y NO VERIFICADA contra la factura. Si la respuesta es directa, manda su usage; las trazas
+//    solo se usan para lo delegado por A2A, que no tiene otra fuente (LES-G-089.5).
+// ---------------------------------------------------------------------------------------------
+let ventana = 1d;
+let umbral_largo = 272000;
+let precios = datatable(modelo_base: string, tramo: string, eur_entrada: real,
+                        eur_cache_entrada: real, eur_escritura_cache: real, eur_salida: real) [
+    "gpt-6-luna", "corto", 0.1056, 0.0106, 0.132, 0.528,
+    "gpt-6-luna", "largo", 0.2112, 0.0211, 0.264, 0.792,
+    "gpt-5.6-luna", "corto", 0.1936, 0.0194, 0.242, 1.1616,
+    "gpt-5.6-luna", "largo", 0.3872, 0.0387, 0.484, 1.7423
+];
+union requests, dependencies
+| where timestamp > ago(ventana)
+| extend op = coalesce(tostring(customDimensions["gen_ai.operation.name"]),
+                       tostring(split(name, " ")[0])),
+         tokens_entrada = tolong(customDimensions["gen_ai.usage.input_tokens"]),
+         tokens_salida = tolong(customDimensions["gen_ai.usage.output_tokens"]),
+         cache_leida = tolong(customDimensions["gen_ai.usage.cache_read.input_tokens"]),
+         cache_escrita = tolong(customDimensions["gen_ai.usage.cache_creation.input_tokens"])
+| where isnotnull(tokens_entrada) or isnotnull(tokens_salida)
+| extend tokens_entrada = coalesce(tokens_entrada, 0), tokens_salida = coalesce(tokens_salida, 0),
+         cache_leida = coalesce(cache_leida, 0), cache_escrita = coalesce(cache_escrita, 0),
+         respuesta = tostring(customDimensions["gen_ai.response.id"]),
+         conversacion = tostring(customDimensions["gen_ai.conversation.id"]),
+         agente = tostring(customDimensions["gen_ai.agent.name"]),
+         modelo = coalesce(tostring(customDimensions["gen_ai.response.model"]),
+                           tostring(customDimensions["gen_ai.request.model"]))
+| extend modelo_base = tostring(split(modelo, "-20")[0]),
+         tramo = iff(tokens_entrada > umbral_largo, "largo", "corto")
+| lookup kind=leftouter precios on modelo_base, tramo
+| extend coste_span = (todouble(max_of(tokens_entrada - cache_leida - cache_escrita, 0)) * eur_entrada
+                       + cache_leida * eur_cache_entrada + cache_escrita * eur_escritura_cache
+                       + tokens_salida * eur_salida) / 1e6
+// Sin gen_ai.response.id no se mezclan respuestas: cada span queda como su propia fila.
+| extend respuesta = iff(isempty(respuesta), strcat("span:", id), respuesta)
+// Si invoke_agent y chat traen tokens a la vez, cuentan solo los de chat para no sumar doble.
+| summarize ops = make_set(op), tramos = make_set(tramo), hay_chat = countif(op == "chat"),
+            entrada_chat = sumif(tokens_entrada, op == "chat"), entrada_total = sum(tokens_entrada),
+            salida_chat = sumif(tokens_salida, op == "chat"), salida_total = sum(tokens_salida),
+            leida_chat = sumif(cache_leida, op == "chat"), leida_total = sum(cache_leida),
+            escrita_chat = sumif(cache_escrita, op == "chat"), escrita_total = sum(cache_escrita),
+            coste_chat = sumif(coste_span, op == "chat"), coste_total = sum(coste_span),
+            sin_precio_chat = countif(op == "chat" and isnull(eur_entrada)),
+            sin_precio_total = countif(isnull(eur_entrada)), momento = min(timestamp),
+            spans_cache_incoherente = countif(cache_leida + cache_escrita > tokens_entrada)
+         by respuesta, conversacion, agente, modelo
+| extend con_chat = hay_chat > 0
+| extend tokens_entrada = iff(con_chat, entrada_chat, entrada_total),
+         tokens_salida = iff(con_chat, salida_chat, salida_total),
+         cache_leida = iff(con_chat, leida_chat, leida_total),
+         cache_escrita = iff(con_chat, escrita_chat, escrita_total),
+         spans_sin_precio = iff(con_chat, sin_precio_chat, sin_precio_total)
+| extend coste_eur = iff(spans_sin_precio > 0, real(null),
+                         round(iff(con_chat, coste_chat, coste_total), 6))
+| project momento, conversacion, respuesta, agente, modelo, tramos, tokens_entrada, cache_leida,
+          cache_escrita, tokens_salida, coste_eur, spans_sin_precio, spans_cache_incoherente, ops,
+          fuente_tokens = "traza"
+| order by momento asc;
+
+// ---------------------------------------------------------------------------------------------
+// 3. Fallos 424 y cortes de A2A por agente, con su duración.
+//    Un 424 no aparece como 424 en las trazas. Quien llama al coordinador recibe HTTP 424
+//    tool_server_error (LES-G-089.6); el servidor registra el invoke_agent del agente que llama
+//    con resultCode 500 y error.type = "tool_server_error" (comprobado el 08-10-2026 en
+//    appi-preventa-ejemplo). La llamada A2A cortada (execute_tool
+//    remote_a2a_<conexión>.SendMessage) figura con success True (en I1, 17,8 s y 120,6 s), así que
+//    el corte se deduce: es la última llamada A2A de una traza cuyo invoke_agent acaba en
+//    tool_server_error (HIPÓTESIS con dos muestras). cerca_del_tope cuenta las llamadas A2A de
+//    110 s o más (tope observado de unos 120 s, LES-G-089.8).
+//    Una fila por agente que llama y destino A2A. fallos_424 y dur_max_424_s son del agente que
+//    llama (se repiten en cada destino) e incluyen tool_server_error que no venga de A2A; cortes
+//    es lo atribuido a cada destino.
+// ---------------------------------------------------------------------------------------------
+let ventana = 1d;
+let umbral_tope_ms = 110000.0;
+let spans_base = union requests, dependencies
+| where timestamp > ago(ventana)
+| extend op = coalesce(tostring(customDimensions["gen_ai.operation.name"]),
+                       tostring(split(name, " ")[0])),
+         agente = tostring(customDimensions["gen_ai.agent.name"]),
+         herramienta = tostring(customDimensions["gen_ai.tool.name"]),
+         error_tipo = tostring(customDimensions["error.type"]),
+         traza = operation_Id, fin = timestamp + duration * 1ms;
+// Si un span no trae el agente, se hereda del invoke_agent de su traza (como en la consulta 1).
+let agente_traza = spans_base | where op == "invoke_agent" and isnotempty(agente)
+| summarize agente_t = take_any(agente) by traza;
+let spans = spans_base | join kind=leftouter (agente_traza) on traza
+| extend agente = iff(isempty(agente), agente_t, agente);
+let fallidos = spans
+| where op == "invoke_agent" and error_tipo == "tool_server_error"
+| project traza, agente, duracion_fallo = duration;
+let a2a = spans
+| where op == "execute_tool" and herramienta startswith "remote_a2a_"
+| extend destino = coalesce(extract(@"^remote_a2a_(.+)\.[A-Za-z]+$", 1, herramienta), herramienta);
+let ultimas = a2a | summarize fin_ultima = max(fin) by traza;
+let trazas_fallidas = fallidos | summarize n_fallos = count() by traza;
+let por_destino = a2a
+| join kind=leftouter (ultimas) on traza
+| join kind=leftouter (trazas_fallidas) on traza
+| extend corte = coalesce(n_fallos, 0) > 0 and fin == fin_ultima, cerca = duration >= umbral_tope_ms
+| summarize llamadas_a2a = count(), cortes = countif(corte), cerca_del_tope = countif(cerca),
+            dur_media_s = round(avg(duration) / 1000, 1),
+            dur_p95_s = round(percentile(duration, 95) / 1000, 1),
+            dur_max_s = round(max(duration) / 1000, 1),
+            dur_max_corte_s = round(maxif(duration, corte) / 1000, 1),
+            primera = min(timestamp), ultima = max(timestamp)
+         by agente, destino;
+let por_agente = fallidos
+| summarize fallos_424 = count(), dur_max_424_s = round(max(duracion_fallo) / 1000, 1) by agente;
+por_destino
+| join kind=fullouter (por_agente) on agente
+| extend agente = coalesce(agente, agente1)
+| project agente, destino, fallos_424 = coalesce(fallos_424, 0), dur_max_424_s,
+          llamadas_a2a = coalesce(llamadas_a2a, 0), cortes = coalesce(cortes, 0),
+          cerca_del_tope = coalesce(cerca_del_tope, 0), dur_media_s, dur_p95_s, dur_max_s,
+          dur_max_corte_s, primera, ultima
+| order by agente asc, destino asc;

@@ -1,0 +1,320 @@
+{
+  "schema": "preventa-textos-cliente/1",
+  "codigo": "OF-KELVARA-001-A",
+  "hash_hechos": "3632a821e4bd68b57c0fe9f444fda09b56783fa44d2b968c5f12062f6cd140d8",
+  "portada": {
+    "titulo": "Asistente de consulta técnica con IA sobre informes de ensayo",
+    "cliente": "Kelvara Ensayos Industriales, S.A.",
+    "codigo": "OF-KELVARA-001-A",
+    "fecha": "2026-10-08",
+    "subtitulo": "Propuesta para revisión interna · versión A"
+  },
+  "necesidad": [
+    {
+      "id": "TX-NEC-01",
+      "texto": "Objetivo: Asistente de IA que responda en lenguaje natural a los técnicos y cite siempre el informe o la norma de origen.",
+      "hechos": [
+        "R-objetivo"
+      ]
+    },
+    {
+      "id": "TX-NEC-02",
+      "texto": "Usuarios finales en España (laboratorios de Zaragoza y Tarragona); marco normativo: RGPD, con datos en la Unión Europea.",
+      "hechos": [
+        "R-ubicacion_usuarios",
+        "R-marco_normativo"
+      ]
+    }
+  ],
+  "arquitectura": {
+    "capas": [
+      {
+        "capa": "usuarios_canales",
+        "titulo": "Usuarios y canales",
+        "componentes": [
+          {
+            "id": "C-03",
+            "nombre": "Azure AI Bot Service"
+          }
+        ]
+      },
+      {
+        "capa": "aplicacion_integracion",
+        "titulo": "Aplicación e integración",
+        "componentes": [
+          {
+            "id": "C-04",
+            "nombre": "Azure App Service"
+          }
+        ]
+      },
+      {
+        "capa": "ia",
+        "titulo": "Inteligencia artificial",
+        "componentes": [
+          {
+            "id": "C-01",
+            "nombre": "Microsoft Foundry"
+          }
+        ]
+      },
+      {
+        "capa": "datos_conocimiento",
+        "titulo": "Datos y conocimiento",
+        "componentes": [
+          {
+            "id": "C-02",
+            "nombre": "Azure AI Search"
+          }
+        ]
+      },
+      {
+        "capa": "identidad_seguridad_red",
+        "titulo": "Identidad, seguridad y red",
+        "componentes": [
+          {
+            "id": "C-05",
+            "nombre": "Microsoft Entra ID"
+          },
+          {
+            "id": "C-06",
+            "nombre": "Azure Private Link"
+          }
+        ]
+      }
+    ],
+    "flujos": [
+      {
+        "origen": "C-03",
+        "destino": "C-04"
+      },
+      {
+        "origen": "C-04",
+        "destino": "C-01"
+      },
+      {
+        "origen": "C-01",
+        "destino": "C-02"
+      },
+      {
+        "origen": "C-05",
+        "destino": "C-04"
+      }
+    ],
+    "referencias": [
+      {
+        "id": "REF-03",
+        "url": "https://learn.microsoft.com/azure/bot-service/bot-overview",
+        "titulo": "Documentación oficial de Microsoft sobre Azure AI Bot Service"
+      },
+      {
+        "id": "REF-06",
+        "url": "https://learn.microsoft.com/azure/app-service/overview",
+        "titulo": "Documentación oficial de Microsoft sobre Azure App Service"
+      },
+      {
+        "id": "REF-05",
+        "url": "https://learn.microsoft.com/azure/foundry/what-is-foundry",
+        "titulo": "Documentación oficial de Microsoft sobre Microsoft Foundry"
+      },
+      {
+        "id": "REF-02",
+        "url": "https://learn.microsoft.com/azure/search/search-what-is-azure-search",
+        "titulo": "Documentación oficial de Microsoft sobre Azure AI Search"
+      },
+      {
+        "id": "REF-07",
+        "url": "https://learn.microsoft.com/entra/fundamentals/what-is-entra",
+        "titulo": "Documentación oficial de Microsoft sobre Microsoft Entra ID"
+      },
+      {
+        "id": "REF-04",
+        "url": "https://learn.microsoft.com/azure/private-link/private-link-overview",
+        "titulo": "Documentación oficial de Microsoft sobre Azure Private Link"
+      },
+      {
+        "id": "REF-01",
+        "url": "https://learn.microsoft.com/azure/architecture/ai-ml/architecture/baseline-microsoft-foundry-chat",
+        "titulo": "Documentación oficial de Microsoft sobre arquitecturas de referencia de Azure"
+      }
+    ]
+  },
+  "alcance": [
+    {
+      "id": "TX-ALC-01",
+      "texto": "Búsqueda en informes de ensayo y procedimientos internos con cita al documento y a la página.",
+      "hechos": [
+        "R-alcance_funcional"
+      ]
+    },
+    {
+      "id": "TX-ALC-02",
+      "texto": "Resumen de un informe largo en un párrafo comprensible para el equipo comercial.",
+      "hechos": [
+        "R-alcance_funcional"
+      ]
+    },
+    {
+      "id": "TX-ALC-03",
+      "texto": "Comparación de dos ensayos del mismo material indicando qué ha cambiado.",
+      "hechos": [
+        "R-alcance_funcional"
+      ]
+    },
+    {
+      "id": "TX-ALC-04",
+      "texto": "Respuesta explícita cuando no encuentra la información, sin inventar.",
+      "hechos": [
+        "R-alcance_funcional"
+      ]
+    }
+  ],
+  "fuera_de_alcance": [
+    {
+      "id": "TX-FDA-01",
+      "texto": "Integración con el LIMS, el sistema de gestión del laboratorio.",
+      "hechos": [
+        "R-fuera_de_alcance"
+      ]
+    },
+    {
+      "id": "TX-FDA-02",
+      "texto": "Integración con SAP.",
+      "hechos": [
+        "R-fuera_de_alcance"
+      ]
+    },
+    {
+      "id": "TX-FDA-03",
+      "texto": "Licencias y consumo cloud, que asume el cliente.",
+      "hechos": [
+        "FIJO-EXCLUSIONES"
+      ]
+    }
+  ],
+  "supuestos": [
+    {
+      "id": "TX-SUP-01",
+      "texto": "Volumetría: 150 técnicos usuarios y unos 20.000 documentos (informes, procedimientos y normas).",
+      "hechos": [
+        "R-volumetria"
+      ],
+      "nivel": "Confianza baja"
+    },
+    {
+      "id": "TX-SUP-02",
+      "texto": "Origen de los documentos: Documentos en SharePoint Online del tenant del cliente, con permisos por grupos de Entra ID que se respetan en las respuestas.",
+      "hechos": [
+        "R-identidad_acl_origen"
+      ],
+      "nivel": "Confianza baja"
+    },
+    {
+      "id": "TX-SUP-03",
+      "texto": "El cliente concede acceso de lectura a las bibliotecas documentales antes de la construcción.",
+      "hechos": [
+        "S-01"
+      ],
+      "nivel": "Confianza media"
+    }
+  ],
+  "precio": {
+    "precio_cerrado_eur": "28025.25",
+    "iva": "IVA no incluido",
+    "duracion_semanas": 4,
+    "hitos": [
+      {
+        "nombre": "Hito 1 - Kick-off y Discovery completado",
+        "porcentaje": 25,
+        "importe_eur": "7006.31"
+      },
+      {
+        "nombre": "Hito 2 - Entregable principal en entorno dev",
+        "porcentaje": 25,
+        "importe_eur": "7006.31"
+      },
+      {
+        "nombre": "Hito 3 - Piloto/MVP en producción controlada",
+        "porcentaje": 25,
+        "importe_eur": "7006.31"
+      },
+      {
+        "nombre": "Hito 4 - Evaluación final y cierre",
+        "porcentaje": 25,
+        "importe_eur": "7006.32"
+      }
+    ]
+  },
+  "consumo": {
+    "lineas": [
+      {
+        "servicio": "Azure AI Search",
+        "concepto": "Standard S1 Unit",
+        "coste_mensual_eur": "250.10"
+      },
+      {
+        "servicio": "Azure App Service",
+        "concepto": "B1 (Azure App Service Basic Plan - Linux)",
+        "coste_mensual_eur": "11.53"
+      },
+      {
+        "servicio": "Azure Private Link",
+        "concepto": "Standard Private Endpoint",
+        "coste_mensual_eur": "25.70"
+      }
+    ],
+    "total_mensual_eur": "287.33",
+    "total_anual_eur": "3447.96",
+    "fuente": "Azure Retail Prices (prices.azure.com), región swedencentral: precios consultados el 2026-10-08, vigentes desde 2024-11-01",
+    "aviso": "Orientativo. No incluido en el precio cerrado; lo asume el cliente."
+  },
+  "riesgos": [
+    {
+      "id": "TX-RSG-01",
+      "texto": "La calidad de las respuestas depende de la calidad y vigencia de los informes de origen.",
+      "hechos": [
+        "RG-01"
+      ]
+    },
+    {
+      "id": "TX-RSG-02",
+      "texto": "Supuesto sin confirmar: la volumetría de usuarios y documentos.",
+      "hechos": [
+        "R-volumetria"
+      ]
+    }
+  ],
+  "condiciones": [
+    {
+      "id": "TX-CON-01",
+      "texto": "Precio cerrado de 28.025,25 €, IVA no incluido.",
+      "hechos": [
+        "ESTIMACION"
+      ]
+    },
+    {
+      "id": "TX-CON-02",
+      "texto": "Facturación por hitos: cuatro hitos del 25 % cada uno.",
+      "hechos": [
+        "TARIFA",
+        "ESTIMACION"
+      ]
+    },
+    {
+      "id": "TX-CON-03",
+      "texto": "Condiciones de pago: 30 días fecha factura. Validez de la oferta: 30 días.",
+      "hechos": [
+        "TARIFA"
+      ]
+    },
+    {
+      "id": "TX-CON-04",
+      "texto": "El consumo cloud no está incluido y lo asume el cliente.",
+      "hechos": [
+        "FIJO-CONDICIONES",
+        "ANEXO"
+      ]
+    }
+  ],
+  "excluidas": []
+}

@@ -1,0 +1,483 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:respuesta_experto:2",
+  "title": "Respuesta de preventa-experto-azure (A2A)",
+  "description": "HISTÓRICO (contrato v2, I1.5, del 11-10-2026 hasta I1.6): solo valida respuestas guardadas en paquetes de su época (componentes con motivo_no_valoracion y sin justificacion_nivel). Compatible con text.format json_schema strict: todas las propiedades en required y additionalProperties false en cada objeto. D publica en la definición una versión derivada sin pattern, minLength, maxLength, minimum, maximum, minItems, maxItems ni uniqueItems y con los $ref expandidos (lo probado en I0 e); este esquema completo lo aplica el código. hechos admite hasta 12 ids por supuesto o riesgo (antes 6, un tope arbitrario: en I1 el experto citó 9 y 10 hechos legítimos con el bloque de límites delante, H-V4); el código lo valida siempre. Los textos de supuestos, riesgos y mitigaciones (los ve el cliente o la nota) no pueden hablar del proceso interno (ids, verificador, brief, rondas): el código los rechaza (H-V8). Cada componente lleva motivo_no_valoracion (lista cerrada; no_aplica si tiene precio o no es facturable de Azure): todo componente facturable de Azure sin precio declara por qué no se puede valorar, y sin precio ni motivo el código rechaza la respuesta (decisión del comercial del 11-10-2026, PR15-2). El código exige además catalogo_id a todo componente con región de Azure (distinta de global; REVERIF14-2). CONTRATOS.md §6.4.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "brief_recibido",
+    "brief_id",
+    "agente",
+    "referencias",
+    "componentes",
+    "flujos",
+    "decisiones",
+    "alternativas_descartadas",
+    "supuestos",
+    "riesgos",
+    "preguntas",
+    "tareas_propuestas",
+    "precios",
+    "herramientas_usadas"
+  ],
+  "properties": {
+    "brief_recibido": {
+      "type": "string",
+      "minLength": 200,
+      "maxLength": 20480
+    },
+    "brief_id": {
+      "type": "string",
+      "pattern": "^BRF-OF-[A-Z0-9]{2,20}-[0-9]{3}-[A-Z]-AZ-R[1-3]$"
+    },
+    "agente": {
+      "enum": [
+        "preventa-experto-azure"
+      ]
+    },
+    "referencias": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 15,
+      "items": {
+        "$ref": "#/$defs/referencia"
+      }
+    },
+    "componentes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/componente"
+      }
+    },
+    "flujos": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "$ref": "#/$defs/flujo"
+      }
+    },
+    "decisiones": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 400
+      }
+    },
+    "alternativas_descartadas": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 400
+      }
+    },
+    "supuestos": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/supuesto"
+      }
+    },
+    "riesgos": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "$ref": "#/$defs/riesgo"
+      }
+    },
+    "preguntas": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 400
+      }
+    },
+    "tareas_propuestas": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 40,
+      "items": {
+        "$ref": "#/$defs/tarea"
+      }
+    },
+    "precios": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "$ref": "#/$defs/precio"
+      }
+    },
+    "herramientas_usadas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "microsoft_docs_search",
+        "microsoft_docs_fetch",
+        "precios_azure"
+      ],
+      "properties": {
+        "microsoft_docs_search": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "microsoft_docs_fetch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "precios_azure": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 30
+        }
+      }
+    }
+  },
+  "$defs": {
+    "referencia": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "url",
+        "titulo",
+        "fecha_consulta"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^REF-[0-9]{2}$"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/"
+        },
+        "titulo": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "fecha_consulta": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "componente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "catalogo_id",
+        "servicio",
+        "capa",
+        "sku",
+        "region",
+        "cantidad",
+        "unidad",
+        "referencia_id",
+        "desviacion_justificada",
+        "motivo_no_valoracion"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "catalogo_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^az-[a-z0-9-]{2,40}$"
+        },
+        "servicio": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "capa": {
+          "enum": [
+            "usuarios_canales",
+            "aplicacion_integracion",
+            "ia",
+            "datos_conocimiento",
+            "identidad_seguridad_red",
+            "operacion_observabilidad"
+          ]
+        },
+        "sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^([a-z]+[a-z0-9]*|global)$"
+        },
+        "cantidad": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unidad": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "referencia_id": {
+          "type": "string",
+          "pattern": "^REF-[0-9]{2}$"
+        },
+        "desviacion_justificada": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 30,
+          "maxLength": 600
+        },
+        "motivo_no_valoracion": {
+          "enum": [
+            "no_aplica",
+            "depende_del_volumen",
+            "sin_medidor_publico",
+            "a_cargo_del_cliente",
+            "incluido_en_otro_componente",
+            "licencia_fuera_de_azure",
+            "fuera_del_catalogo"
+          ]
+        }
+      }
+    },
+    "flujo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origen",
+        "destino",
+        "descripcion"
+      ],
+      "properties": {
+        "origen": {
+          "type": "string",
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "destino": {
+          "type": "string",
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        }
+      }
+    },
+    "supuesto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "texto",
+        "confianza",
+        "hechos"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^S-[0-9]{2}$"
+        },
+        "texto": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "confianza": {
+          "enum": [
+            "ALTA",
+            "MEDIA",
+            "BAJA"
+          ]
+        },
+        "hechos": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/id_hecho"
+          }
+        }
+      }
+    },
+    "riesgo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "texto",
+        "mitigacion",
+        "hechos"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^RG-[0-9]{2}$"
+        },
+        "texto": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "mitigacion": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "hechos": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/id_hecho"
+          }
+        }
+      }
+    },
+    "tarea": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "fase",
+        "tarea",
+        "perfil",
+        "horas_base",
+        "reuniones_h",
+        "descripcion",
+        "entregable"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^T-[0-9]{2}$"
+        },
+        "fase": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "tarea": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "perfil": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "horas_base": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 400
+        },
+        "reuniones_h": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 80
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 400
+        },
+        "entregable": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        }
+      }
+    },
+    "precio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "componente_id",
+        "filtro",
+        "precio",
+        "moneda",
+        "unidad",
+        "region",
+        "effectiveStartDate",
+        "concepto",
+        "cantidad_mensual",
+        "supuesto_cantidad"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^P-[0-9]{2}$"
+        },
+        "componente_id": {
+          "type": "string",
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "filtro": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500
+        },
+        "precio": {
+          "type": "number",
+          "minimum": 0
+        },
+        "moneda": {
+          "enum": [
+            "EUR"
+          ]
+        },
+        "unidad": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^([a-z]+[a-z0-9]*|global)$"
+        },
+        "effectiveStartDate": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9:.]+Z?)?$"
+        },
+        "concepto": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "cantidad_mensual": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "supuesto_cantidad": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        }
+      }
+    },
+    "id_hecho": {
+      "type": "string",
+      "pattern": "^(R-[a-z_]+|REF-[0-9]{2}|C-[0-9]{2}|P-[0-9]{2})$"
+    }
+  }
+}

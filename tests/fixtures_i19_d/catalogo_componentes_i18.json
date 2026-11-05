@@ -1,0 +1,3076 @@
+{
+  "schema": "preventa-catalogo/1",
+  "version": 7,
+  "fecha": "2026-10-08",
+  "factores_estandar": [
+    {
+      "id": "asistente_rag.tokens_entrada_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 5656,
+      "unidad": "tokens de entrada por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "oficial",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-10-13",
+      "justificacion": "Media de la tabla «Token usage estimation for Azure OpenAI On Your Data» de Learn en cuatro modelos: petición de generación 4.422 tokens más petición de intención 1.234 (5 fragmentos de 1.024 tokens).",
+      "desglose": [
+        {
+          "parte": "petición de generación: pregunta, historial, fragmentos recuperados, rol e instrucciones",
+          "valor": 4422,
+          "origen": "Learn: media de 4.297, 3.997, 4.538 y 4.854 tokens"
+        },
+        {
+          "parte": "petición de intención: pregunta, historial e instrucciones",
+          "valor": 1234,
+          "origen": "Learn: media de 1.366, 1.385, 811 y 1.372 tokens"
+        },
+        {
+          "parte": "fragmentos recuperados (incluidos en la generación)",
+          "valor": null,
+          "origen": "Learn: 5 fragmentos de hasta 1.024 tokens; no se publica por separado"
+        },
+        {
+          "parte": "pregunta e historial (incluidos en las dos peticiones)",
+          "valor": null,
+          "origen": "Learn: 10 tokens por pregunta y 4 turnos por conversación de media"
+        }
+      ]
+    },
+    {
+      "id": "asistente_rag.tokens_salida_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 1171,
+      "unidad": "tokens de salida por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry/openai/how-to/reasoning",
+      "consultado": "2026-10-13",
+      "justificacion": "Respuesta e intención medidas en Learn más 1.024 tokens de razonamiento, que se facturan como salida; Learn no publica una media de razonamiento por consulta: se mide en el piloto.",
+      "desglose": [
+        {
+          "parte": "respuesta visible",
+          "valor": 120,
+          "origen": "Learn (On Your Data): de 110 a 119 tokens"
+        },
+        {
+          "parte": "intención de búsqueda",
+          "valor": 27,
+          "origen": "Learn (On Your Data): de 18 a 27 tokens"
+        },
+        {
+          "parte": "razonamiento (se factura como salida)",
+          "valor": 1024,
+          "origen": "supuesto: el valor del ejemplo de la página de razonamiento de Learn; NO VERIFICADO como media"
+        }
+      ]
+    },
+    {
+      "id": "asistente_rag.consultas_ranking_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 1,
+      "unidad": "consultas de ranking semántico por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-10-13",
+      "justificacion": "Una búsqueda con ranking semántico por pregunta del usuario; si la aplicación lanza una por intención, el experto lo cambia citando el requisito.",
+      "desglose": [
+        {
+          "parte": "búsqueda de la pregunta",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "bot.mensajes_por_consulta",
+      "caso_uso": "bot",
+      "valor": 2,
+      "unidad": "mensajes por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "oficial",
+      "fuente_url": "https://azure.microsoft.com/en-us/pricing/details/bot-services/",
+      "consultado": "2026-10-13",
+      "justificacion": "Cada POST de una actividad entre el canal y el bot es un mensaje (preguntas frecuentes de la página de precios): la pregunta del usuario y la respuesta del bot.",
+      "desglose": [
+        {
+          "parte": "pregunta del usuario al bot",
+          "valor": 1,
+          "origen": "página de precios de Bot Service"
+        },
+        {
+          "parte": "respuesta del bot al canal",
+          "valor": 1,
+          "origen": "página de precios de Bot Service"
+        }
+      ]
+    },
+    {
+      "id": "almacen_documentos.gb_por_documento",
+      "caso_uso": "almacen_documentos",
+      "valor": 0.002,
+      "unidad": "GB almacenados por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento",
+        "fichero",
+        "archivo"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/storage/common/storage-plan-manage-costs",
+      "consultado": "2026-10-13",
+      "justificacion": "La capacidad de Blob Storage se factura por GB al mes (Learn). Learn no publica el tamaño medio de un documento: supuesto de 2 MB por documento ofimático o PDF; se mide en el piloto con el inventario del origen.",
+      "desglose": [
+        {
+          "parte": "tamaño medio de un documento del origen",
+          "valor": 0.002,
+          "origen": "supuesto de Devoteam (2 MB por documento); NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "almacen_documentos.escrituras_por_documento",
+      "caso_uso": "almacen_documentos",
+      "valor": 1,
+      "unidad": "escrituras por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento",
+        "fichero",
+        "archivo"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/storage/common/storage-plan-manage-costs",
+      "consultado": "2026-10-13",
+      "justificacion": "Cada documento nuevo o cambiado se sube con una escritura (Put Blob; supuesto, documentos de menos de 5.000 MiB).",
+      "desglose": [
+        {
+          "parte": "subida del documento",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "almacen_documentos.lecturas_por_documento",
+      "caso_uso": "almacen_documentos",
+      "valor": 1,
+      "unidad": "lecturas por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento",
+        "fichero",
+        "archivo"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/storage/common/storage-plan-manage-costs",
+      "consultado": "2026-10-13",
+      "justificacion": "El indexador lee una vez cada documento nuevo o cambiado (supuesto).",
+      "desglose": [
+        {
+          "parte": "lectura del indexador",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "documentos.paginas_por_documento",
+      "caso_uso": "documentos",
+      "valor": 10,
+      "unidad": "páginas por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento",
+        "fichero",
+        "archivo"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/ai-services/document-intelligence/overview",
+      "consultado": "2026-10-13",
+      "justificacion": "Se factura por página y Learn no publica las páginas medias de un documento: supuesto de 10. Cuenta los documentos procesados en el mes; con solo el fondo citado, lo procesa entero en un mes (cota superior).",
+      "desglose": [
+        {
+          "parte": "páginas medias de un documento del origen",
+          "valor": 10,
+          "origen": "supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "documentos.registros_texto_por_documento",
+      "caso_uso": "documentos",
+      "valor": 30,
+      "unidad": "registros de texto por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento",
+        "fichero",
+        "archivo"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/ai-services/language-service/concepts/data-limits",
+      "consultado": "2026-10-13",
+      "justificacion": "Learn: un registro de texto son 1.000 caracteres. Supuesto: 10 páginas por documento y 3.000 caracteres por página, 30.000 caracteres = 30 registros.",
+      "desglose": [
+        {
+          "parte": "10 páginas × 3.000 caracteres ÷ 1.000 caracteres por registro",
+          "valor": 30,
+          "origen": "Learn (1.000 caracteres por registro) y supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "consulta_texto.registros_por_consulta",
+      "caso_uso": "consulta_texto",
+      "valor": 1,
+      "unidad": "registros de texto por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/ai-services/language-service/concepts/data-limits",
+      "consultado": "2026-10-13",
+      "justificacion": "Learn: un registro de texto son 1.000 caracteres; una pregunta del usuario cabe en uno (supuesto: menos de 1.000 caracteres).",
+      "desglose": [
+        {
+          "parte": "pregunta del usuario",
+          "valor": 1,
+          "origen": "Learn (1.000 caracteres por registro) y supuesto"
+        }
+      ]
+    },
+    {
+      "id": "consulta_texto.registros_moderacion_por_consulta",
+      "caso_uso": "consulta_texto",
+      "valor": 2,
+      "unidad": "registros de texto analizados por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/ai-services/content-safety/overview",
+      "consultado": "2026-10-13",
+      "justificacion": "Se analizan la pregunta del usuario y la respuesta del modelo, un registro cada una (supuesto: menos de 1.000 caracteres cada una).",
+      "desglose": [
+        {
+          "parte": "pregunta del usuario",
+          "valor": 1,
+          "origen": "supuesto"
+        },
+        {
+          "parte": "respuesta del modelo",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "consulta_texto.imagenes_por_imagen",
+      "caso_uso": "consulta_texto",
+      "valor": 1,
+      "unidad": "imágenes analizadas por imagen",
+      "unidad_base": "imágenes",
+      "base": [
+        "imagen",
+        "foto",
+        "fotografía"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/ai-services/content-safety/overview",
+      "consultado": "2026-10-13",
+      "justificacion": "Cada imagen citada en la volumetría se analiza una vez (supuesto).",
+      "desglose": [
+        {
+          "parte": "análisis de la imagen",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "voz.horas_audio_por_consulta",
+      "caso_uso": "voz",
+      "valor": 0.01,
+      "unidad": "horas de audio por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/ai-services/speech-service/overview",
+      "consultado": "2026-10-13",
+      "justificacion": "La voz a texto y la traducción de voz se facturan por hora de audio; supuesto de 36 segundos de audio por consulta hablada.",
+      "desglose": [
+        {
+          "parte": "36 segundos de audio de la pregunta",
+          "valor": 0.01,
+          "origen": "supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "voz.caracteres_por_consulta",
+      "caso_uso": "voz",
+      "valor": 480,
+      "unidad": "caracteres sintetizados por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-10-13",
+      "justificacion": "Respuesta visible de 120 tokens (Learn, tabla de On Your Data) a unos 4 caracteres por token (supuesto): 480 caracteres de texto a voz por consulta.",
+      "desglose": [
+        {
+          "parte": "120 tokens de respuesta × 4 caracteres por token",
+          "valor": 480,
+          "origen": "Learn (120 tokens) y supuesto (4 caracteres)"
+        }
+      ]
+    },
+    {
+      "id": "agente.eventos_memoria_por_consulta",
+      "caso_uso": "agente",
+      "valor": 2,
+      "unidad": "eventos de memoria guardados por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry/agents/concepts/what-is-memory",
+      "consultado": "2026-10-13",
+      "justificacion": "La memoria (vista previa) guarda la conversación de la sesión; supuesto: la pregunta y la respuesta, un evento cada una.",
+      "desglose": [
+        {
+          "parte": "pregunta del usuario",
+          "valor": 1,
+          "origen": "supuesto"
+        },
+        {
+          "parte": "respuesta del agente",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "agente.horas_vcpu_por_consulta",
+      "caso_uso": "agente",
+      "valor": 0.3,
+      "unidad": "horas de vCPU por consulta (sesión de 1 vCPU)",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents",
+      "consultado": "2026-10-13",
+      "justificacion": "Learn: se factura la CPU y la memoria de cada sesión activa, que sigue activa 15 minutos por defecto tras la última petición. Supuesto: una sesión de 1 vCPU por consulta y 3 minutos de proceso (cota superior).",
+      "desglose": [
+        {
+          "parte": "15 minutos de inactividad por defecto tras la última petición",
+          "valor": 0.25,
+          "origen": "Learn (hosted agents)"
+        },
+        {
+          "parte": "3 minutos de proceso de la consulta",
+          "valor": 0.05,
+          "origen": "supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "agente.gib_hora_por_consulta",
+      "caso_uso": "agente",
+      "valor": 0.6,
+      "unidad": "GiB·hora de memoria por consulta (sesión de 2 GiB)",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents",
+      "consultado": "2026-10-13",
+      "justificacion": "Sesión de 1 vCPU y 2 GiB (combinación de Learn) durante las 0,3 horas del factor de vCPU: 0,6 GiB·hora por consulta (supuesto, una sesión por consulta).",
+      "desglose": [
+        {
+          "parte": "2 GiB durante 15 minutos de inactividad",
+          "valor": 0.5,
+          "origen": "Learn (1 vCPU con 2 GiB; 15 minutos)"
+        },
+        {
+          "parte": "2 GiB durante 3 minutos de proceso",
+          "valor": 0.1,
+          "origen": "supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "historial_chat.ru_por_consulta",
+      "caso_uso": "historial_chat",
+      "valor": 6,
+      "unidad": "unidades de solicitud por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/cosmos-db/key-value-store-cost",
+      "consultado": "2026-10-13",
+      "justificacion": "Learn: leer un elemento de 1 KB cuesta 1 RU y escribirlo, 5 RU. Supuesto: cada consulta lee el historial y guarda el turno, un elemento de 1 KB cada vez.",
+      "desglose": [
+        {
+          "parte": "lectura del historial (1 KB)",
+          "valor": 1,
+          "origen": "Learn (key-value-store-cost)"
+        },
+        {
+          "parte": "escritura del turno (1 KB)",
+          "valor": 5,
+          "origen": "Learn (key-value-store-cost)"
+        }
+      ]
+    },
+    {
+      "id": "historial_chat.gb_por_consulta",
+      "caso_uso": "historial_chat",
+      "valor": 1e-06,
+      "unidad": "GB guardados por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/cosmos-db/key-value-store-cost",
+      "consultado": "2026-10-13",
+      "justificacion": "Un turno de 1 KB por consulta, guardado durante el mes (supuesto); la capacidad se factura por GB al mes.",
+      "desglose": [
+        {
+          "parte": "turno de 1 KB",
+          "valor": 1e-06,
+          "origen": "supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "integracion.operaciones_por_mensaje",
+      "caso_uso": "integracion",
+      "valor": 2,
+      "unidad": "operaciones de mensajería por mensaje",
+      "unidad_base": "mensajes",
+      "base": [
+        "mensaje"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://azure.microsoft.com/en-us/pricing/details/service-bus/",
+      "consultado": "2026-10-13",
+      "justificacion": "Página de precios: una operación es cualquier llamada a la API de Service Bus. Supuesto: un envío y una recepción por mensaje.",
+      "desglose": [
+        {
+          "parte": "envío del mensaje",
+          "valor": 1,
+          "origen": "supuesto"
+        },
+        {
+          "parte": "recepción del mensaje",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "integracion.operaciones_por_evento",
+      "caso_uso": "integracion",
+      "valor": 2,
+      "unidad": "operaciones por evento",
+      "unidad_base": "eventos",
+      "base": [
+        "evento",
+        "documento",
+        "mensaje"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://azure.microsoft.com/en-us/pricing/details/event-grid/",
+      "consultado": "2026-10-13",
+      "justificacion": "Página de precios: las operaciones incluyen los eventos publicados y los intentos de entrega. Supuesto: una publicación y una entrega por evento.",
+      "desglose": [
+        {
+          "parte": "publicación del evento",
+          "valor": 1,
+          "origen": "página de precios"
+        },
+        {
+          "parte": "entrega a una suscripción",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "integracion.acciones_por_mensaje",
+      "caso_uso": "integracion",
+      "valor": 1,
+      "unidad": "acciones de conector empresarial por mensaje",
+      "unidad_base": "mensajes",
+      "base": [
+        "mensaje",
+        "documento",
+        "transacción"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/logic-apps/logic-apps-pricing",
+      "consultado": "2026-10-13",
+      "justificacion": "Learn: en Consumo se mide y factura cada ejecución de una operación de conector. Supuesto: una acción de conector empresarial por mensaje o documento integrado.",
+      "desglose": [
+        {
+          "parte": "acción del conector",
+          "valor": 1,
+          "origen": "supuesto"
+        }
+      ]
+    },
+    {
+      "id": "integracion.llamadas_api_por_consulta",
+      "caso_uso": "integracion",
+      "valor": 2,
+      "unidad": "llamadas a la API por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-10-13",
+      "justificacion": "Con API Management delante del modelo pasan las dos peticiones de cada consulta: intención y generación (Learn, On Your Data). Supuesto: la pasarela solo media el modelo.",
+      "desglose": [
+        {
+          "parte": "petición de intención",
+          "valor": 1,
+          "origen": "Learn (On Your Data)"
+        },
+        {
+          "parte": "petición de generación",
+          "valor": 1,
+          "origen": "Learn (On Your Data)"
+        }
+      ]
+    },
+    {
+      "id": "integracion.actividades_por_documento",
+      "caso_uso": "integracion",
+      "valor": 1,
+      "unidad": "ejecuciones de actividad por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento",
+        "fichero",
+        "archivo"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/data-factory/pricing-concepts",
+      "consultado": "2026-10-13",
+      "justificacion": "Learn: se cobra cada ejecución de actividad orquestada. Supuesto: una copia por documento nuevo o cambiado en el mes (cota superior; por lotes son menos).",
+      "desglose": [
+        {
+          "parte": "copia del documento",
+          "valor": 1,
+          "origen": "supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "integracion.diu_horas_por_documento",
+      "caso_uso": "integracion",
+      "valor": 0.0667,
+      "unidad": "horas de DIU por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento",
+        "fichero",
+        "archivo"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/data-factory/copy-activity-performance-features",
+      "consultado": "2026-10-13",
+      "justificacion": "Learn: copiar un fichero usa 4 DIU por defecto. Supuesto: una copia de 1 minuto por documento nuevo o cambiado (4 DIU × 1/60 h; cota superior, por lotes es menor).",
+      "desglose": [
+        {
+          "parte": "4 DIU durante 1 minuto por documento",
+          "valor": 0.0667,
+          "origen": "Learn (4 DIU por defecto) y supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "operacion.gb_registros_por_consulta",
+      "caso_uso": "operacion",
+      "valor": 1e-05,
+      "unidad": "GB de registros por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/azure-monitor/logs/cost-logs",
+      "consultado": "2026-10-13",
+      "justificacion": "Log Analytics factura por GB ingerido y retenido (Learn). Supuesto: 10 KB de telemetría por consulta (petición, dependencias y trazas).",
+      "desglose": [
+        {
+          "parte": "10 KB de telemetría por consulta",
+          "valor": 1e-05,
+          "origen": "supuesto de Devoteam; NO VERIFICADO: se mide en el piloto"
+        }
+      ]
+    },
+    {
+      "id": "operacion.operaciones_secretos_por_consulta",
+      "caso_uso": "operacion",
+      "valor": 1,
+      "unidad": "operaciones de Key Vault por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/key-vault/general/overview",
+      "consultado": "2026-10-13",
+      "justificacion": "Cota superior: una lectura de secreto por consulta, sin caché en la aplicación (supuesto).",
+      "desglose": [
+        {
+          "parte": "lectura de un secreto",
+          "valor": 1,
+          "origen": "supuesto (cota superior)"
+        }
+      ]
+    },
+    {
+      "id": "operacion.gb_entrada_privada_por_consulta",
+      "caso_uso": "operacion",
+      "valor": 2.26e-05,
+      "unidad": "GB de entrada procesados por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/private-link/private-endpoint-overview",
+      "consultado": "2026-10-13",
+      "justificacion": "5.656 tokens de entrada por consulta (factor RAG de Learn) a unos 4 bytes por token (supuesto): 22,6 KB por consulta por el punto de conexión privado.",
+      "desglose": [
+        {
+          "parte": "5.656 tokens × 4 bytes",
+          "valor": 2.26e-05,
+          "origen": "Learn y supuesto"
+        }
+      ]
+    },
+    {
+      "id": "operacion.gb_salida_privada_por_consulta",
+      "caso_uso": "operacion",
+      "valor": 4.7e-06,
+      "unidad": "GB de salida procesados por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/private-link/private-endpoint-overview",
+      "consultado": "2026-10-13",
+      "justificacion": "1.171 tokens de salida por consulta (factor RAG) a unos 4 bytes por token (supuesto): 4,7 KB por consulta.",
+      "desglose": [
+        {
+          "parte": "1.171 tokens × 4 bytes",
+          "valor": 4.7e-06,
+          "origen": "factor RAG y supuesto"
+        }
+      ]
+    }
+  ],
+  "modelo_por_defecto": {
+    "componente": "az-foundry",
+    "modelo": "gpt-6-luna",
+    "plantillas": [
+      "gpt-6-luna-entrada",
+      "gpt-6-luna-salida"
+    ],
+    "region": "swedencentral",
+    "despliegue": "DataZoneStandard",
+    "motivo": "Decisión del comercial (13-10-2026). Learn lo da como modelo vendido por Azure, sin marca de vista previa y disponible en Data Zone UE; algunos niveles de cuota exigen pedir cuota para GPT-6 (los niveles 5 y 6 la tienen por defecto): supuesto y trámite en la semana 1.",
+    "fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+    "region_fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+    "consultado": "2026-10-13"
+  },
+  "computo_por_defecto": {
+    "componente": "az-app-service",
+    "nivel": "B1",
+    "plantillas": [
+      "b1-linux"
+    ],
+    "motivo": "La arquitectura básica de chat con Microsoft Foundry de Learn (piloto o prueba de concepto) usa el nivel Basic de App Service. Otro cómputo u otro nivel solo con un requisito de dimensionamiento citado en justificacion_nivel.",
+    "fuente_url": "https://learn.microsoft.com/azure/architecture/ai-ml/architecture/basic-microsoft-foundry-chat",
+    "consultado": "2026-10-13",
+    "filas": [
+      "az-app-service",
+      "az-functions",
+      "az-container-apps",
+      "az-logic-apps",
+      "az-foundry-agent-service"
+    ]
+  },
+  "arquitecturas_referencia": [
+    {
+      "id": "foundry-chat-basica",
+      "titulo": "Basic Microsoft Foundry chat reference architecture",
+      "url": "https://learn.microsoft.com/azure/architecture/ai-ml/architecture/basic-microsoft-foundry-chat",
+      "consultado": "2026-10-13",
+      "cuando_usar": "Piloto o prueba de concepto de un chat con Foundry, sin red privada ni alta disponibilidad."
+    },
+    {
+      "id": "foundry-chat-base",
+      "titulo": "Baseline Microsoft Foundry chat reference architecture",
+      "url": "https://learn.microsoft.com/azure/architecture/ai-ml/architecture/baseline-microsoft-foundry-chat",
+      "consultado": "2026-10-13",
+      "cuando_usar": "Chat empresarial con Foundry Agent Service, red privada, alta disponibilidad y seguridad de producción."
+    },
+    {
+      "id": "foundry-chat-zona-aterrizaje",
+      "titulo": "Baseline Microsoft Foundry chat reference architecture in an Azure landing zone",
+      "url": "https://learn.microsoft.com/azure/architecture/ai-ml/architecture/baseline-microsoft-foundry-landing-zone",
+      "consultado": "2026-10-13",
+      "cuando_usar": "Lo mismo que la base, desplegado en una zona de aterrizaje de Azure gestionada por la plataforma del cliente."
+    },
+    {
+      "id": "rag-diseno",
+      "titulo": "Design and develop a RAG solution",
+      "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/rag/rag-solution-design-and-evaluation-guide",
+      "consultado": "2026-10-13",
+      "cuando_usar": "Diseño de la recuperación (fragmentación, índice, búsqueda y evaluación) de un asistente con RAG."
+    },
+    {
+      "id": "waf-ia",
+      "titulo": "AI workloads on Azure",
+      "url": "https://learn.microsoft.com/azure/well-architected/ai/get-started",
+      "consultado": "2026-10-13",
+      "cuando_usar": "Principios de diseño de cualquier carga de IA (fiabilidad, seguridad, coste, operación y rendimiento)."
+    }
+  ],
+  "precios_auxiliares": [
+    {
+      "service_name": "Azure Private Link",
+      "motivo": "Punto de conexión privado facturado como precio auxiliar de un componente del catálogo; lo usa el paquete de ejemplo (esquemas/ejemplos/respuesta_experto.json, P-03).",
+      "plantillas_de": "az-private-link",
+      "plantillas": [
+        "punto-conexion"
+      ],
+      "componentes": [
+        "az-foundry",
+        "az-foundry-agent-service",
+        "az-ai-search",
+        "az-content-understanding",
+        "az-document-intelligence",
+        "az-speech",
+        "az-language",
+        "az-content-safety",
+        "az-storage",
+        "az-cosmos-db",
+        "az-sql-database",
+        "az-postgresql",
+        "az-app-service",
+        "az-container-apps",
+        "az-api-management",
+        "az-service-bus",
+        "az-event-grid",
+        "az-container-registry",
+        "az-data-factory",
+        "az-key-vault",
+        "az-purview",
+        "az-monitor",
+        "az-app-insights",
+        "az-log-analytics"
+      ]
+    }
+  ],
+  "componentes": [
+    {
+      "id": "az-foundry",
+      "nombre_oficial": "Microsoft Foundry",
+      "capa": "ia",
+      "service_name_precios": "Foundry Models",
+      "referencia_url": "https://learn.microsoft.com/azure/foundry/what-is-foundry",
+      "referencia_titulo": "What is Microsoft Foundry?",
+      "alias": [
+        "Azure AI Foundry",
+        "Azure AI Studio",
+        "Azure OpenAI",
+        "Azure OpenAI in Foundry Models"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "gpt-6-luna-entrada",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna ShortCo Inp Std DZ 1M Tokens'",
+          "concepto": "6-luna ShortCo Inp Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "por_defecto": true,
+          "modelo": "gpt-6-luna",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_entrada_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          }
+        },
+        {
+          "id": "gpt-6-luna-salida",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna ShortCo Opt Std DZ 1M Tokens'",
+          "concepto": "6-luna ShortCo Opt Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "por_defecto": true,
+          "modelo": "gpt-6-luna",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_salida_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          }
+        },
+        {
+          "id": "gpt-6-luna-entrada-cache",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna ShortCo Cd Inp Std DZ 1M Tokens'",
+          "concepto": "6-luna ShortCo Cd Inp Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-luna",
+          "contexto": "corto",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan la caché de peticiones: los tokens en caché dependen del prefijo repetido de cada solución (Learn: 1.024 tokens como mínimo); factor_override citando ese requisito, y la entrada sin caché baja en la misma cantidad."
+        },
+        {
+          "id": "gpt-6-luna-escritura-cache",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna ShortCo Cd Wr Std DZ 1M Tokens'",
+          "concepto": "6-luna ShortCo Cd Wr Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-luna",
+          "contexto": "corto",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan la caché de peticiones: los tokens en caché dependen del prefijo repetido de cada solución (Learn: 1.024 tokens como mínimo); factor_override citando ese requisito, y la entrada sin caché baja en la misma cantidad."
+        },
+        {
+          "id": "gpt-6-luna-entrada-largo",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna LongCo Inp Std DZ 1M Tokens'",
+          "concepto": "6-luna LongCo Inp Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-luna",
+          "contexto": "largo",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan peticiones de contexto largo; el umbral de tokens de entrada entre contexto corto y largo de GPT-6 está NO VERIFICADO (E17-1): factor_override citando ese requisito."
+        },
+        {
+          "id": "gpt-6-luna-salida-largo",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna LongCo Opt Std DZ 1M Tokens'",
+          "concepto": "6-luna LongCo Opt Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-luna",
+          "contexto": "largo",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan peticiones de contexto largo; el umbral de tokens de entrada entre contexto corto y largo de GPT-6 está NO VERIFICADO (E17-1): factor_override citando ese requisito."
+        },
+        {
+          "id": "gpt-6-luna-entrada-cache-largo",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna LongCo Cd Inp Std DZ 1M Tokens'",
+          "concepto": "6-luna LongCo Cd Inp Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-luna",
+          "contexto": "largo",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan peticiones de contexto largo; el umbral de tokens de entrada entre contexto corto y largo de GPT-6 está NO VERIFICADO (E17-1): factor_override citando ese requisito."
+        },
+        {
+          "id": "gpt-6-luna-escritura-cache-largo",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna LongCo Cd Wr Std DZ 1M Tokens'",
+          "concepto": "6-luna LongCo Cd Wr Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-luna",
+          "contexto": "largo",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan peticiones de contexto largo; el umbral de tokens de entrada entre contexto corto y largo de GPT-6 está NO VERIFICADO (E17-1): factor_override citando ese requisito."
+        },
+        {
+          "id": "gpt-6-sol-entrada",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-sol ShortCo Inp Std DZ 1M Tokens'",
+          "concepto": "6-sol ShortCo Inp Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-sol",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_entrada_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          }
+        },
+        {
+          "id": "gpt-6-sol-salida",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-sol ShortCo Opt Std DZ 1M Tokens'",
+          "concepto": "6-sol ShortCo Opt Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-sol",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_salida_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          }
+        },
+        {
+          "id": "gpt-6-sol-entrada-largo",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-sol LongCo Inp Std DZ 1M Tokens'",
+          "concepto": "6-sol LongCo Inp Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-sol",
+          "contexto": "largo",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan peticiones de contexto largo; el umbral de tokens de entrada entre contexto corto y largo de GPT-6 está NO VERIFICADO (E17-1): factor_override citando ese requisito."
+        },
+        {
+          "id": "gpt-6-sol-salida-largo",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-sol LongCo Opt Std DZ 1M Tokens'",
+          "concepto": "6-sol LongCo Opt Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6-sol",
+          "contexto": "largo",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan peticiones de contexto largo; el umbral de tokens de entrada entre contexto corto y largo de GPT-6 está NO VERIFICADO (E17-1): factor_override citando ese requisito."
+        },
+        {
+          "id": "gpt-6.1-sol-entrada",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6.1-sol ShortCo Inp Std DZ 1M Tokens'",
+          "concepto": "6.1-sol ShortCo Inp Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6.1-sol",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_entrada_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-29",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          }
+        },
+        {
+          "id": "gpt-6.1-sol-salida",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6.1-sol ShortCo Opt Std DZ 1M Tokens'",
+          "concepto": "6.1-sol ShortCo Opt Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6.1-sol",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_salida_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-29",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          }
+        },
+        {
+          "id": "gpt-6.1-sol-entrada-largo",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6.1-sol LongCo Inp Std DZ 1M Tokens'",
+          "concepto": "6.1-sol LongCo Inp Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6.1-sol",
+          "contexto": "largo",
+          "ciclo_vida": {
+            "ga": "2026-09-29",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan peticiones de contexto largo; el umbral de tokens de entrada entre contexto corto y largo de GPT-6 está NO VERIFICADO (E17-1): factor_override citando ese requisito."
+        },
+        {
+          "id": "gpt-6.1-sol-salida-largo",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6.1-sol LongCo Opt Std DZ 1M Tokens'",
+          "concepto": "6.1-sol LongCo Opt Std DZ 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-6.1-sol",
+          "contexto": "largo",
+          "ciclo_vida": {
+            "ga": "2026-09-29",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan peticiones de contexto largo; el umbral de tokens de entrada entre contexto corto y largo de GPT-6 está NO VERIFICADO (E17-1): factor_override citando ese requisito."
+        },
+        {
+          "id": "gpt-5-entrada",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Inpt DZone 1M Tokens'",
+          "concepto": "GPT 5 Inpt DZone 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5",
+          "ciclo_vida": {
+            "ga": "2025-08-07",
+            "retirada": "2027-02-09",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        },
+        {
+          "id": "gpt-5-entrada-cache",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 cchd Inpt DZone 1M Tokens'",
+          "concepto": "GPT 5 cchd Inpt DZone 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5",
+          "ciclo_vida": {
+            "ga": "2025-08-07",
+            "retirada": "2027-02-09",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        },
+        {
+          "id": "gpt-5-salida",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 outpt DZone 1M Tokens'",
+          "concepto": "GPT 5 outpt DZone 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5",
+          "ciclo_vida": {
+            "ga": "2025-08-07",
+            "retirada": "2027-02-09",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        },
+        {
+          "id": "gpt-5-mini-entrada",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Mini Inpt DZone 1M Tokens'",
+          "concepto": "GPT 5 Mini Inpt DZone 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5-mini",
+          "ciclo_vida": {
+            "ga": "2025-08-07",
+            "retirada": "2027-02-09",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        },
+        {
+          "id": "gpt-5-mini-salida",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Mini outpt DZone 1M Tokens'",
+          "concepto": "GPT 5 Mini outpt DZone 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5-mini",
+          "ciclo_vida": {
+            "ga": "2025-08-07",
+            "retirada": "2027-02-09",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        },
+        {
+          "id": "gpt-5-nano-entrada",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Nano Inpt DZone 1M Tokens'",
+          "concepto": "GPT 5 Nano Inpt DZone 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5-nano",
+          "ciclo_vida": {
+            "ga": "2025-08-07",
+            "retirada": "2027-02-09",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        },
+        {
+          "id": "gpt-5-nano-salida",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Nano outpt DZone 1M Tokens'",
+          "concepto": "GPT 5 Nano outpt DZone 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5-nano",
+          "ciclo_vida": {
+            "ga": "2025-08-07",
+            "retirada": "2027-02-09",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        },
+        {
+          "id": "gpt-5.4-entrada",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '5.4 inp Dz 1M Tokens'",
+          "concepto": "5.4 inp Dz 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5.4",
+          "ciclo_vida": {
+            "ga": "2026-03-05",
+            "retirada": "2027-09-02",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        },
+        {
+          "id": "gpt-5.4-salida",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '5.4 opt Dz 1M Tokens'",
+          "concepto": "5.4 opt Dz 1M Tokens",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "modelo": "gpt-5.4",
+          "ciclo_vida": {
+            "ga": "2026-03-05",
+            "retirada": "2027-09-02",
+            "fuente": "https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule"
+          },
+          "sin_factor_motivo": "Modelo fuera por ciclo de vida: el código lo rechaza y no se valora."
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "modelos de inserción text-embedding-3-small y text-embedding-3-large (Data Zone), tokens",
+          "motivo": "precio_redondeado_en_eur"
+        }
+      ],
+      "reglas_medidores": [
+        {
+          "si_usa": [
+            "gpt-6-luna-entrada",
+            "gpt-6-luna-salida",
+            "gpt-6-luna-entrada-cache",
+            "gpt-6-luna-escritura-cache"
+          ],
+          "exige": [
+            "gpt-6-luna-entrada",
+            "gpt-6-luna-salida"
+          ],
+          "motivo": "Una petición a gpt-6-luna factura tokens de entrada y de salida: con cualquiera de sus plantillas van las dos de ese contexto",
+          "fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+        },
+        {
+          "si_usa": [
+            "gpt-6-luna-entrada-largo",
+            "gpt-6-luna-salida-largo",
+            "gpt-6-luna-entrada-cache-largo",
+            "gpt-6-luna-escritura-cache-largo"
+          ],
+          "exige": [
+            "gpt-6-luna-entrada-largo",
+            "gpt-6-luna-salida-largo"
+          ],
+          "motivo": "Una petición a gpt-6-luna factura tokens de entrada y de salida: con cualquiera de sus plantillas van las dos de ese contexto",
+          "fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+        },
+        {
+          "si_usa": [
+            "gpt-6-sol-entrada",
+            "gpt-6-sol-salida"
+          ],
+          "exige": [
+            "gpt-6-sol-entrada",
+            "gpt-6-sol-salida"
+          ],
+          "motivo": "Una petición a gpt-6-sol factura tokens de entrada y de salida: con cualquiera de sus plantillas van las dos de ese contexto",
+          "fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+        },
+        {
+          "si_usa": [
+            "gpt-6-sol-entrada-largo",
+            "gpt-6-sol-salida-largo"
+          ],
+          "exige": [
+            "gpt-6-sol-entrada-largo",
+            "gpt-6-sol-salida-largo"
+          ],
+          "motivo": "Una petición a gpt-6-sol factura tokens de entrada y de salida: con cualquiera de sus plantillas van las dos de ese contexto",
+          "fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+        },
+        {
+          "si_usa": [
+            "gpt-6.1-sol-entrada",
+            "gpt-6.1-sol-salida"
+          ],
+          "exige": [
+            "gpt-6.1-sol-entrada",
+            "gpt-6.1-sol-salida"
+          ],
+          "motivo": "Una petición a gpt-6.1-sol factura tokens de entrada y de salida: con cualquiera de sus plantillas van las dos de ese contexto",
+          "fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+        },
+        {
+          "si_usa": [
+            "gpt-6.1-sol-entrada-largo",
+            "gpt-6.1-sol-salida-largo"
+          ],
+          "exige": [
+            "gpt-6.1-sol-entrada-largo",
+            "gpt-6.1-sol-salida-largo"
+          ],
+          "motivo": "Una petición a gpt-6.1-sol factura tokens de entrada y de salida: con cualquiera de sus plantillas van las dos de ese contexto",
+          "fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+        }
+      ]
+    },
+    {
+      "id": "az-foundry-agent-service",
+      "nombre_oficial": "Foundry Agent Service",
+      "capa": "ia",
+      "service_name_precios": "Foundry Tools",
+      "referencia_url": "https://learn.microsoft.com/azure/foundry/agents/overview",
+      "referencia_titulo": "Agents in Microsoft Foundry",
+      "alias": [
+        "Azure AI Agent Service",
+        "Agent Service",
+        "Servicio de agente de Microsoft Foundry",
+        "Servicio de agente de Foundry"
+      ],
+      "producto_precios": "Foundry Agents",
+      "region_ue": "swedencentral",
+      "regiones_no_admitidas": [
+        {
+          "region": "northeurope",
+          "motivo": "Learn no incluye North Europe en la tabla de regiones admitidas de Agent Service (Responses API y agentes); tampoco en la de agentes alojados.",
+          "fuente_url": "https://learn.microsoft.com/azure/foundry/agents/concepts/limits-quotas-regions",
+          "consultado": "2026-10-08"
+        }
+      ],
+      "plantillas_precio": [
+        {
+          "id": "hosted-vcpu",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Foundry Agents' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Hosted vCPU Usage'",
+          "concepto": "Hosted vCPU Usage",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "agente.horas_vcpu_por_consulta"
+        },
+        {
+          "id": "hosted-memoria",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Foundry Agents' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Hosted Memory Usage'",
+          "concepto": "Hosted Memory Usage",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "agente.gib_hora_por_consulta"
+        },
+        {
+          "id": "memoria-corto-plazo",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Foundry Agents' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Short Term Memory Events Stored'",
+          "concepto": "Short Term Memory Events Stored",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "agente.eventos_memoria_por_consulta"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Hospedado 1 vCPU y 2 GiB",
+          "plantillas": [
+            "hosted-vcpu",
+            "hosted-memoria"
+          ],
+          "limites": [
+            "Hospedado: 0,5, 1 o 2 vCPU con 1, 2 o 4 GiB por sesión",
+            "Hospedado: se factura la CPU y la memoria de las sesiones activas, sin réplicas"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "hosted-vcpu",
+            "hosted-memoria"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "az-ai-search",
+      "nombre_oficial": "Azure AI Search",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "Azure Cognitive Search",
+      "referencia_url": "https://learn.microsoft.com/azure/search/search-what-is-azure-search",
+      "referencia_titulo": "What is Azure AI Search?",
+      "alias": [
+        "Azure Cognitive Search",
+        "Azure Search",
+        "AI Search",
+        "Búsqueda de Azure AI",
+        "Búsqueda cognitiva de Azure"
+      ],
+      "producto_precios": "Azure AI Search",
+      "region_ue": "francecentral",
+      "regiones_no_admitidas": [
+        {
+          "region": "swedencentral",
+          "motivo": "Learn: «This region is in high demand, which prevents the creation of new search services»",
+          "fuente_url": "https://learn.microsoft.com/azure/search/search-region-support",
+          "consultado": "2026-10-08"
+        },
+        {
+          "region": "westeurope",
+          "motivo": "Learn: «This region is in high demand, which prevents the creation of new search services»",
+          "fuente_url": "https://learn.microsoft.com/azure/search/search-region-support",
+          "consultado": "2026-10-08"
+        },
+        {
+          "region": "northeurope",
+          "motivo": "Learn: «This region is in high demand, which prevents the creation of new search services»",
+          "fuente_url": "https://learn.microsoft.com/azure/search/search-region-support",
+          "consultado": "2026-10-08"
+        },
+        {
+          "region": "germanywestcentral",
+          "motivo": "Learn: «This region is in high demand, which prevents the creation of new search services»",
+          "fuente_url": "https://learn.microsoft.com/azure/search/search-region-support",
+          "consultado": "2026-10-08"
+        }
+      ],
+      "plantillas_precio": [
+        {
+          "id": "basic",
+          "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Basic Unit'",
+          "concepto": "Basic Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "s1",
+          "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Standard S1 Unit'",
+          "concepto": "Standard S1 Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "ranking-semantico",
+          "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Semantic Ranker queries'",
+          "concepto": "Semantic Ranker queries",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "asistente_rag.consultas_ranking_por_consulta"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Basic",
+          "plantillas": [
+            "basic"
+          ],
+          "limites": [
+            "15 GB de almacenamiento por partición (servicios creados desde abril de 2024)",
+            "5 GB de índice vectorial por partición",
+            "15 índices como máximo en servicios nuevos",
+            "3 particiones y 3 réplicas como máximo (9 unidades de búsqueda)"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+          "consultado": "2026-10-13",
+          "instancias_max": 9
+        },
+        {
+          "nivel": "S1",
+          "plantillas": [
+            "s1"
+          ],
+          "limites": [
+            "160 GB de almacenamiento por partición",
+            "35 GB de índice vectorial por partición",
+            "50 índices como máximo",
+            "36 unidades de búsqueda como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+          "consultado": "2026-10-13",
+          "instancias_max": 36
+        }
+      ],
+      "reglas_medidores": [
+        {
+          "si_usa": [
+            "ranking-semantico"
+          ],
+          "exige_uno_de": [
+            "basic",
+            "s1"
+          ],
+          "motivo": "El ranking semántico se cobra además de las unidades de búsqueda de un nivel dedicado",
+          "fuente_url": "https://learn.microsoft.com/azure/search/semantic-search-overview"
+        }
+      ]
+    },
+    {
+      "id": "az-content-understanding",
+      "nombre_oficial": "Azure Content Understanding in Foundry Tools",
+      "capa": "ia",
+      "service_name_precios": "Foundry Tools",
+      "referencia_url": "https://learn.microsoft.com/azure/ai-services/content-understanding/overview",
+      "referencia_titulo": "What is Azure Content Understanding in Foundry Tools?",
+      "alias": [
+        "Azure AI Content Understanding",
+        "Content Understanding",
+        "Comprensión de contenido de Azure en Foundry Tools"
+      ],
+      "producto_precios": "Azure Content Understanding",
+      "region_ue": "swedencentral",
+      "regiones_no_admitidas": [
+        {
+          "region": "francecentral",
+          "motivo": "Learn: Content Understanding solo está en las regiones listadas; en la UE, swedencentral y westeurope.",
+          "fuente_url": "https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support",
+          "consultado": "2026-10-08"
+        },
+        {
+          "region": "northeurope",
+          "motivo": "Learn: Content Understanding solo está en las regiones listadas; en la UE, swedencentral y westeurope.",
+          "fuente_url": "https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support",
+          "consultado": "2026-10-08"
+        },
+        {
+          "region": "germanywestcentral",
+          "motivo": "Learn: Content Understanding solo está en las regiones listadas; en la UE, swedencentral y westeurope.",
+          "fuente_url": "https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support",
+          "consultado": "2026-10-08"
+        },
+        {
+          "region": "spaincentral",
+          "motivo": "Learn: Content Understanding solo está en las regiones listadas; en la UE, swedencentral y westeurope.",
+          "fuente_url": "https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support",
+          "consultado": "2026-10-08"
+        },
+        {
+          "region": "italynorth",
+          "motivo": "Learn: Content Understanding solo está en las regiones listadas; en la UE, swedencentral y westeurope.",
+          "fuente_url": "https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support",
+          "consultado": "2026-10-08"
+        }
+      ],
+      "plantillas_precio": [
+        {
+          "id": "extraccion-contenido-estandar",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Content Understanding' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Doc Content Extraction Standard Pages'",
+          "concepto": "Doc Content Extraction Standard Pages",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "documentos.paginas_por_documento"
+        },
+        {
+          "id": "extraccion-campos-documento",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Content Understanding' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Document Field Extraction Pages'",
+          "concepto": "Document Field Extraction Pages",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "documentos.paginas_por_documento"
+        }
+      ]
+    },
+    {
+      "id": "az-document-intelligence",
+      "nombre_oficial": "Azure Document Intelligence in Foundry Tools",
+      "capa": "ia",
+      "service_name_precios": "Foundry Tools",
+      "referencia_url": "https://learn.microsoft.com/azure/ai-services/document-intelligence/overview",
+      "referencia_titulo": "What is Azure Document Intelligence in Foundry Tools?",
+      "alias": [
+        "Azure AI Document Intelligence",
+        "Form Recognizer",
+        "Azure Form Recognizer",
+        "Document Intelligence",
+        "Inteligencia de Documentos de Azure",
+        "Inteligencia de documentos"
+      ],
+      "producto_precios": "Azure Document Intelligence",
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "lectura",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Document Intelligence' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S0 Read Pages'",
+          "concepto": "S0 Read Pages",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "documentos.paginas_por_documento"
+        },
+        {
+          "id": "precompilado",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Document Intelligence' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S0 Pre-built Pages'",
+          "concepto": "S0 Pre-built Pages",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "documentos.paginas_por_documento"
+        },
+        {
+          "id": "personalizado",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Document Intelligence' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S0 Custom Pages'",
+          "concepto": "S0 Custom Pages",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "documentos.paginas_por_documento"
+        }
+      ]
+    },
+    {
+      "id": "az-speech",
+      "nombre_oficial": "Azure Speech in Foundry Tools",
+      "capa": "ia",
+      "service_name_precios": "Foundry Tools",
+      "referencia_url": "https://learn.microsoft.com/azure/ai-services/speech-service/overview",
+      "referencia_titulo": "What is Azure Speech?",
+      "alias": [
+        "Azure AI Speech",
+        "Azure Speech",
+        "Speech service",
+        "Voz de Azure"
+      ],
+      "producto_precios": "Azure Speech",
+      "region_ue": "swedencentral",
+      "regiones_no_admitidas": [
+        {
+          "region": "spaincentral",
+          "motivo": "Learn: «The following regions supported by an AIServices resource are currently not supported for speech processing: southindia, spaincentral».",
+          "fuente_url": "https://learn.microsoft.com/azure/ai-services/speech-service/regions",
+          "consultado": "2026-10-08"
+        }
+      ],
+      "plantillas_precio": [
+        {
+          "id": "voz-a-texto",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Speech' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S1 Speech To Text'",
+          "concepto": "S1 Speech To Text",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "voz.horas_audio_por_consulta"
+        },
+        {
+          "id": "texto-a-voz-neural",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Speech' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S1 Neural Text To Speech Characters'",
+          "concepto": "S1 Neural Text To Speech Characters",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "factor_estandar": "voz.caracteres_por_consulta"
+        },
+        {
+          "id": "traduccion-voz",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Speech' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S1 Speech Translation'",
+          "concepto": "S1 Speech Translation",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "voz.horas_audio_por_consulta"
+        }
+      ]
+    },
+    {
+      "id": "az-language",
+      "nombre_oficial": "Azure Language in Foundry Tools",
+      "capa": "ia",
+      "service_name_precios": "Foundry Tools",
+      "referencia_url": "https://learn.microsoft.com/azure/ai-services/language-service/overview",
+      "referencia_titulo": "What is Azure Language in Foundry Tools?",
+      "alias": [
+        "Azure AI Language",
+        "Azure Language",
+        "Text Analytics",
+        "Lenguaje de Azure en Foundry Tools",
+        "Lenguaje de Azure"
+      ],
+      "producto_precios": "Azure Language",
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "resumen",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Summarization Text Records'",
+          "concepto": "Standard Summarization Text Records",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "documentos.registros_texto_por_documento"
+        },
+        {
+          "id": "clu",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard CLU Text Records'",
+          "concepto": "Standard CLU Text Records",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "consulta_texto.registros_por_consulta"
+        },
+        {
+          "id": "preguntas-respuestas",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard QA Text Records'",
+          "concepto": "Standard QA Text Records",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "consulta_texto.registros_por_consulta"
+        },
+        {
+          "id": "redaccion-pii-documentos",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Doc-PII Redaction Pages'",
+          "concepto": "Doc-PII Redaction Pages",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "documentos.paginas_por_documento"
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "análisis de texto estándar (opiniones, entidades y datos personales)",
+          "motivo": "no_publicado_en_la_region"
+        }
+      ]
+    },
+    {
+      "id": "az-content-safety",
+      "nombre_oficial": "Azure AI Content Safety",
+      "capa": "ia",
+      "service_name_precios": "Foundry Tools",
+      "referencia_url": "https://learn.microsoft.com/azure/ai-services/content-safety/overview",
+      "referencia_titulo": "What is Azure AI Content Safety?",
+      "alias": [
+        "Content Safety",
+        "Seguridad del contenido de Azure AI"
+      ],
+      "producto_precios": "Content Safety",
+      "region_ue": "swedencentral",
+      "regiones_no_admitidas": [
+        {
+          "region": "northeurope",
+          "motivo": "Learn no incluye North Europe en la tabla de Europa de Azure AI Content Safety.",
+          "fuente_url": "https://learn.microsoft.com/azure/ai-services/content-safety/region-availability",
+          "consultado": "2026-10-08"
+        }
+      ],
+      "plantillas_precio": [
+        {
+          "id": "texto",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Content Safety' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Text Records'",
+          "concepto": "Standard Text Records",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "consulta_texto.registros_moderacion_por_consulta"
+        },
+        {
+          "id": "imagenes",
+          "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Content Safety' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Images'",
+          "concepto": "Standard Images",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "consulta_texto.imagenes_por_imagen"
+        }
+      ]
+    },
+    {
+      "id": "az-storage",
+      "nombre_oficial": "Azure Blob Storage",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "Storage",
+      "referencia_url": "https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction",
+      "referencia_titulo": "Introduction to Azure Blob Storage",
+      "alias": [
+        "Blob Storage",
+        "Azure Storage",
+        "Almacenamiento Blob"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "hot-lrs-datos",
+          "filtro": "serviceName eq 'Storage' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BPH7' and meterName eq 'Hot LRS Data Stored'",
+          "concepto": "Hot LRS Data Stored",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "almacen_documentos.gb_por_documento"
+        },
+        {
+          "id": "hot-lrs-escrituras",
+          "filtro": "serviceName eq 'Storage' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BPH7' and meterName eq 'Hot LRS Write Operations'",
+          "concepto": "Hot LRS Write Operations",
+          "impulsor": "volumen",
+          "divisor": 10000,
+          "factor_estandar": "almacen_documentos.escrituras_por_documento"
+        },
+        {
+          "id": "hot-lrs-lecturas",
+          "filtro": "serviceName eq 'Storage' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BPH7' and skuName eq 'Hot LRS' and meterName eq 'Hot Read Operations'",
+          "concepto": "Hot Read Operations",
+          "impulsor": "volumen",
+          "divisor": 10000,
+          "factor_estandar": "almacen_documentos.lecturas_por_documento"
+        }
+      ],
+      "medidores_obligatorios": [
+        "hot-lrs-datos"
+      ]
+    },
+    {
+      "id": "az-cosmos-db",
+      "nombre_oficial": "Azure Cosmos DB",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "Azure Cosmos DB",
+      "referencia_url": "https://learn.microsoft.com/azure/cosmos-db/overview",
+      "referencia_titulo": "Azure Cosmos DB - Database for the AI Era",
+      "alias": [
+        "Cosmos DB",
+        "Azure Cosmos DB for NoSQL"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "sin-servidor-ru",
+          "filtro": "serviceName eq 'Azure Cosmos DB' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '1M RUs'",
+          "concepto": "1M RUs",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "factor_estandar": "historial_chat.ru_por_consulta"
+        },
+        {
+          "id": "aprovisionado-100ru",
+          "filtro": "serviceName eq 'Azure Cosmos DB' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and skuName eq 'RUs' and meterName eq '100 RU/s'",
+          "concepto": "100 RU/s",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "almacenamiento",
+          "filtro": "serviceName eq 'Azure Cosmos DB' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and skuName eq 'RUs' and meterName eq 'Data Stored'",
+          "concepto": "Data Stored",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "historial_chat.gb_por_consulta"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Sin servidor",
+          "plantillas": [
+            "sin-servidor-ru"
+          ],
+          "limites": [
+            "una sola región de Azure; no se pueden añadir regiones después",
+            "5.000 RU/s por partición física"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/cosmos-db/serverless",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "sin-servidor-ru",
+            "almacenamiento"
+          ]
+        },
+        {
+          "nivel": "Aprovisionado",
+          "plantillas": [
+            "aprovisionado-100ru"
+          ],
+          "limites": [
+            "mínimo de 400 RU/s por contenedor con rendimiento manual"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/cosmos-db/concepts-limits",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "aprovisionado-100ru",
+            "almacenamiento"
+          ],
+          "instancias_min": 4
+        }
+      ],
+      "medidores_obligatorios": [
+        "almacenamiento"
+      ],
+      "reglas_medidores": [
+        {
+          "si_usa": [
+            "almacenamiento"
+          ],
+          "exige_uno_de": [
+            "sin-servidor-ru",
+            "aprovisionado-100ru"
+          ],
+          "motivo": "La capacidad se cobra además del rendimiento: sin servidor o aprovisionado",
+          "fuente_url": "https://learn.microsoft.com/azure/cosmos-db/request-units"
+        }
+      ]
+    },
+    {
+      "id": "az-sql-database",
+      "nombre_oficial": "Azure SQL Database",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "SQL Database",
+      "referencia_url": "https://learn.microsoft.com/azure/azure-sql/database/sql-database-paas-overview",
+      "referencia_titulo": "What is Azure SQL Database?",
+      "alias": [
+        "SQL Database"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "basic",
+          "filtro": "serviceName eq 'SQL Database' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BQGZ' and skuName eq 'B' and meterName eq 'B DTU'",
+          "concepto": "B DTU",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "s0",
+          "filtro": "serviceName eq 'SQL Database' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BQHF' and skuName eq 'S0' and meterName eq 'S0 DTUs'",
+          "concepto": "S0 DTUs",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "s1",
+          "filtro": "serviceName eq 'SQL Database' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BQHF' and skuName eq 'S1' and meterName eq 'S1 DTUs'",
+          "concepto": "S1 DTUs",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "gp-2vcore",
+          "filtro": "serviceName eq 'SQL Database' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BPXL' and skuName eq '2 vCore' and meterName eq 'vCore'",
+          "concepto": "vCore (2 vCore)",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "gp-almacenamiento",
+          "filtro": "serviceName eq 'SQL Database' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BQDW' and meterName eq 'General Purpose Data Stored'",
+          "concepto": "General Purpose Data Stored",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "por_instancia": {
+            "valor": 41.6,
+            "unidad": "GB por base de datos (32 GB por defecto + 30 % de registro)",
+            "fuente_url": "https://learn.microsoft.com/azure/azure-sql/database/service-tiers-sql-database-vcore"
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Basic",
+          "plantillas": [
+            "basic"
+          ],
+          "limites": [
+            "5 DTU como máximo",
+            "almacenamiento máximo de 2 GB",
+            "30 trabajos simultáneos como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-sql/database/resource-limits-dtu-single-databases",
+          "consultado": "2026-10-11"
+        },
+        {
+          "nivel": "S0",
+          "plantillas": [
+            "s0"
+          ],
+          "limites": [
+            "10 DTU como máximo",
+            "almacenamiento máximo de 250 GB",
+            "60 trabajos simultáneos como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-sql/database/resource-limits-dtu-single-databases",
+          "consultado": "2026-10-11"
+        },
+        {
+          "nivel": "S1",
+          "plantillas": [
+            "s1"
+          ],
+          "limites": [
+            "20 DTU como máximo",
+            "almacenamiento máximo de 250 GB",
+            "90 trabajos simultáneos como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-sql/database/resource-limits-dtu-single-databases",
+          "consultado": "2026-10-11"
+        },
+        {
+          "nivel": "GP_Gen5_2",
+          "plantillas": [
+            "gp-2vcore",
+            "gp-almacenamiento"
+          ],
+          "limites": [
+            "2 núcleos virtuales y 10,4 GB de memoria",
+            "tamaño máximo de datos de 1.024 GB",
+            "200 trabajos simultáneos como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-sql/database/resource-limits-vcore-single-databases",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "gp-2vcore",
+            "gp-almacenamiento"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "az-postgresql",
+      "nombre_oficial": "Azure Database for PostgreSQL",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "Azure Database for PostgreSQL",
+      "referencia_url": "https://learn.microsoft.com/azure/postgresql/overview",
+      "referencia_titulo": "What is Azure Database for PostgreSQL flexible server?",
+      "alias": [
+        "Azure Database for PostgreSQL flexible server"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "b1ms",
+          "filtro": "serviceName eq 'Azure Database for PostgreSQL' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0DCRL' and meterName eq 'B1MS'",
+          "concepto": "B1MS",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "d2ds-v5",
+          "filtro": "serviceName eq 'Azure Database for PostgreSQL' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0KDZJ' and armSkuName eq 'Standard_D2ds_v5' and meterName eq 'vCore'",
+          "concepto": "vCore (2 vCore)",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "almacenamiento",
+          "filtro": "serviceName eq 'Azure Database for PostgreSQL' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0DCRX' and skuName eq 'Storage' and meterName eq 'Storage Data Stored'",
+          "concepto": "Storage Data Stored",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "por_instancia": {
+            "valor": 32,
+            "unidad": "GiB aprovisionados por servidor (el mínimo)",
+            "fuente_url": "https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-storage"
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "B1ms",
+          "plantillas": [
+            "b1ms"
+          ],
+          "limites": [
+            "1 núcleo virtual y 2 GiB de memoria",
+            "640 IOPS como máximo",
+            "Burstable: sin soporte 24x7, pensado para desarrollo y pruebas"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-compute",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "b1ms",
+            "almacenamiento"
+          ]
+        },
+        {
+          "nivel": "D2ds_v5",
+          "plantillas": [
+            "d2ds-v5"
+          ],
+          "limites": [
+            "2 núcleos virtuales y 8 GiB de memoria",
+            "3.750 IOPS como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-compute",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "d2ds-v5",
+            "almacenamiento"
+          ]
+        }
+      ],
+      "medidores_obligatorios": [
+        "almacenamiento"
+      ],
+      "reglas_medidores": [
+        {
+          "si_usa": [
+            "almacenamiento"
+          ],
+          "exige_uno_de": [
+            "b1ms",
+            "d2ds-v5"
+          ],
+          "motivo": "El almacenamiento aprovisionado se cobra además del cómputo del servidor",
+          "fuente_url": "https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-storage"
+        }
+      ]
+    },
+    {
+      "id": "az-app-service",
+      "nombre_oficial": "Azure App Service",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Azure App Service",
+      "referencia_url": "https://learn.microsoft.com/azure/app-service/overview",
+      "referencia_titulo": "App Service overview",
+      "alias": [
+        "App Service",
+        "Web Apps"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "b1-linux",
+          "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'B1'",
+          "concepto": "B1 (Azure App Service Basic Plan - Linux)",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "p0v3-linux",
+          "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and armSkuName eq 'Azure_App_Service_Premium_v3_Plan_Linux_P0_v3' and meterName eq 'P0v3 App'",
+          "concepto": "P0v3 App",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "p1v3-linux",
+          "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and armSkuName eq 'Azure_App_Service_Premium_v3_Plan_Linux_P1_v3' and meterName eq 'P1 v3 App'",
+          "concepto": "P1 v3 App",
+          "impulsor": "tiempo",
+          "divisor": 1
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "B1",
+          "plantillas": [
+            "b1-linux"
+          ],
+          "limites": [
+            "Basic: 3 instancias dedicadas como máximo",
+            "Basic: 10 GB de almacenamiento",
+            "Basic: copias de seguridad programadas cada 2 horas, 12 al día como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits",
+          "consultado": "2026-10-13",
+          "instancias_max": 3
+        },
+        {
+          "nivel": "P0v3",
+          "plantillas": [
+            "p0v3-linux"
+          ],
+          "limites": [
+            "Premium v3: 30 instancias dedicadas como máximo",
+            "Premium: 250 GB de almacenamiento",
+            "Premium: copias de seguridad programadas cada hora, 50 al día como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits",
+          "consultado": "2026-10-13",
+          "instancias_max": 30
+        },
+        {
+          "nivel": "P1v3",
+          "plantillas": [
+            "p1v3-linux"
+          ],
+          "limites": [
+            "Premium v3: 30 instancias dedicadas como máximo",
+            "Premium: 250 GB de almacenamiento",
+            "Premium: copias de seguridad programadas cada hora, 50 al día como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits",
+          "consultado": "2026-10-13",
+          "instancias_max": 30
+        }
+      ]
+    },
+    {
+      "id": "az-container-apps",
+      "nombre_oficial": "Azure Container Apps",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Azure Container Apps",
+      "referencia_url": "https://learn.microsoft.com/azure/container-apps/overview",
+      "referencia_titulo": "Azure Container Apps overview",
+      "alias": [
+        "Container Apps"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "dedicado-vcpu",
+          "filtro": "serviceName eq 'Azure Container Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Dedicated vCPU Usage'",
+          "concepto": "Dedicated vCPU Usage",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "por_instancia": {
+            "valor": 4,
+            "unidad": "vCPU por instancia D4",
+            "fuente_url": "https://learn.microsoft.com/azure/container-apps/workload-profiles-overview"
+          }
+        },
+        {
+          "id": "dedicado-memoria",
+          "filtro": "serviceName eq 'Azure Container Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Dedicated Memory Usage'",
+          "concepto": "Dedicated Memory Usage",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "por_instancia": {
+            "valor": 16,
+            "unidad": "GiB por instancia D4",
+            "fuente_url": "https://learn.microsoft.com/azure/container-apps/workload-profiles-overview"
+          }
+        },
+        {
+          "id": "dedicado-gestion",
+          "filtro": "serviceName eq 'Azure Container Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Dedicated Plan Management'",
+          "concepto": "Dedicated Plan Management",
+          "impulsor": "tiempo",
+          "divisor": 1
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Dedicado D4",
+          "plantillas": [
+            "dedicado-vcpu",
+            "dedicado-memoria",
+            "dedicado-gestion"
+          ],
+          "limites": [
+            "General Purpose D4, D8, D16 y D32: de 4 a 32 vCPU y de 16 a 128 GiB por instancia",
+            "Dedicado: se factura por instancias del perfil en ejecución, no por aplicación",
+            "Las instancias del perfil se añaden y quitan con la demanda, entre un mínimo y un máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/container-apps/workload-profiles-overview",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "dedicado-vcpu",
+            "dedicado-memoria",
+            "dedicado-gestion"
+          ]
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "plan de consumo: vCPU, memoria por segundo y peticiones",
+          "motivo": "precio_redondeado_en_eur"
+        }
+      ],
+      "medidores_obligatorios": [
+        "dedicado-vcpu",
+        "dedicado-memoria",
+        "dedicado-gestion"
+      ]
+    },
+    {
+      "id": "az-functions",
+      "nombre_oficial": "Azure Functions",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Functions",
+      "referencia_url": "https://learn.microsoft.com/azure/azure-functions/functions-overview",
+      "referencia_titulo": "What is Azure Functions?",
+      "alias": [
+        "Function App"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "premium-vcpu",
+          "filtro": "serviceName eq 'Functions' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Premium vCPU Duration'",
+          "concepto": "Premium vCPU Duration",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "por_instancia": {
+            "valor": 1,
+            "unidad": "núcleo por instancia EP1",
+            "fuente_url": "https://learn.microsoft.com/azure/azure-functions/functions-premium-plan"
+          }
+        },
+        {
+          "id": "premium-memoria",
+          "filtro": "serviceName eq 'Functions' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Premium Memory Duration'",
+          "concepto": "Premium Memory Duration",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "por_instancia": {
+            "valor": 3.5,
+            "unidad": "GB de memoria por instancia EP1",
+            "fuente_url": "https://learn.microsoft.com/azure/azure-functions/functions-premium-plan"
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "EP1",
+          "plantillas": [
+            "premium-vcpu",
+            "premium-memoria"
+          ],
+          "limites": [
+            "EP1: 1 núcleo y 3,5 GB de memoria por instancia",
+            "Premium: siempre hay al menos una instancia activa facturada",
+            "Premium: hasta 20 instancias siempre preparadas por aplicación"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-functions/functions-premium-plan",
+          "consultado": "2026-10-13",
+          "instancias_max": 20,
+          "medidores_obligatorios": [
+            "premium-vcpu",
+            "premium-memoria"
+          ]
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "planes Consumo y Flex Consumption, tiempo de ejecución y ejecuciones",
+          "motivo": "precio_redondeado_en_eur"
+        }
+      ],
+      "medidores_obligatorios": [
+        "premium-vcpu",
+        "premium-memoria"
+      ]
+    },
+    {
+      "id": "az-api-management",
+      "nombre_oficial": "Azure API Management",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "API Management",
+      "referencia_url": "https://learn.microsoft.com/azure/api-management/api-management-key-concepts",
+      "referencia_titulo": "What is Azure API Management?",
+      "alias": [
+        "API Management",
+        "APIM"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "developer",
+          "filtro": "serviceName eq 'API Management' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Developer Unit'",
+          "concepto": "Developer Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "basic-v2",
+          "filtro": "serviceName eq 'API Management' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Basic v2 Unit'",
+          "concepto": "Basic v2 Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "standard-v2",
+          "filtro": "serviceName eq 'API Management' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard v2 Unit'",
+          "concepto": "Standard v2 Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "consumo-llamadas",
+          "filtro": "serviceName eq 'API Management' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Consumption Calls'",
+          "concepto": "Consumption Calls",
+          "impulsor": "volumen",
+          "divisor": 10000,
+          "factor_estandar": "integracion.llamadas_api_por_consulta"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Consumption",
+          "plantillas": [
+            "consumo-llamadas"
+          ],
+          "limites": [
+            "sin integración con Microsoft Entra",
+            "sin punto de conexión privado de entrada"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/api-management/api-management-features",
+          "consultado": "2026-10-13"
+        },
+        {
+          "nivel": "Developer",
+          "plantillas": [
+            "developer"
+          ],
+          "limites": [
+            "solo para uso no productivo y evaluaciones; sin SLA",
+            "Developer: 1 unidad de escala como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/api-management/api-management-features",
+          "consultado": "2026-10-13",
+          "instancias_max": 1
+        },
+        {
+          "nivel": "Basic v2",
+          "plantillas": [
+            "basic-v2"
+          ],
+          "limites": [
+            "con integración con Microsoft Entra",
+            "sin punto de conexión privado de entrada",
+            "Basic v2: 10 unidades de escala como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/api-management/api-management-features",
+          "consultado": "2026-10-13",
+          "instancias_max": 10
+        },
+        {
+          "nivel": "Standard v2",
+          "plantillas": [
+            "standard-v2"
+          ],
+          "limites": [
+            "punto de conexión privado de entrada",
+            "conexión con back-ends aislados en una red virtual",
+            "Standard v2: 10 unidades de escala como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/api-management/api-management-features",
+          "consultado": "2026-10-13",
+          "instancias_max": 10
+        }
+      ]
+    },
+    {
+      "id": "az-logic-apps",
+      "nombre_oficial": "Azure Logic Apps",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Logic Apps",
+      "referencia_url": "https://learn.microsoft.com/azure/logic-apps/logic-apps-overview",
+      "referencia_titulo": "What is Azure Logic Apps?",
+      "alias": [
+        "Logic Apps"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "standard-vcpu",
+          "filtro": "serviceName eq 'Logic Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard vCPU Duration'",
+          "concepto": "Standard vCPU Duration",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "por_instancia": {
+            "valor": 1,
+            "unidad": "vCPU por instancia WS1",
+            "fuente_url": "https://learn.microsoft.com/azure/logic-apps/logic-apps-pricing"
+          }
+        },
+        {
+          "id": "standard-memoria",
+          "filtro": "serviceName eq 'Logic Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Memory Duration'",
+          "concepto": "Standard Memory Duration",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "por_instancia": {
+            "valor": 3.5,
+            "unidad": "GB de memoria por instancia WS1",
+            "fuente_url": "https://learn.microsoft.com/azure/logic-apps/logic-apps-pricing"
+          }
+        },
+        {
+          "id": "consumo-conector-empresarial",
+          "filtro": "serviceName eq 'Logic Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Consumption Enterprise Connector Actions'",
+          "concepto": "Consumption Enterprise Connector Actions",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "integracion.acciones_por_mensaje"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Consumo",
+          "plantillas": [
+            "consumo-conector-empresarial"
+          ],
+          "limites": [
+            "Consumo: se mide y factura cada ejecución de una operación, tras las integradas gratuitas",
+            "Consumo: los conectores administrados se facturan como conector estándar o empresarial"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/logic-apps/logic-apps-pricing",
+          "consultado": "2026-10-13"
+        },
+        {
+          "nivel": "Standard WS1",
+          "plantillas": [
+            "standard-vcpu",
+            "standard-memoria"
+          ],
+          "limites": [
+            "WS1: 1 vCPU y 3,5 GB de memoria",
+            "Standard: 730 horas al mes por la vCPU y la memoria del nivel elegido"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/logic-apps/logic-apps-pricing",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "standard-vcpu",
+            "standard-memoria"
+          ]
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "plan Consumo, acciones de conector estándar",
+          "motivo": "precio_redondeado_en_eur"
+        }
+      ]
+    },
+    {
+      "id": "az-service-bus",
+      "nombre_oficial": "Azure Service Bus",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Service Bus",
+      "referencia_url": "https://learn.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview",
+      "referencia_titulo": "What is Azure Service Bus?",
+      "alias": [
+        "Service Bus"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "basic-operaciones",
+          "filtro": "serviceName eq 'Service Bus' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Basic Messaging Operations'",
+          "concepto": "Basic Messaging Operations",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "factor_estandar": "integracion.operaciones_por_mensaje"
+        },
+        {
+          "id": "standard-base",
+          "filtro": "serviceName eq 'Service Bus' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Base Unit'",
+          "concepto": "Standard Base Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "standard-operaciones",
+          "filtro": "serviceName eq 'Service Bus' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Messaging Operations'",
+          "concepto": "Standard Messaging Operations",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "factor_estandar": "integracion.operaciones_por_mensaje"
+        },
+        {
+          "id": "premium-mu",
+          "filtro": "serviceName eq 'Service Bus' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Premium Messaging Unit'",
+          "concepto": "Premium Messaging Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Basic",
+          "plantillas": [
+            "basic-operaciones"
+          ],
+          "limites": [
+            "solo colas, sin temas ni suscripciones"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging",
+          "consultado": "2026-10-13"
+        },
+        {
+          "nivel": "Standard",
+          "plantillas": [
+            "standard-base",
+            "standard-operaciones"
+          ],
+          "limites": [
+            "añade temas y suscripciones, sesiones, transacciones y detección de duplicados",
+            "capacidad compartida facturada por operación"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging",
+          "consultado": "2026-10-13",
+          "medidores_obligatorios": [
+            "standard-base",
+            "standard-operaciones"
+          ]
+        },
+        {
+          "nivel": "Premium",
+          "plantillas": [
+            "premium-mu"
+          ],
+          "limites": [
+            "unidades de mensajería dedicadas con aislamiento de recursos",
+            "mensajes de hasta 100 MB",
+            "integración con red virtual y Private Link",
+            "Premium: 1, 2, 4, 8 o 16 unidades de mensajería por espacio de nombres"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/service-bus-messaging/service-bus-premium-messaging",
+          "consultado": "2026-10-13",
+          "instancias_max": 16,
+          "instancias_validas": [
+            1,
+            2,
+            4,
+            8,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "id": "az-event-grid",
+      "nombre_oficial": "Azure Event Grid",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Event Grid",
+      "referencia_url": "https://learn.microsoft.com/azure/event-grid/overview",
+      "referencia_titulo": "What is Azure Event Grid?",
+      "alias": [
+        "Event Grid"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "operaciones",
+          "filtro": "serviceName eq 'Event Grid' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Operations'",
+          "concepto": "Standard Operations",
+          "impulsor": "volumen",
+          "divisor": 100000,
+          "factor_estandar": "integracion.operaciones_por_evento"
+        }
+      ]
+    },
+    {
+      "id": "az-container-registry",
+      "nombre_oficial": "Azure Container Registry",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Container Registry",
+      "referencia_url": "https://learn.microsoft.com/azure/container-registry/container-registry-intro",
+      "referencia_titulo": "Introduction to Azure Container Registry",
+      "alias": [
+        "Container Registry"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "basic",
+          "filtro": "serviceName eq 'Container Registry' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Basic Registry Unit'",
+          "concepto": "Basic Registry Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "standard",
+          "filtro": "serviceName eq 'Container Registry' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Registry Unit'",
+          "concepto": "Standard Registry Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "premium",
+          "filtro": "serviceName eq 'Container Registry' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Premium Registry Unit'",
+          "concepto": "Premium Registry Unit",
+          "impulsor": "tiempo",
+          "divisor": 1
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Basic",
+          "plantillas": [
+            "basic"
+          ],
+          "limites": [
+            "10 GiB de almacenamiento incluido",
+            "2 webhooks",
+            "sin Private Link con puntos de conexión privados"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/container-registry/container-registry-skus",
+          "consultado": "2026-10-11"
+        },
+        {
+          "nivel": "Standard",
+          "plantillas": [
+            "standard"
+          ],
+          "limites": [
+            "100 GiB de almacenamiento incluido",
+            "10 webhooks",
+            "sin Private Link con puntos de conexión privados"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/container-registry/container-registry-skus",
+          "consultado": "2026-10-11"
+        },
+        {
+          "nivel": "Premium",
+          "plantillas": [
+            "premium"
+          ],
+          "limites": [
+            "500 GiB de almacenamiento incluido",
+            "Private Link con puntos de conexión privados",
+            "replicación geográfica"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/container-registry/container-registry-skus",
+          "consultado": "2026-10-11"
+        }
+      ]
+    },
+    {
+      "id": "az-data-factory",
+      "nombre_oficial": "Azure Data Factory",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Azure Data Factory v2",
+      "referencia_url": "https://learn.microsoft.com/azure/data-factory/introduction",
+      "referencia_titulo": "What is Azure Data Factory?",
+      "alias": [
+        "Data Factory"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "orquestacion",
+          "filtro": "serviceName eq 'Azure Data Factory v2' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Cloud Orchestration Activity Run'",
+          "concepto": "Cloud Orchestration Activity Run",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "integracion.actividades_por_documento"
+        },
+        {
+          "id": "movimiento-datos",
+          "filtro": "serviceName eq 'Azure Data Factory v2' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Cloud Data Movement'",
+          "concepto": "Cloud Data Movement",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "integracion.diu_horas_por_documento"
+        }
+      ],
+      "medidores_obligatorios": [
+        "orquestacion"
+      ]
+    },
+    {
+      "id": "az-bot-service",
+      "nombre_oficial": "Azure AI Bot Service",
+      "capa": "usuarios_canales",
+      "service_name_precios": "Azure Bot Service",
+      "referencia_url": "https://learn.microsoft.com/azure/bot-service/bot-overview",
+      "referencia_titulo": "Choose the right chatbot solution for your use case",
+      "alias": [
+        "Azure Bot Service",
+        "Azure Bot",
+        "Bot Service",
+        "Servicio de Bot de Azure AI"
+      ],
+      "producto_precios": "Azure Bot Service",
+      "region_ue": "westeurope",
+      "region_precio": "Global",
+      "regiones_no_admitidas": [
+        {
+          "region": "global",
+          "motivo": "Usuarios en la UE: un bot «global» no mantiene sus datos dentro de la UE. Learn ofrece la residencia local del recurso Azure Bot en westeurope; el precio se sigue publicando como Global.",
+          "fuente_url": "https://learn.microsoft.com/azure/bot-service/abs-quickstart",
+          "consultado": "2026-10-09"
+        }
+      ],
+      "plantillas_precio": [
+        {
+          "id": "canales-estandar",
+          "filtro": "serviceName eq 'Azure Bot Service' and productName eq 'Azure Bot Service' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Free Standard Channel Messages'",
+          "concepto": "Free Standard Channel Messages",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "bot.mensajes_por_consulta"
+        },
+        {
+          "id": "canales-premium",
+          "filtro": "serviceName eq 'Azure Bot Service' and productName eq 'Azure Bot Service' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'S1 Premium Channel Messages'",
+          "concepto": "S1 Premium Channel Messages",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "bot.mensajes_por_consulta"
+        }
+      ]
+    },
+    {
+      "id": "az-teams",
+      "nombre_oficial": "Microsoft Teams",
+      "capa": "usuarios_canales",
+      "service_name_precios": null,
+      "referencia_url": "https://learn.microsoft.com/microsoftteams/platform/overview",
+      "referencia_titulo": "Microsoft Teams developer platform overview",
+      "alias": [
+        "Teams"
+      ],
+      "residencia": "geografia_tenant"
+    },
+    {
+      "id": "az-sharepoint",
+      "nombre_oficial": "SharePoint Online",
+      "capa": "datos_conocimiento",
+      "service_name_precios": null,
+      "referencia_url": "https://learn.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-service-description",
+      "referencia_titulo": "SharePoint service description",
+      "alias": [
+        "SharePoint"
+      ],
+      "region_ue": "global",
+      "residencia": "geografia_tenant"
+    },
+    {
+      "id": "az-microsoft-365",
+      "nombre_oficial": "Microsoft 365",
+      "capa": "usuarios_canales",
+      "service_name_precios": null,
+      "referencia_url": "https://learn.microsoft.com/microsoft-365/enterprise/microsoft-365-overview",
+      "referencia_titulo": "Microsoft 365 for enterprise overview",
+      "region_ue": "global",
+      "residencia": "geografia_tenant"
+    },
+    {
+      "id": "az-key-vault",
+      "nombre_oficial": "Azure Key Vault",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": "Key Vault",
+      "referencia_url": "https://learn.microsoft.com/azure/key-vault/general/overview",
+      "referencia_titulo": "About Azure Key Vault",
+      "alias": [
+        "Key Vault"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "operaciones",
+          "filtro": "serviceName eq 'Key Vault' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and skuName eq 'Standard' and meterName eq 'Operations'",
+          "concepto": "Operations",
+          "impulsor": "volumen",
+          "divisor": 10000,
+          "factor_estandar": "operacion.operaciones_secretos_por_consulta"
+        }
+      ]
+    },
+    {
+      "id": "az-entra-id",
+      "nombre_oficial": "Microsoft Entra ID",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": null,
+      "referencia_url": "https://learn.microsoft.com/entra/fundamentals/what-is-entra",
+      "referencia_titulo": "What is Microsoft Entra?",
+      "alias": [
+        "Azure Active Directory",
+        "Azure AD",
+        "Entra ID"
+      ],
+      "region_ue": "global",
+      "residencia": "geografia_tenant"
+    },
+    {
+      "id": "az-defender-cloud",
+      "nombre_oficial": "Microsoft Defender for Cloud",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": "Microsoft Defender for Cloud",
+      "referencia_url": "https://learn.microsoft.com/azure/defender-for-cloud/defender-for-cloud-introduction",
+      "referencia_titulo": "What is Microsoft Defender for Cloud?",
+      "alias": [
+        "Azure Security Center",
+        "Azure Defender",
+        "Defender for Cloud"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "servidores-p1",
+          "filtro": "serviceName eq 'Microsoft Defender for Cloud' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard P1 Node'",
+          "concepto": "Standard P1 Node",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "servidores-p2",
+          "filtro": "serviceName eq 'Microsoft Defender for Cloud' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard P2 Node'",
+          "concepto": "Standard P2 Node",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "almacenamiento-malware",
+          "filtro": "serviceName eq 'Microsoft Defender for Cloud' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Malware Scanning Data Ingested'",
+          "concepto": "Malware Scanning Data Ingested",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "almacen_documentos.gb_por_documento"
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "Defender for App Service, por instancia",
+          "motivo": "sin_medidor_unico"
+        }
+      ]
+    },
+    {
+      "id": "az-purview",
+      "nombre_oficial": "Microsoft Purview",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": "Microsoft Purview",
+      "referencia_url": "https://learn.microsoft.com/purview/purview",
+      "referencia_titulo": "Learn about Microsoft Purview",
+      "alias": [
+        "Azure Purview",
+        "Purview"
+      ],
+      "region_ue": "westeurope",
+      "plantillas_precio": [
+        {
+          "id": "gobierno-basico",
+          "filtro": "serviceName eq 'Microsoft Purview' and armRegionName eq 'westeurope' and priceType eq 'Consumption' and meterName eq 'Data Management Basic Data Governance Processing Unit'",
+          "concepto": "Data Management Basic Data Governance Processing Unit",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "sin_factor_motivo": "Learn no publica cómo se convierte un volumen de documentos o consultas en unidades de procesamiento de gobierno de datos: solo con factor_override citando un requisito que lo diga."
+        },
+        {
+          "id": "catalogo-activos",
+          "filtro": "serviceName eq 'Microsoft Purview' and armRegionName eq 'westeurope' and priceType eq 'Consumption' and meterName eq 'Data Catalog Standard Asset'",
+          "concepto": "Data Catalog Standard Asset",
+          "impulsor": "tiempo",
+          "divisor": 1
+        }
+      ]
+    },
+    {
+      "id": "az-virtual-network",
+      "nombre_oficial": "Azure Virtual Network",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": "Virtual Network",
+      "referencia_url": "https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview",
+      "referencia_titulo": "What is Azure Virtual Network?",
+      "alias": [
+        "VNet",
+        "Virtual Network",
+        "Red virtual de Azure"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "ip-publica-estandar",
+          "filtro": "serviceName eq 'Virtual Network' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard IPv4 Static Public IP'",
+          "concepto": "Standard IPv4 Static Public IP",
+          "impulsor": "tiempo",
+          "divisor": 1
+        }
+      ]
+    },
+    {
+      "id": "az-private-link",
+      "nombre_oficial": "Azure Private Link",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": "Virtual Network",
+      "referencia_url": "https://learn.microsoft.com/azure/private-link/private-link-overview",
+      "referencia_titulo": "What is Azure Private Link?",
+      "alias": [
+        "Private Link",
+        "Private Endpoint"
+      ],
+      "producto_precios": "Virtual Network Private Link",
+      "region_ue": "global",
+      "region_precio": "Global",
+      "plantillas_precio": [
+        {
+          "id": "punto-conexion",
+          "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Private Endpoint'",
+          "concepto": "Standard Private Endpoint",
+          "impulsor": "tiempo",
+          "divisor": 1
+        },
+        {
+          "id": "datos-entrada",
+          "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Data Processed - Ingress'",
+          "concepto": "Standard Data Processed - Ingress",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "operacion.gb_entrada_privada_por_consulta"
+        },
+        {
+          "id": "datos-salida",
+          "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Data Processed - Egress'",
+          "concepto": "Standard Data Processed - Egress",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "operacion.gb_salida_privada_por_consulta"
+        }
+      ],
+      "medidores_obligatorios": [
+        "punto-conexion"
+      ]
+    },
+    {
+      "id": "az-monitor",
+      "nombre_oficial": "Azure Monitor",
+      "capa": "operacion_observabilidad",
+      "service_name_precios": "Azure Monitor",
+      "referencia_url": "https://learn.microsoft.com/azure/azure-monitor/fundamentals/overview",
+      "referencia_titulo": "Azure Monitor overview",
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "registros-basicos",
+          "filtro": "serviceName eq 'Azure Monitor' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Basic Logs Data Ingestion'",
+          "concepto": "Basic Logs Data Ingestion",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "operacion.gb_registros_por_consulta"
+        },
+        {
+          "id": "alertas-metricas",
+          "filtro": "serviceName eq 'Azure Monitor' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Alerts Resource Monitored at 5 Minute Frequency'",
+          "concepto": "Alerts Resource Monitored at 5 Minute Frequency",
+          "impulsor": "tiempo",
+          "divisor": 1
+        }
+      ]
+    },
+    {
+      "id": "az-app-insights",
+      "nombre_oficial": "Application Insights",
+      "capa": "operacion_observabilidad",
+      "service_name_precios": "Application Insights",
+      "referencia_url": "https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview",
+      "referencia_titulo": "Introduction to Application Insights - OpenTelemetry observability",
+      "alias": [
+        "Azure Monitor Application Insights"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "retencion",
+          "filtro": "serviceName eq 'Application Insights' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and skuName eq 'Basic' and meterName eq 'Data Retention'",
+          "concepto": "Data Retention",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "operacion.gb_registros_por_consulta"
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "ingesta de datos",
+          "motivo": "se_factura_en_otro_componente"
+        }
+      ]
+    },
+    {
+      "id": "az-log-analytics",
+      "nombre_oficial": "Log Analytics",
+      "capa": "operacion_observabilidad",
+      "service_name_precios": "Log Analytics",
+      "referencia_url": "https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-overview",
+      "referencia_titulo": "Overview of Log Analytics in Azure Monitor",
+      "alias": [
+        "Log Analytics workspace",
+        "Azure Monitor Logs"
+      ],
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "ingesta",
+          "filtro": "serviceName eq 'Log Analytics' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Analytics Logs Data Ingestion'",
+          "concepto": "Analytics Logs Data Ingestion",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "operacion.gb_registros_por_consulta"
+        },
+        {
+          "id": "retencion",
+          "filtro": "serviceName eq 'Log Analytics' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Analytics Logs Data Retention'",
+          "concepto": "Analytics Logs Data Retention",
+          "impulsor": "volumen",
+          "divisor": 1,
+          "factor_estandar": "operacion.gb_registros_por_consulta"
+        }
+      ],
+      "incluye": [
+        {
+          "catalogo_id": "az-app-insights",
+          "concepto": "ingesta y retención de datos de Application Insights basado en área de trabajo",
+          "fuente_url": "https://learn.microsoft.com/azure/azure-monitor/logs/cost-logs"
+        }
+      ],
+      "medidores_obligatorios": [
+        "ingesta"
+      ]
+    },
+    {
+      "id": "az-cost-management",
+      "nombre_oficial": "Microsoft Cost Management",
+      "capa": "operacion_observabilidad",
+      "service_name_precios": null,
+      "referencia_url": "https://learn.microsoft.com/azure/cost-management-billing/costs/overview-cost-management",
+      "referencia_titulo": "What is Microsoft Cost Management",
+      "alias": [
+        "Cost Management"
+      ]
+    },
+    {
+      "id": "az-policy",
+      "nombre_oficial": "Azure Policy",
+      "capa": "operacion_observabilidad",
+      "service_name_precios": null,
+      "referencia_url": "https://learn.microsoft.com/azure/governance/policy/overview",
+      "referencia_titulo": "What is Azure Policy?"
+    }
+  ]
+}

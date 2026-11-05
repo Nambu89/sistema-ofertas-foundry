@@ -1,0 +1,23 @@
+{
+  "brief_id": "BRF-OF-KELVARA-001-A-AZ-R1",
+  "experto": "preventa-experto-azure",
+  "version": "A",
+  "ronda": 1,
+  "texto": "BRIEF-PREVENTA/1\nbrief_id: BRF-OF-KELVARA-001-A-AZ-R1\nexperto: preventa-experto-azure\nronda: 1\nperfiles_permitidos: AI Architect / Tech Lead; Senior AI / Foundry Engineer; Integration Engineer / Salesforce; Data & BI Engineer; AI Engineer / Tech Lead; Project Manager; Consultor Junior\n---\n## Necesidad\nObjetivo: Asistente de IA que responda en lenguaje natural a los técnicos y cite siempre el informe o la norma de origen\nNubes: Azure\n## Alcance funcional\n- Búsqueda en informes de ensayo y procedimientos internos con cita al documento y a la página\n- Resumen de un informe largo en un párrafo comprensible para el equipo comercial\n- Comparación de dos ensayos del mismo material indicando qué ha cambiado\n- Respuesta explícita cuando no encuentra la información, sin inventar\n## Canales e integraciones\n- Microsoft Teams\n## Usuarios y marco normativo\nUbicación de los usuarios finales: España (laboratorios de [SENSIBLE] y [SENSIBLE])\nMarco normativo: RGPD, con datos en la Unión Europea\n## Contexto\nVolumetría: entre 100 y 500 técnicos usuarios y unos 20.000 documentos (informes, procedimientos y normas) [ASUMIDO, confianza baja]\nIdentidad y permisos del origen: Documentos en SharePoint Online del tenant del cliente, con permisos por grupos de Entra ID que se respetan en las respuestas [ASUMIDO, confianza baja]\nRed privada: Servicios sin exposición a internet, con acceso privado y puntos de conexión privados donde se pueda\nTipo de suscripción: Enterprise Agreement directo con Microsoft\nPlazo: Piloto funcionando en unos tres meses desde el arranque\nPresupuesto orientativo: Entre cuarenta y cincuenta mil euros para el piloto, sin consumo de Azure\nIdioma de la oferta: Castellano\n## Fuera de alcance\n- Integración con el LIMS, el sistema de gestión del laboratorio\n- Integración con SAP",
+  "sha256": "cae85726e2f83684e560b9b63c8fb561d76a9466f2e7eed45aa5ffb070417d01",
+  "sha256_cuerpo": "8d7540fa577df620b1317930681af865250136587c2089a0958e18a1cb2470bd",
+  "catalogo_sha256": "4742c92eaad3d073879838cdd3288cc1515f45e5e7392d389fb8cd7ed76250e1",
+  "perfiles_permitidos": [
+    "AI Architect / Tech Lead",
+    "Senior AI / Foundry Engineer",
+    "Integration Engineer / Salesforce",
+    "Data & BI Engineer",
+    "AI Engineer / Tech Lead",
+    "Project Manager",
+    "Consultor Junior"
+  ],
+  "correcciones": [],
+  "conservar": [],
+  "conservar_precios": [],
+  "aceptados": []
+}

@@ -1,0 +1,85 @@
+{
+ "origen": {
+  "skill": "rate-card-sintetica",
+  "skill_id": "sintetica",
+  "version": "1",
+  "proyecto": "proyecto-ejemplo",
+  "sha256_skill_md": "0000000000000000000000000000000000000000000000000000000000000000"
+ },
+ "tarifa": {
+  "esquema": "devoteam-rate-card/1",
+  "empresa": "Devoteam M Cloud",
+  "pilar": "Microsoft",
+  "moneda": "EUR",
+  "iva_incluido": false,
+  "contingencia_porcentaje": 0,
+  "perfiles": [
+   {
+    "nombre": "AI Architect / Tech Lead",
+    "nivel": "Consultor Senior",
+    "tarifa_hora": 110.0,
+    "descripcion": "Perfil de ejemplo con tarifa SINTÉTICA para pruebas"
+   },
+   {
+    "nombre": "Senior AI / Foundry Engineer",
+    "nivel": "Consultor Senior",
+    "tarifa_hora": 100.25,
+    "descripcion": "Perfil de ejemplo con tarifa SINTÉTICA para pruebas"
+   },
+   {
+    "nombre": "Integration Engineer / Salesforce",
+    "nivel": "Consultor Senior",
+    "tarifa_hora": 95.0,
+    "descripcion": "Perfil de ejemplo con tarifa SINTÉTICA para pruebas"
+   },
+   {
+    "nombre": "Data & BI Engineer",
+    "nivel": "Consultor Senior",
+    "tarifa_hora": 90.0,
+    "descripcion": "Perfil de ejemplo con tarifa SINTÉTICA para pruebas"
+   },
+   {
+    "nombre": "AI Engineer / Tech Lead",
+    "nivel": "Consultor Senior",
+    "tarifa_hora": 100.0,
+    "descripcion": "Perfil de ejemplo con tarifa SINTÉTICA para pruebas"
+   },
+   {
+    "nombre": "Project Manager",
+    "nivel": "Consultor Senior",
+    "tarifa_hora": 85.0,
+    "descripcion": "Perfil de ejemplo con tarifa SINTÉTICA para pruebas"
+   },
+   {
+    "nombre": "Consultor Junior",
+    "nivel": "Junior",
+    "tarifa_hora": 70.0,
+    "descripcion": "Perfil de ejemplo con tarifa SINTÉTICA para pruebas"
+   }
+  ],
+  "hitos_pago": [
+   {
+    "hito": 1,
+    "porcentaje": 25,
+    "descripcion": "Kick-off y Discovery completado"
+   },
+   {
+    "hito": 2,
+    "porcentaje": 25,
+    "descripcion": "Entregable principal en entorno dev"
+   },
+   {
+    "hito": 3,
+    "porcentaje": 25,
+    "descripcion": "Piloto/MVP en producción controlada"
+   },
+   {
+    "hito": 4,
+    "porcentaje": 25,
+    "descripcion": "Evaluación final y cierre"
+   }
+  ],
+  "condiciones_pago": "30 días fecha factura",
+  "validez_oferta_dias": 30
+ }
+}

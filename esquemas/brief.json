@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:brief:2",
+  "title": "Brief anonimizado guardado en carga.briefs[]",
+  "description": "Lo genera brief.generar; 'texto' es exactamente lo que se envía por A2A (formato de CONTRATOS.md §6.1). sha256 = SHA-256 de 'texto'; sha256_cuerpo = SHA-256 de lo que sigue a la línea '---'.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "brief_id",
+    "experto",
+    "version",
+    "ronda",
+    "texto",
+    "sha256",
+    "sha256_cuerpo",
+    "catalogo_sha256",
+    "perfiles_permitidos",
+    "correcciones"
+  ],
+  "properties": {
+    "brief_id": {
+      "type": "string",
+      "pattern": "^BRF-OF-[A-Z0-9]{2,20}-[0-9]{3}-[A-Z]-AZ-R[1-3]$"
+    },
+    "experto": {
+      "enum": [
+        "preventa-experto-azure"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[A-Z]$"
+    },
+    "ronda": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3
+    },
+    "texto": {
+      "type": "string",
+      "minLength": 200,
+      "maxLength": 20480
+    },
+    "sha256": {
+      "$ref": "#/$defs/hex64"
+    },
+    "sha256_cuerpo": {
+      "$ref": "#/$defs/hex64"
+    },
+    "catalogo_sha256": {
+      "$ref": "#/$defs/hex64"
+    },
+    "perfiles_permitidos": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "correcciones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "veredicto",
+          "valor_correcto",
+          "fuente_url"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^(REF|C|P|S|RG)-[0-9]{2}$"
+          },
+          "veredicto": {
+            "enum": [
+              "DISCREPA"
+            ]
+          },
+          "valor_correcto": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fuente_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "texto_original": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        }
+      }
+    },
+    "conservar": {
+      "type": "array",
+      "maxItems": 65,
+      "description": "CMP-1 (I1.3): líneas de referencias y componentes del consolidado anterior que la verificación no dejó como DISCREPA efectivo (con PR16-6, también las heredadas sin enviar porque ya estaban aceptadas); el brief las lleva para que el experto las conserve. I1.7: las líneas P- salen de la respuesta registrada (plantilla, instancias, base y factor propio, y la cantidad que calculó el núcleo) de los componentes sin corrección. Opcional: los briefs anteriores a I1.3 no la tienen.",
+      "items": {
+        "type": "string",
+        "pattern": "^(REF|C|P)-[0-9]{2} \\| ",
+        "maxLength": 2000
+      }
+    },
+    "conservar_precios": {
+      "type": "array",
+      "maxItems": 40,
+      "description": "LES-G-100.6 (I1.7): lo que el experto conserva, POR EFECTO: una entrada por servicio del catálogo y plantilla (o filtro, si el precio no tiene plantilla_id) con la cantidad mensual TOTAL de sus precios. registrar-experto (verificacion.errores_conservacion_efecto) exige en la respuesta nueva la misma suma, a 6 decimales, con esa plantilla en componentes de ese catalogo_id. La puerta la ata a las líneas P- del texto sellado (REVERIF16-2). Opcional: los briefs anteriores no la tienen; en un brief de I1.6 (un precio por elemento) no valida.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "catalogo_id",
+          "plantilla_id",
+          "filtro",
+          "cantidad_mensual",
+          "precio_ids",
+          "componente_ids"
+        ],
+        "properties": {
+          "catalogo_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "plantilla_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "filtro": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "cantidad_mensual": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "precio_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^P-[0-9]{2}$"
+            }
+          },
+          "componente_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^C-[0-9]{2}$"
+            }
+          }
+        }
+      }
+    },
+    "aceptados": {
+      "type": "array",
+      "maxItems": 130,
+      "description": "PR16-6 (I1.7): lo que el verificador ya aceptó (OK, OBSERVACION o reparado) en las rondas anteriores de esta versión, por contenido de línea del consolidado (sin id). El consolidado de esta ronda solo envía lo nuevo o cambiado y una objeción sobre lo aceptado que llega igual pasa a OBSERVACION. Es dato de control: no va en el texto; la puerta exige que cada línea figure como conservada en un brief de la misma versión. [] en la ronda 1. Opcional: los briefs anteriores a I1.7 no la tienen.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "linea",
+          "veredicto",
+          "ronda"
+        ],
+        "properties": {
+          "linea": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 2000
+          },
+          "veredicto": {
+            "enum": [
+              "OK",
+              "OBSERVACION",
+              "REPARADO"
+            ]
+          },
+          "ronda": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "hex64": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

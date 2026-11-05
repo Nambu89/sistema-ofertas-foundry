@@ -1,0 +1,1641 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:catalogo:catalogo_referencias_azure:1",
+  "title": "Catálogo de referencias Azure para preventa de IA y datos (catalogo/catalogo_referencias_azure.json)",
+  "description": "Fuente enriquecida de BD. De aquí se derivan el catálogo de componentes del sandbox (esquemas/catalogo_componentes.json) y la tabla de las instrucciones del experto y del verificador. Cada URL y cada serviceName se comprueban con catalogo/comprobar_catalogo.py; la comprobación queda en el bloque comprobacion de cada entrada. Subconjunto de CONTRATOS.md §12. Desde I1.2 (F2): alias con fuente de Learn por alias, región UE recomendada con su fuente, regiones vetadas y con restricciones, y el registro fuentes_comprobadas (HTTP y título de cada URL usada, consultadas el mismo día).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "fecha",
+    "fuente_precios",
+    "componentes"
+  ],
+  "properties": {
+    "schema": {
+      "const": "preventa-catalogo-referencias/1"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "fecha": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "fuente_precios": {
+      "const": "https://prices.azure.com/api/retail/prices"
+    },
+    "componentes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 120,
+      "items": {
+        "$ref": "#/$defs/componente"
+      }
+    },
+    "fuentes_comprobadas": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "$ref": "#/$defs/fuente"
+      }
+    },
+    "precios_auxiliares": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/auxiliar"
+      },
+      "description": "Lista blanca de serviceName de servicios auxiliares sin componente propio: solo valen como precio auxiliar de un componente con catalogo_id y nunca identifican un servicio (decisión del PM, I1.2)."
+    },
+    "casos_uso": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "descripcion",
+          "factores"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z_]{3,40}$"
+          },
+          "descripcion": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200
+          },
+          "factores": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/$defs/factor"
+            }
+          }
+        }
+      },
+      "description": "I1.7 (decisión 2 del comercial): factores estándar por caso de uso, con fuente."
+    },
+    "ciclo_vida_modelos": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 40,
+      "items": {
+        "$ref": "#/$defs/ciclo_vida"
+      },
+      "description": "I1.7: GA y retirada publicada (o null) de cada modelo con plantilla."
+    },
+    "modelo_por_defecto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "componente",
+        "modelo",
+        "plantillas",
+        "region",
+        "despliegue",
+        "motivo",
+        "fuente_url",
+        "region_fuente_url",
+        "consultado"
+      ],
+      "properties": {
+        "componente": {
+          "const": "az-foundry"
+        },
+        "modelo": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+        },
+        "plantillas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+          }
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^[a-z]+[a-z0-9]*$"
+        },
+        "despliegue": {
+          "const": "DataZoneStandard"
+        },
+        "motivo": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 400
+        },
+        "fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "region_fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "consultado": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "arquitecturas_referencia": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "titulo",
+          "url",
+          "consultado",
+          "cuando_usar"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+          },
+          "titulo": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 200
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+          },
+          "consultado": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "cuando_usar": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200
+          }
+        }
+      },
+      "description": "I1.7: arquitecturas de referencia oficiales; el experto elige el id y el núcleo pone la URL."
+    },
+    "computo_por_defecto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "componente",
+        "nivel",
+        "plantillas",
+        "motivo",
+        "fuente_url",
+        "consultado"
+      ],
+      "properties": {
+        "componente": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+        },
+        "nivel": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 40
+        },
+        "plantillas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+          }
+        },
+        "motivo": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 400
+        },
+        "fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "consultado": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "filas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^az-[a-z0-9-]{2,40}$"
+          },
+          "description": "I1.8 (REVERIF17-2): filas de la clase cómputo (lo lee experto.filas_computo)."
+        }
+      },
+      "description": "PR17-4 (arreglos I1.7): cómputo por defecto; con él no hace falta justificacion_nivel, con cualquier otro cómputo con niveles sí (cita de dimensionamiento)."
+    }
+  },
+  "$defs": {
+    "componente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "nombre_oficial",
+        "alias",
+        "capa",
+        "cuando_usar",
+        "referencia_url",
+        "referencia_url_propuesta",
+        "service_name_precios",
+        "producto_precios",
+        "nota",
+        "comprobacion"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^az-[a-z0-9-]{2,40}$"
+        },
+        "nombre_oficial": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "alias": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "nombre",
+              "fuente_url"
+            ],
+            "properties": {
+              "nombre": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 80,
+                "pattern": "^\\S(.*\\S)?$"
+              },
+              "fuente_url": {
+                "type": "string",
+                "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+              }
+            }
+          }
+        },
+        "capa": {
+          "enum": [
+            "usuarios_canales",
+            "aplicacion_integracion",
+            "ia",
+            "datos_conocimiento",
+            "identidad_seguridad_red",
+            "operacion_observabilidad"
+          ]
+        },
+        "cuando_usar": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 300
+        },
+        "referencia_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "referencia_url_propuesta": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "service_name_precios": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "producto_precios": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "nota": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 10,
+          "maxLength": 400
+        },
+        "comprobacion": {
+          "$ref": "#/$defs/comprobacion"
+        },
+        "region_ue": {
+          "type": "string",
+          "pattern": "^[a-z]+[a-z0-9]*$"
+        },
+        "regiones_no_admitidas": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "region",
+              "motivo",
+              "fuente_url",
+              "consultado"
+            ],
+            "properties": {
+              "region": {
+                "type": "string",
+                "pattern": "^[a-z]+[a-z0-9]*$"
+              },
+              "motivo": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 300
+              },
+              "fuente_url": {
+                "type": "string",
+                "pattern": "^https://learn\\.microsoft\\.com/"
+              },
+              "consultado": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              }
+            }
+          }
+        },
+        "region_fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "residencia": {
+          "enum": [
+            "geografia_tenant"
+          ]
+        },
+        "residencia_fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "precios_items_ue": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "swedencentral",
+            "francecentral",
+            "westeurope",
+            "northeurope",
+            "germanywestcentral",
+            "spaincentral",
+            "italynorth"
+          ],
+          "properties": {
+            "swedencentral": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "francecentral": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "westeurope": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "northeurope": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "germanywestcentral": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "spaincentral": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "italynorth": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          }
+        },
+        "regiones_con_restricciones": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "region",
+              "motivo",
+              "fuente_url",
+              "consultado"
+            ],
+            "properties": {
+              "region": {
+                "type": "string",
+                "pattern": "^[a-z]+[a-z0-9]*$"
+              },
+              "motivo": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 400
+              },
+              "fuente_url": {
+                "type": "string",
+                "pattern": "^https://learn\\.microsoft\\.com/"
+              },
+              "consultado": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              }
+            }
+          }
+        },
+        "region_precio": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40,
+          "description": "armRegionName EXACTO (la API distingue mayúsculas) con el que Retail Prices publica el precio de un servicio que no tiene precio por región (p. ej. «Global»). Si existe, el filtro de todo precio del servicio lleva este armRegionName en vez de la región del componente."
+        },
+        "region_precio_comprobacion": {
+          "$ref": "#/$defs/comprobacion_precio"
+        },
+        "plantillas_precio": {
+          "type": "array",
+          "maxItems": 30,
+          "items": {
+            "$ref": "#/$defs/plantilla_precio"
+          }
+        },
+        "no_valorables": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/no_valorable"
+          }
+        },
+        "niveles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "description": "I1.6 (decisión 4): niveles del servicio de menor a mayor, con sus plantillas y límites oficiales literales de Learn.",
+          "items": {
+            "$ref": "#/$defs/nivel"
+          }
+        },
+        "incluye": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/inclusion"
+          },
+          "description": "I1.7: lo que el precio de este componente ya incluye (incluido_en_otro_componente exige esta declaración)."
+        },
+        "referencia_titulo": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200,
+          "description": "PR17-1 (arreglos I1.7): título publicado (h1) de la referencia_url en Learn; lo pone el núcleo."
+        },
+        "medidores_obligatorios": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+          },
+          "description": "PR17-3 (arreglos I1.7): plantillas que un componente de esta fila con algún precio propio tiene que llevar (el medidor que más pesa: la capacidad de Storage, núcleos y memoria)."
+        },
+        "reglas_medidores": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "si_usa",
+              "motivo",
+              "fuente_url"
+            ],
+            "properties": {
+              "si_usa": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 8,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+                }
+              },
+              "exige": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 8,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+                }
+              },
+              "exige_uno_de": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 8,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+                }
+              },
+              "motivo": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 300
+              },
+              "fuente_url": {
+                "type": "string",
+                "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+              }
+            }
+          },
+          "description": "I1.8 (REVERIF17-2): si el componente usa alguna plantilla de «si_usa», lleva todas las de «exige» y al menos una de «exige_uno_de». Propuesta al núcleo (CAMBIOS-I18-E §3)."
+        },
+        "nivel_por_defecto": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nivel",
+            "fuente",
+            "motivo",
+            "consultado"
+          ],
+          "description": "I1.9 (VC18-1): nivel mínimo viable en producción con SLA, que no se justifica (fuera de la clase cómputo; en ella solo el cómputo por defecto). Lo lee experto.nivel_por_defecto.",
+          "properties": {
+            "nivel": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 40
+            },
+            "fuente": {
+              "type": "string",
+              "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+            },
+            "motivo": {
+              "type": "string",
+              "minLength": 20,
+              "maxLength": 400
+            },
+            "consultado": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            }
+          }
+        },
+        "disponibilidad": {
+          "type": "object",
+          "description": "I1.9 (VC18-3, VC18-11): {nivel (o modelo en Microsoft Foundry): {regiones, alcance, fuente, consultado, nota}}: las regiones de la UE del catálogo donde Learn lo da disponible; alcance «nivel» si Learn publica la tabla por nivel, «servicio» si solo por servicio. Un DISCREPA de región contra esto pasa a OBSERVACION (núcleo: verificacion.disponibilidad_catalogo). El validador de esquemas no admite claves libres con esquema: la forma de cada entrada la comprueba plantillas_precio.problemas_i19."
+        }
+      }
+    },
+    "comprobacion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fecha",
+        "url_http",
+        "url_titulo",
+        "precios_items"
+      ],
+      "properties": {
+        "fecha": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "url_http": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 100,
+          "maximum": 599
+        },
+        "url_titulo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 3,
+          "maxLength": 300
+        },
+        "precios_items": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "fuente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "http",
+        "url_final",
+        "titulo",
+        "actualizado",
+        "consultado"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "http": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599
+        },
+        "url_final": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/"
+        },
+        "titulo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 300
+        },
+        "actualizado": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 40
+        },
+        "consultado": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "comprobacion_precio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fecha",
+        "filtro",
+        "precios_items"
+      ],
+      "properties": {
+        "fecha": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "filtro": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "precios_items": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "auxiliar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "service_name",
+        "motivo",
+        "nota",
+        "comprobacion"
+      ],
+      "properties": {
+        "service_name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "productos": {
+          "type": "array",
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 80
+          }
+        },
+        "region_precio": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40
+        },
+        "motivo": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "nota": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500
+        },
+        "comprobacion": {
+          "$ref": "#/$defs/comprobacion_precio"
+        },
+        "componentes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 60,
+          "uniqueItems": true,
+          "description": "INT15-3 y REV15-3 (I1.6): catalogo_id de los componentes a los que puede acompañar este precio auxiliar.",
+          "items": {
+            "type": "string",
+            "pattern": "^az-[a-z0-9-]{2,40}$"
+          }
+        },
+        "componentes_fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "plantillas_de": {
+          "type": "string",
+          "pattern": "^az-[a-z0-9-]{2,40}$",
+          "description": "Fila del catálogo con region_precio cuyas plantillas usa el auxiliar (INT15-3)."
+        },
+        "plantillas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+          }
+        }
+      }
+    },
+    "plantilla_precio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "descripcion",
+        "filtro",
+        "impulsor",
+        "divisor",
+        "comprobacion"
+      ],
+      "description": "Plantilla de filtro de precio (I1.5, decisión 1): filtro OData de Retail Prices que devuelve un solo medidor (o sus tramos), comprobado con catalogo/medir_plantillas.py. Forma y región: catalogo/plantillas_precio.py.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+        },
+        "filtro": {
+          "type": "string",
+          "minLength": 40,
+          "maxLength": 400,
+          "pattern": "^serviceName eq '[^']+'( and [A-Za-z]+ eq '[^']+')+$"
+        },
+        "gratuito": {
+          "type": "boolean"
+        },
+        "comprobacion": {
+          "$ref": "#/$defs/comprobacion_plantilla"
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 120,
+          "description": "Descripción en castellano para el lector del catálogo. NO es el concepto del precio: ese lo deriva catalogo.plantillas_precio.concepto() de la comprobación (I1.6, PR15-3)."
+        },
+        "impulsor": {
+          "enum": [
+            "tiempo",
+            "volumen"
+          ],
+          "description": "I1.6 (decisión 4, LES-G-100): qué mueve la cantidad mensual. tiempo = horas, días o meses desplegado; volumen = sale de la volumetría citada con factor."
+        },
+        "divisor": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Divisor de la unidad del medidor (1M = 1000000, 1K = 1000, 10K = 10000…; 1 en las de tiempo). Igual a plantillas_precio.divisor_de_unidad(unidad)."
+        },
+        "concepto_con_sku": {
+          "type": "boolean",
+          "description": "El concepto lleva el skuName entre paréntesis: el meterName solo («vCore») no distingue el tamaño."
+        },
+        "por_defecto": {
+          "const": true,
+          "description": "PR16-3 (arreglos I1.6): plantilla por defecto de la fila (el modelo de Microsoft Foundry): el experto la usa salvo que el brief pida otra y el núcleo anota para el revisor cuando no se usa."
+        },
+        "modelo": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$",
+          "description": "I1.7: modelo de la plantilla (clave de ciclo_vida_modelos); solo en las de modelos."
+        },
+        "contexto": {
+          "enum": [
+            "corto",
+            "largo"
+          ],
+          "description": "I1.7: GPT-6 factura aparte las peticiones de contexto corto y largo según los tokens de entrada de cada petición."
+        },
+        "factor_estandar": {
+          "type": "string",
+          "pattern": "^[a-z_]+\\.[a-z_]+$",
+          "description": "I1.7 (decisión 2): «caso_uso.factor» de casos_uso; el código hace la cuenta."
+        },
+        "por_instancia": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "valor",
+            "unidad",
+            "fuente_url"
+          ],
+          "properties": {
+            "valor": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 1000
+            },
+            "unidad": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 60
+            },
+            "fuente_url": {
+              "type": "string",
+              "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+            }
+          },
+          "description": "PR17-5 (arreglos I1.7): unidades del medidor por instancia (EP1: 3,5 GB de memoria); cantidad de tiempo = 730 h × instancias × valor."
+        },
+        "sin_factor_motivo": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 300,
+          "description": "I1.8 (LES-G-100.8): por qué una plantilla de volumen no trae factor estándar; sin él, solo con factor_override citando un requisito."
+        },
+        "razones_subida": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "tipo",
+              "fuente",
+              "texto"
+            ],
+            "description": "I1.9 (VC18-1, PR18-3, VC18-5): razón cerrada para no usar el valor por defecto. «umbral»: un número de una cita de `campo` que va con una palabra de `unidad` supera `limite` (el del nivel por defecto o el del inmediatamente inferior); «caracteristica»: la cita (de `campo` o de un campo de dimensionamiento) contiene una de `palabras_clave` como palabras seguidas. Lo comprueba el código (experto.razones_validas y razon_cumplida).",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9_.-]{0,59}$"
+              },
+              "tipo": {
+                "enum": [
+                  "umbral",
+                  "caracteristica"
+                ]
+              },
+              "campo": {
+                "enum": [
+                  "objetivo",
+                  "nubes",
+                  "alcance_funcional",
+                  "canales_integraciones",
+                  "ubicacion_usuarios",
+                  "marco_normativo",
+                  "volumetria",
+                  "identidad_acl_origen",
+                  "red_privada"
+                ]
+              },
+              "unidad": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 12,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 60
+                }
+              },
+              "unidad_corta": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 12,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 60
+                },
+                "description": "I1.9: formas cortas de la unidad (GB, KB, MB) que solo valen como palabra entera junto al número (experto.numeros_con_unidad)."
+              },
+              "limite": {
+                "type": "number",
+                "minimum": 0
+              },
+              "palabras_clave": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 12,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 60
+                }
+              },
+              "fuente": {
+                "type": "string",
+                "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+              },
+              "texto": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 400
+              },
+              "por_instancia": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "VC19-1 (I1.10): solo en «umbral»: la razón justifica instancias de su nivel, una por cada `por_instancia` unidades citadas (techo); el núcleo exige exactamente esas instancias y rechaza menos con la cita (instancias_insuficientes). Sin él, la razón elige el nivel."
+              }
+            }
+          }
+        },
+        "opcional": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "por_defecto",
+            "motivo",
+            "fuente",
+            "razones"
+          ],
+          "description": "I1.9 (VC18-7): plantilla opcional con su valor por defecto declarado («sin»: no se valora salvo que una razón se cumpla).",
+          "properties": {
+            "por_defecto": {
+              "enum": [
+                "sin",
+                "con"
+              ]
+            },
+            "fuente": {
+              "type": "string",
+              "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+            },
+            "motivo": {
+              "type": "string",
+              "minLength": 20,
+              "maxLength": 400
+            },
+            "razones": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "tipo",
+                  "fuente",
+                  "texto"
+                ],
+                "description": "I1.9 (VC18-1, PR18-3, VC18-5): razón cerrada para no usar el valor por defecto. «umbral»: un número de una cita de `campo` que va con una palabra de `unidad` supera `limite` (el del nivel por defecto o el del inmediatamente inferior); «caracteristica»: la cita (de `campo` o de un campo de dimensionamiento) contiene una de `palabras_clave` como palabras seguidas. Lo comprueba el código (experto.razones_validas y razon_cumplida).",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9_.-]{0,59}$"
+                  },
+                  "tipo": {
+                    "enum": [
+                      "umbral",
+                      "caracteristica"
+                    ]
+                  },
+                  "campo": {
+                    "enum": [
+                      "objetivo",
+                      "nubes",
+                      "alcance_funcional",
+                      "canales_integraciones",
+                      "ubicacion_usuarios",
+                      "marco_normativo",
+                      "volumetria",
+                      "identidad_acl_origen",
+                      "red_privada"
+                    ]
+                  },
+                  "unidad": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 12,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 60
+                    }
+                  },
+                  "unidad_corta": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 12,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 60
+                    },
+                    "description": "I1.9: formas cortas de la unidad (GB, KB, MB) que solo valen como palabra entera junto al número (experto.numeros_con_unidad)."
+                  },
+                  "limite": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "palabras_clave": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 12,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 60
+                    }
+                  },
+                  "fuente": {
+                    "type": "string",
+                    "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+                  },
+                  "texto": {
+                    "type": "string",
+                    "minLength": 10,
+                    "maxLength": 400
+                  }
+                }
+              }
+            }
+          }
+        },
+        "factores_alternativos": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z_]+\\.[a-z_]+$"
+          },
+          "description": "I1.9 (PR18-5): factores para otras bases de volumen («acciones»); el núcleo elige el que casa con la cita (propuesta E19-2)."
+        }
+      }
+    },
+    "comprobacion_plantilla": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fecha",
+        "consultas",
+        "articulos",
+        "bytes",
+        "medidor",
+        "producto",
+        "unidad",
+        "precios_eur",
+        "tramos"
+      ],
+      "properties": {
+        "fecha": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "consultas": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 10
+        },
+        "articulos": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "bytes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 10,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          }
+        },
+        "medidor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "producto": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "unidad": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "precios_eur": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "tramos": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "sku": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 120
+        }
+      }
+    },
+    "no_valorable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "concepto",
+        "motivo",
+        "detalle",
+        "fecha"
+      ],
+      "description": "Concepto facturable del servicio que a propósito no tiene plantilla, con su motivo de una lista cerrada (catalogo/plantillas_precio.MOTIVOS_NO_VALORABLE).",
+      "properties": {
+        "concepto": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 160
+        },
+        "motivo": {
+          "enum": [
+            "precio_redondeado_en_eur",
+            "sin_medidor_unico",
+            "no_publicado_en_la_region",
+            "se_factura_en_otro_componente"
+          ]
+        },
+        "detalle": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "filtro": {
+          "type": "string",
+          "minLength": 40,
+          "maxLength": 400
+        },
+        "fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/"
+        },
+        "fecha": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "nivel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "nivel",
+        "plantillas",
+        "limites",
+        "fuente_url",
+        "consultado"
+      ],
+      "properties": {
+        "nivel": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 40
+        },
+        "plantillas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+          }
+        },
+        "limites": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 160
+          }
+        },
+        "fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "consultado": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "medidores_obligatorios": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+          },
+          "description": "I1.8 (REVERIF17-2): con alguna plantilla de este nivel, el componente lleva también todas estas (lo que factura el nivel)."
+        },
+        "instancias_max": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "I1.8 (REVERIF17-3): tope de instancias, unidades o réplicas de las plantillas de tiempo del nivel; su límite literal va en «limites»."
+        },
+        "instancias_min": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "I1.8: mínimo de instancias que factura el nivel (Cosmos DB aprovisionado: 4 × 100 RU/s). Propuesta al núcleo (CAMBIOS-I18-E §3)."
+        },
+        "instancias_validas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "description": "I1.8: únicos valores admitidos de instancias (Service Bus Premium: 1, 2, 4, 8 o 16). Propuesta al núcleo (CAMBIOS-I18-E §3)."
+        },
+        "razones_subida": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "tipo",
+              "fuente",
+              "texto"
+            ],
+            "description": "I1.9 (VC18-1, PR18-3, VC18-5): razón cerrada para no usar el valor por defecto. «umbral»: un número de una cita de `campo` que va con una palabra de `unidad` supera `limite` (el del nivel por defecto o el del inmediatamente inferior); «caracteristica»: la cita (de `campo` o de un campo de dimensionamiento) contiene una de `palabras_clave` como palabras seguidas. Lo comprueba el código (experto.razones_validas y razon_cumplida).",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9_.-]{0,59}$"
+              },
+              "tipo": {
+                "enum": [
+                  "umbral",
+                  "caracteristica"
+                ]
+              },
+              "campo": {
+                "enum": [
+                  "objetivo",
+                  "nubes",
+                  "alcance_funcional",
+                  "canales_integraciones",
+                  "ubicacion_usuarios",
+                  "marco_normativo",
+                  "volumetria",
+                  "identidad_acl_origen",
+                  "red_privada"
+                ]
+              },
+              "unidad": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 12,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 60
+                }
+              },
+              "unidad_corta": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 12,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 60
+                },
+                "description": "I1.9: formas cortas de la unidad (GB, KB, MB) que solo valen como palabra entera junto al número (experto.numeros_con_unidad)."
+              },
+              "limite": {
+                "type": "number",
+                "minimum": 0
+              },
+              "palabras_clave": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 12,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 60
+                }
+              },
+              "fuente": {
+                "type": "string",
+                "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+              },
+              "texto": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 400
+              },
+              "por_instancia": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "VC19-1 (I1.10): solo en «umbral»: la razón justifica instancias de su nivel, una por cada `por_instancia` unidades citadas (techo); el núcleo exige exactamente esas instancias y rechaza menos con la cita (instancias_insuficientes). Sin él, la razón elige el nivel."
+              }
+            }
+          }
+        }
+      }
+    },
+    "inclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalogo_id",
+        "concepto",
+        "cita",
+        "fuente_url",
+        "consultado"
+      ],
+      "properties": {
+        "catalogo_id": {
+          "type": "string",
+          "pattern": "^az-[a-z0-9-]{2,40}$"
+        },
+        "concepto": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 160
+        },
+        "cita": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 400
+        },
+        "fuente_url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "consultado": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      }
+    },
+    "factor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "valor",
+        "unidad",
+        "unidad_base",
+        "base",
+        "tipo",
+        "fuente_url",
+        "consultado",
+        "justificacion",
+        "desglose"
+      ],
+      "properties": {
+        "valor": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unidad": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 60
+        },
+        "unidad_base": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 60
+        },
+        "base": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 30
+          }
+        },
+        "tipo": {
+          "enum": [
+            "oficial",
+            "supuesto"
+          ]
+        },
+        "fuente_url": {
+          "type": "string",
+          "pattern": "^https://(learn\\.microsoft\\.com|azure\\.microsoft\\.com/en-us/pricing)/[a-z0-9/._-]+$"
+        },
+        "consultado": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "justificacion": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 300
+        },
+        "desglose": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "parte",
+              "valor",
+              "origen"
+            ],
+            "properties": {
+              "parte": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120
+              },
+              "valor": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "origen": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 160
+              }
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z_]{3,60}$"
+        }
+      }
+    },
+    "ciclo_vida": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modelo",
+        "ga",
+        "ga_fuente",
+        "retirada",
+        "fuente",
+        "consultado"
+      ],
+      "properties": {
+        "ga": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "ga_fuente": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "retirada": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "fuente": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/[a-z0-9/._-]+$"
+        },
+        "consultado": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "modelo": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]{1,39}$"
+        }
+      }
+    }
+  }
+}

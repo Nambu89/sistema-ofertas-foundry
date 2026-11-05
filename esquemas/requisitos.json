@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:requisitos:1",
+  "title": "Requisitos de una solicitud de preventa (I1)",
+  "description": "Lo rellena el modelo en entrada/requisitos.json (canales_integraciones es ASUMIBLE pero no obligatorio en el esquema, para restaurar estados anteriores: si falta, suficiencia lo pregunta); suficiencia recalcula 'estado' de cada campo y comprueba cada cita contra las fuentes; fuera_de_alcance y ya_contratado_por_cliente son opcionales (I1.8); desde I1.9 ya_contratado_por_cliente lleva una entrada por recurso con id, servicio del catálogo y la cita entera (campo_existente). CONTRATOS.md §3.3, docs/I1/CAMBIOS-I18-P.md y CAMBIOS-I19-P.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "campos"],
+  "properties": {
+    "schema": {"const": "preventa-requisitos/1"},
+    "campos": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objetivo", "nubes", "alcance_funcional", "ubicacion_usuarios", "marco_normativo",
+        "volumetria", "identidad_acl_origen", "red_privada", "tipo_suscripcion", "plazo",
+        "presupuesto_orientativo", "idioma_oferta"
+      ],
+      "properties": {
+        "objetivo": {"$ref": "#/$defs/campo"},
+        "nubes": {"$ref": "#/$defs/campo"},
+        "alcance_funcional": {"$ref": "#/$defs/campo"},
+        "canales_integraciones": {"$ref": "#/$defs/campo"},
+        "ubicacion_usuarios": {"$ref": "#/$defs/campo"},
+        "marco_normativo": {"$ref": "#/$defs/campo"},
+        "volumetria": {"$ref": "#/$defs/campo"},
+        "identidad_acl_origen": {"$ref": "#/$defs/campo"},
+        "red_privada": {"$ref": "#/$defs/campo"},
+        "tipo_suscripcion": {"$ref": "#/$defs/campo"},
+        "plazo": {"$ref": "#/$defs/campo"},
+        "presupuesto_orientativo": {"$ref": "#/$defs/campo"},
+        "idioma_oferta": {"$ref": "#/$defs/campo"},
+        "fuera_de_alcance": {"$ref": "#/$defs/campo"},
+        "ya_contratado_por_cliente": {"$ref": "#/$defs/campo_existente", "description": "I1.9 (PR18-1, decisión del PM): lo que el cliente ya tiene o paga por su cuenta, UNA ENTRADA POR RECURSO: id «EX-nn», servicio_catalogo (id del catálogo o null si no es un servicio del catálogo), valor (fragmento literal de la cita que nombra ese recurso), cita (la frase literal ENTERA de la fuente, que viaja tal cual en el brief) y fuente; siempre CITADO o ACLARACION (no se asume). Opcional. Un componente del experto que ES ese recurso lo declara con existente_del_cliente {entrada: «EX-nn»}."}
+      }
+    }
+  },
+  "$defs": {
+    "campo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estado", "entradas"],
+      "properties": {
+        "estado": {"enum": ["CITADO", "ASUMIDO", "FALTA"]},
+        "entradas": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/entrada"}}
+      }
+    },
+    "entrada": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["valor", "cita", "fuente", "origen"],
+      "properties": {
+        "valor": {"type": "string", "minLength": 2, "maxLength": 600},
+        "cita": {"type": ["string", "null"], "minLength": 15, "maxLength": 1200},
+        "fuente": {"type": ["string", "null"], "pattern": "^F[0-9]{1,2}$"},
+        "origen": {"enum": ["CITADO", "ASUMIDO", "ACLARACION"]}
+      }
+    },
+    "campo_existente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estado", "entradas"],
+      "properties": {
+        "estado": {"enum": ["CITADO", "FALTA"]},
+        "entradas": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/entrada_existente"}}
+      }
+    },
+    "entrada_existente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "servicio_catalogo", "valor", "cita", "fuente", "origen"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^EX-[0-9]{2}$"},
+        "servicio_catalogo": {"type": ["string", "null"], "pattern": "^az-[a-z0-9-]{2,40}$"},
+        "valor": {"type": "string", "minLength": 2, "maxLength": 600},
+        "cita": {"type": "string", "minLength": 15, "maxLength": 1200},
+        "fuente": {"type": "string", "pattern": "^F[0-9]{1,2}$"},
+        "origen": {"enum": ["CITADO", "ACLARACION"]}
+      }
+    }
+  }
+}

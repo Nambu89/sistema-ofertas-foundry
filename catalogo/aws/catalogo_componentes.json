@@ -1,0 +1,1539 @@
+{
+  "schema": "preventa-catalogo-aws/1",
+  "version": 1,
+  "fecha": "2026-11-04",
+  "nube": "aws",
+  "moneda": "EUR",
+  "moneda_origen": "USD",
+  "regiones_ue": [
+    "eu-central-1",
+    "eu-west-1",
+    "eu-west-3",
+    "eu-north-1",
+    "eu-south-1",
+    "eu-south-2"
+  ],
+  "fuente_precios": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/<servicecode>/current/<region>/index.json",
+  "fuente_precios_doc": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/using-the-aws-price-list-bulk-api-fetching-price-list-files-manually.html",
+  "conversion": {
+    "fuente": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
+    "regla": "EUR = USD / tipo_bce",
+    "pagina": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+    "texto_oferta": "Los precios de AWS se publican en dólares estadounidenses (USD) y se han convertido a euros (EUR) con el tipo de cambio de referencia del Banco Central Europeo del {fecha_tipo_bce} (1 EUR = {tipo_bce} USD). Importes orientativos: la factura de AWS puede emitirse en euros al tipo que AWS aplique en el momento del cobro."
+  },
+  "aviso_precios": "This pricing list is for informational purposes only. All prices are subject to the additional terms included in the pricing pages on http://aws.amazon.com.",
+  "documentacion_mcp": {
+    "server_url": "https://knowledge-mcp.global.api.aws",
+    "autenticacion": null,
+    "herramientas": [
+      "aws___search_documentation",
+      "aws___read_documentation",
+      "aws___get_regional_availability"
+    ],
+    "fuente": "https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server",
+    "consultado": "2026-11-04"
+  },
+  "factores_estandar": [
+    {
+      "id": "asistente_rag.tokens_entrada_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 5656,
+      "unidad": "tokens de entrada por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-11-04",
+      "justificacion": "Misma cifra que el catálogo de Azure (media oficial de la tabla de Learn para RAG con 5 fragmentos de 1.024 tokens) para que las dos nubes se comparen con el mismo consumo; AWS no publica una media equivalente para Bedrock."
+    },
+    {
+      "id": "asistente_rag.tokens_salida_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 1171,
+      "unidad": "tokens de salida por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-11-04",
+      "justificacion": "Misma cifra que el catálogo de Azure (supuesto con 1.024 tokens de razonamiento); en Nova 2 Lite el razonamiento va desactivado por defecto, luego es una cota alta."
+    },
+    {
+      "id": "rag.tokens_embedding_por_consulta",
+      "caso_uso": "rag",
+      "valor": 10,
+      "unidad": "tokens de embedding por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "consultado": "2026-11-04",
+      "justificacion": "La pregunta se vectoriza una vez; Learn da 10 tokens por pregunta de media en la misma tabla."
+    },
+    {
+      "id": "documentos.tokens_embedding_por_documento",
+      "caso_uso": "documentos",
+      "valor": 5000,
+      "unidad": "tokens de embedding por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html",
+      "consultado": "2026-11-04",
+      "justificacion": "10 páginas por documento (mismo supuesto que Azure) por unos 500 tokens por página, vectorizado una vez al indexar."
+    },
+    {
+      "id": "documentos.paginas_por_documento",
+      "caso_uso": "documentos",
+      "valor": 10,
+      "unidad": "páginas por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/textract/latest/dg/what-is.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Mismo supuesto que el catálogo de Azure."
+    },
+    {
+      "id": "almacen_documentos.gb_por_documento",
+      "caso_uso": "almacen_documentos",
+      "valor": 0.002,
+      "unidad": "GB almacenados por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Mismo supuesto que el catálogo de Azure (2 MB por documento)."
+    },
+    {
+      "id": "almacen_documentos.escrituras_por_documento",
+      "caso_uso": "almacen_documentos",
+      "valor": 1,
+      "unidad": "peticiones PUT por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Una subida por documento."
+    },
+    {
+      "id": "almacen_documentos.lecturas_por_documento",
+      "caso_uso": "almacen_documentos",
+      "valor": 1,
+      "unidad": "peticiones GET por documento",
+      "unidad_base": "documentos",
+      "base": [
+        "documento"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Una lectura por documento al indexar."
+    },
+    {
+      "id": "computo.invocaciones_por_consulta",
+      "caso_uso": "computo",
+      "valor": 1,
+      "unidad": "invocaciones de función por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Una invocación de la función por consulta."
+    },
+    {
+      "id": "computo.gb_segundo_por_consulta",
+      "caso_uso": "computo",
+      "valor": 8,
+      "unidad": "GB-segundo por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Función de 1 GB de memoria que espera unos 8 s la respuesta del modelo; Lambda factura la duración por memoria configurada."
+    },
+    {
+      "id": "api.solicitudes_por_consulta",
+      "caso_uso": "api",
+      "valor": 1,
+      "unidad": "peticiones a la API por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Una petición a la API por consulta."
+    },
+    {
+      "id": "historial_chat.escrituras_por_consulta",
+      "caso_uso": "historial_chat",
+      "valor": 2,
+      "unidad": "unidades de escritura por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Pregunta y respuesta guardadas como dos elementos de hasta 1 KB."
+    },
+    {
+      "id": "historial_chat.lecturas_por_consulta",
+      "caso_uso": "historial_chat",
+      "valor": 1,
+      "unidad": "unidades de lectura por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Una lectura del historial (hasta 4 KB) por consulta."
+    },
+    {
+      "id": "historial_chat.gb_por_consulta",
+      "caso_uso": "historial_chat",
+      "valor": 1e-06,
+      "unidad": "GB guardados por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Mismo supuesto que el catálogo de Azure (1 KB por consulta)."
+    },
+    {
+      "id": "orquestacion.transiciones_por_ejecucion",
+      "caso_uso": "orquestacion",
+      "valor": 5,
+      "unidad": "transiciones de estado por ejecución",
+      "unidad_base": "ejecuciones",
+      "base": [
+        "ejecución",
+        "flujo",
+        "documento"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Flujo estándar de cinco pasos."
+    },
+    {
+      "id": "integracion.solicitudes_por_mensaje",
+      "caso_uso": "integracion",
+      "valor": 3,
+      "unidad": "peticiones de cola por mensaje",
+      "unidad_base": "mensajes",
+      "base": [
+        "mensaje",
+        "evento",
+        "documento"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Envío, recepción y borrado de cada mensaje."
+    },
+    {
+      "id": "operacion.gb_registros_por_consulta",
+      "caso_uso": "operacion",
+      "valor": 1e-05,
+      "unidad": "GB de registros por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Mismo supuesto que el catálogo de Azure (10 KB de registros por consulta)."
+    },
+    {
+      "id": "operacion.llamadas_secretos_por_consulta",
+      "caso_uso": "operacion",
+      "valor": 1,
+      "unidad": "llamadas a Secrets Manager por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Mismo supuesto que Key Vault en el catálogo de Azure; con caché del secreto en la función serían muchas menos."
+    },
+    {
+      "id": "operacion.solicitudes_kms_por_consulta",
+      "caso_uso": "operacion",
+      "valor": 1,
+      "unidad": "peticiones a KMS por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta",
+        "pregunta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Una operación criptográfica por consulta (descifrado del dato cifrado con clave del cliente)."
+    },
+    {
+      "id": "identidad.mau_por_usuario",
+      "caso_uso": "identidad",
+      "valor": 1,
+      "unidad": "usuarios activos al mes por usuario",
+      "unidad_base": "usuarios",
+      "base": [
+        "usuario"
+      ],
+      "tipo": "oficial",
+      "fuente_url": "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html",
+      "consultado": "2026-11-04",
+      "justificacion": "Cognito factura por usuario activo al mes (MAU): cada usuario que inicia sesión en el mes cuenta una vez."
+    }
+  ],
+  "modelo_por_defecto": {
+    "componente": "aws-bedrock",
+    "modelo": "amazon.nova-2-lite-v1:0",
+    "nombre": "Amazon Nova 2 Lite",
+    "plantillas": [
+      "nova-2-lite-entrada",
+      "nova-2-lite-salida"
+    ],
+    "region": "eu-central-1",
+    "perfil_inferencia": "eu.amazon.nova-2-lite-v1:0",
+    "despliegue": "Geo UE (inferencia geográfica entre regiones de la UE), nivel Standard",
+    "motivo": "Modelo propio de Amazon (sin AWS Marketplace), vigente y con perfil geográfico UE cuyo destino son exactamente las 6 regiones de la lista blanca. La inferencia global queda prohibida porque sale de la UE. Su ficha no publica fecha de retirada pero dice «EOL no sooner than Dec 02, 2026»: riesgo de ciclo de vida que se declara en cada oferta.",
+    "fuente_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-lite.html",
+    "region_fuente_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html",
+    "consultado": "2026-11-04"
+  },
+  "computo_por_defecto": {
+    "componente": "aws-lambda",
+    "nivel": "bajo demanda",
+    "plantillas": [
+      "solicitudes",
+      "duracion-x86"
+    ],
+    "motivo": "Patrón sin servidor de la lente Serverless Applications del Well-Architected: se paga por petición y duración, sin instancias encendidas. Otro cómputo (AWS Fargate) solo con justificacion_nivel: una razón de razones_subida de su nivel y la cita de los requisitos que la cumple.",
+    "fuente_url": "https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/welcome.html",
+    "consultado": "2026-11-04",
+    "filas": [
+      "aws-lambda",
+      "aws-fargate"
+    ]
+  },
+  "arquitecturas_referencia": [
+    {
+      "id": "centro-arquitectura",
+      "titulo": "Reference Architecture Examples and Best Practices",
+      "url": "https://aws.amazon.com/architecture/",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Punto de partida: AWS Architecture Center, para buscar una arquitectura de referencia del caso antes de diseñar."
+    },
+    {
+      "id": "rag-opciones",
+      "titulo": "Retrieval Augmented Generation options and architectures on AWS - AWS Prescriptive Guidance",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/retrieval-augmented-generation-options/introduction.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Asistente con RAG: opciones de recuperación (Knowledge Bases, almacén vectorial propio) y su arquitectura."
+    },
+    {
+      "id": "asistente-agentes-kb",
+      "titulo": "Develop a fully automated chat-based assistant by using Amazon Bedrock agents and knowledge bases - AWS Prescriptive Guidance",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/develop-a-fully-automated-chat-based-assistant-by-using-amazon-bedrock-agents-and-knowledge-bases.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Asistente conversacional con agentes y bases de conocimiento de Bedrock."
+    },
+    {
+      "id": "patrones-ia-generativa",
+      "titulo": "Layer 4: Repeatable application patterns for common generative AI use cases - AWS Prescriptive Guidance",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-enterprise-ready-gen-ai-platform/patterns.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Patrones repetibles de aplicaciones de IA generativa en una plataforma empresarial."
+    },
+    {
+      "id": "waf-ia-generativa",
+      "titulo": "Generative AI Lens - AWS Well-Architected Framework - Generative AI Lens",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/generative-ai-lens/generative-ai-lens.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Buenas prácticas por pilar para cargas de IA generativa."
+    },
+    {
+      "id": "waf-ia-agentica",
+      "titulo": "Agentic AI Lens - AWS Well-Architected Framework - Agentic AI Lens",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentic-ai-lens.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Buenas prácticas por pilar para agentes de IA."
+    },
+    {
+      "id": "waf-sin-servidor",
+      "titulo": "Serverless Applications Lens - AWS Well-Architected Framework - Serverless Applications Lens",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/welcome.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Aplicación sin servidor (Lambda, API Gateway, DynamoDB): el cómputo por defecto del catálogo."
+    }
+  ],
+  "componentes": [
+    {
+      "id": "aws-bedrock",
+      "nombre_oficial": "Amazon Bedrock",
+      "capa": "ia",
+      "servicecode_precios": "AmazonBedrock",
+      "referencia_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html",
+      "referencia_titulo": "Overview - Amazon Bedrock",
+      "alias": [
+        "Bedrock",
+        "Amazon Nova"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "nova-2-lite-entrada",
+          "filtro": "servicecode eq 'AmazonBedrock' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Nova2.0Lite-input-tokens' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Nova2.0Lite-input-tokens",
+          "descripcion": "Nova 2 Lite, tokens de entrada (inferencia bajo demanda, nivel Standard)",
+          "impulsor": "volumen",
+          "unidad": "1K tokens",
+          "divisor": 1000,
+          "factor_estandar": "asistente_rag.tokens_entrada_por_consulta",
+          "por_defecto": true,
+          "modelo": "amazon.nova-2-lite-v1:0",
+          "ciclo_vida": {
+            "lanzamiento": "2025-12-02",
+            "retirada": null,
+            "eol_no_antes_de": "2026-12-02",
+            "fuente": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-lite.html"
+          }
+        },
+        {
+          "id": "nova-2-lite-salida",
+          "filtro": "servicecode eq 'AmazonBedrock' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Nova2.0Lite-output-tokens' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Nova2.0Lite-output-tokens",
+          "descripcion": "Nova 2 Lite, tokens de salida (inferencia bajo demanda, nivel Standard)",
+          "impulsor": "volumen",
+          "unidad": "1K tokens",
+          "divisor": 1000,
+          "factor_estandar": "asistente_rag.tokens_salida_por_consulta",
+          "por_defecto": true,
+          "modelo": "amazon.nova-2-lite-v1:0",
+          "ciclo_vida": {
+            "lanzamiento": "2025-12-02",
+            "retirada": null,
+            "eol_no_antes_de": "2026-12-02",
+            "fuente": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-lite.html"
+          }
+        },
+        {
+          "id": "nova-2-lite-lectura-cache",
+          "filtro": "servicecode eq 'AmazonBedrock' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Nova2.0Lite-cache-read-input-token-count' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Nova2.0Lite-cache-read-input-token-count",
+          "descripcion": "Nova 2 Lite, tokens de entrada leídos de la caché de peticiones",
+          "impulsor": "volumen",
+          "unidad": "1K tokens",
+          "divisor": 1000,
+          "modelo": "amazon.nova-2-lite-v1:0",
+          "ciclo_vida": {
+            "lanzamiento": "2025-12-02",
+            "retirada": null,
+            "eol_no_antes_de": "2026-12-02",
+            "fuente": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-lite.html"
+          },
+          "sin_factor_motivo": "Solo si los requisitos citan la caché de peticiones (mínimo 1K tokens por punto de caché y hasta 20K en Nova): factor_override citando ese requisito, y la entrada sin caché baja en la misma cantidad."
+        },
+        {
+          "id": "titan-embeddings-v2",
+          "filtro": "servicecode eq 'AmazonBedrock' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-TitanEmbeddingV2-Text-input-tokens' and termType eq 'OnDemand'",
+          "concepto": "EUC1-TitanEmbeddingV2-Text-input-tokens",
+          "descripcion": "Titan Text Embeddings V2, tokens de entrada (vectorización de preguntas y documentos)",
+          "impulsor": "volumen",
+          "unidad": "1K tokens",
+          "divisor": 1000,
+          "factor_estandar": "rag.tokens_embedding_por_consulta",
+          "modelo": "amazon.titan-embed-text-v2:0",
+          "ciclo_vida": {
+            "lanzamiento": "2024-04-30",
+            "retirada": null,
+            "eol_no_antes_de": "2025-04-30",
+            "fuente": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-titan-text-embeddings-v2.html"
+          },
+          "factores_alternativos": [
+            "documentos.tokens_embedding_por_documento"
+          ]
+        }
+      ],
+      "medidores_obligatorios": [],
+      "reglas_medidores": [
+        {
+          "si_usa": [
+            "nova-2-lite-entrada"
+          ],
+          "exige_uno_de": [
+            "nova-2-lite-salida"
+          ],
+          "motivo": "El modelo factura por separado la entrada y la salida",
+          "fuente_url": "https://aws.amazon.com/bedrock/pricing/"
+        },
+        {
+          "si_usa": [
+            "nova-2-lite-salida"
+          ],
+          "exige_uno_de": [
+            "nova-2-lite-entrada"
+          ],
+          "motivo": "El modelo factura por separado la entrada y la salida",
+          "fuente_url": "https://aws.amazon.com/bedrock/pricing/"
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "modelos de terceros vendidos por AWS Marketplace (Anthropic, Cohere, AI21…)",
+          "motivo": "marketplace_de_terceros"
+        },
+        {
+          "concepto": "Nova 2 Pro y Nova 2 Omni",
+          "motivo": "solo_inferencia_global_fuera_de_la_ue"
+        },
+        {
+          "concepto": "Amazon Bedrock Guardrails",
+          "motivo": "unidad_de_texto_por_validar"
+        }
+      ],
+      "disponibilidad": {
+        "amazon.nova-2-lite-v1:0": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "modelo",
+          "fuente": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-lite.html",
+          "consultado": "2026-11-04",
+          "nota": "perfil geográfico UE eu.amazon.nova-2-lite-v1:0: desde eu-central-1 enruta solo a eu-central-1, eu-north-1, eu-south-1, eu-south-2, eu-west-1 y eu-west-3 (ficha del modelo). La inferencia geográfica se cobra al precio estándar de la región de origen (cross-region-inference.html). La inferencia global sale de la UE: prohibida."
+        },
+        "Amazon Bedrock": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon Bedrock",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-bedrock-knowledge-bases",
+      "nombre_oficial": "Amazon Bedrock Knowledge Bases",
+      "capa": "datos_conocimiento",
+      "servicecode_precios": null,
+      "referencia_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html",
+      "referencia_titulo": "Retrieve data and generate AI responses with Amazon Bedrock Knowledge Bases - Amazon Bedrock",
+      "alias": [
+        "Knowledge Bases for Amazon Bedrock",
+        "Bases de conocimiento de Bedrock"
+      ],
+      "region_ue": "eu-central-1",
+      "no_valorables": [
+        {
+          "concepto": "cargo propio de Knowledge Bases (si existe): no aparece como medidor identificable en el fichero público de AmazonBedrock; NO VERIFICADO",
+          "motivo": "sin_medidor_publico"
+        }
+      ],
+      "nota": "Se valoran sus piezas: el modelo de embeddings (aws-bedrock/titan-embeddings-v2), el almacén vectorial (aws-opensearch-serverless) y el modelo que genera la respuesta (aws-bedrock).",
+      "disponibilidad": {
+        "Knowledge Bases": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon Bedrock Knowledge Bases (RAG)",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04",
+          "nota": "eu-north-1, eu-south-1 y eu-south-2: isBeingPlannedIn el 2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-lambda",
+      "nombre_oficial": "AWS Lambda",
+      "capa": "aplicacion_integracion",
+      "servicecode_precios": "AWSLambda",
+      "referencia_url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "referencia_titulo": "What is AWS Lambda? - AWS Lambda",
+      "alias": [
+        "Lambda",
+        "función Lambda"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "solicitudes",
+          "filtro": "servicecode eq 'AWSLambda' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Request' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Request",
+          "descripcion": "peticiones (invocaciones) de funciones",
+          "impulsor": "volumen",
+          "unidad": "Request",
+          "divisor": 1,
+          "factor_estandar": "computo.invocaciones_por_consulta"
+        },
+        {
+          "id": "duracion-x86",
+          "filtro": "servicecode eq 'AWSLambda' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Lambda-GB-Second' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Lambda-GB-Second",
+          "descripcion": "duración de cómputo en x86, GB-segundo (tres tramos)",
+          "impulsor": "volumen",
+          "unidad": "Lambda-GB-Second",
+          "divisor": 1,
+          "factor_estandar": "computo.gb_segundo_por_consulta"
+        }
+      ],
+      "medidores_obligatorios": [
+        "solicitudes",
+        "duracion-x86"
+      ],
+      "no_valorables": [
+        {
+          "concepto": "capa gratuita mensual (1 millón de peticiones y 400.000 GB-segundo)",
+          "motivo": "capa_gratuita_no_aplicada"
+        }
+      ],
+      "disponibilidad": {
+        "bajo demanda": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "AWS Lambda",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-fargate",
+      "nombre_oficial": "AWS Fargate",
+      "capa": "aplicacion_integracion",
+      "servicecode_precios": "AmazonECS",
+      "referencia_url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html",
+      "referencia_titulo": "Architect for AWS Fargate for Amazon ECS - Amazon Elastic Container Service",
+      "alias": [
+        "Amazon ECS en Fargate",
+        "Fargate",
+        "Amazon Elastic Container Service"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "vcpu",
+          "filtro": "servicecode eq 'AmazonECS' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Fargate-vCPU-Hours:perCPU' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Fargate-vCPU-Hours:perCPU",
+          "descripcion": "tarea Linux, vCPU por hora",
+          "impulsor": "tiempo",
+          "unidad": "hours",
+          "divisor": 1,
+          "periodo": "hora",
+          "por_instancia": {
+            "valor": 1,
+            "unidad": "vCPU por tarea de 1 vCPU y 2 GB",
+            "fuente_url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-tasks-services.html"
+          }
+        },
+        {
+          "id": "memoria",
+          "filtro": "servicecode eq 'AmazonECS' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Fargate-GB-Hours' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Fargate-GB-Hours",
+          "descripcion": "tarea Linux, GB de memoria por hora",
+          "impulsor": "tiempo",
+          "unidad": "hours",
+          "divisor": 1,
+          "periodo": "hora",
+          "por_instancia": {
+            "valor": 2,
+            "unidad": "GB por tarea de 1 vCPU y 2 GB",
+            "fuente_url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-tasks-services.html"
+          }
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "1 vCPU y 2 GB",
+          "plantillas": [
+            "vcpu",
+            "memoria"
+          ],
+          "limites": [
+            "1 vCPU admite de 2 a 8 GB de memoria",
+            "se factura la tarea mientras está en marcha"
+          ],
+          "fuente_url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-tasks-services.html",
+          "consultado": "2026-11-04",
+          "medidores_obligatorios": [
+            "vcpu",
+            "memoria"
+          ],
+          "razones_subida": [
+            {
+              "id": "ejecucion_larga",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "más de 15 minutos",
+                "procesos largos",
+                "ejecuciones largas",
+                "tareas de larga duración"
+              ],
+              "fuente": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html",
+              "texto": "AWS: Lambda admite «a maximum value of 900 seconds (15 minutes)»"
+            },
+            {
+              "id": "contenedores",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "contenedor",
+                "contenedores",
+                "Docker",
+                "imagen de contenedor"
+              ],
+              "fuente": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html",
+              "texto": "Los requisitos piden ejecutar contenedores"
+            },
+            {
+              "id": "plataforma_nombrada",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "Fargate",
+                "Amazon ECS"
+              ],
+              "fuente": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html",
+              "texto": "Los requisitos piden Fargate o Amazon ECS"
+            }
+          ]
+        }
+      ],
+      "medidores_obligatorios": [
+        "vcpu",
+        "memoria"
+      ],
+      "nivel_por_defecto": {
+        "nivel": "1 vCPU y 2 GB",
+        "fuente": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-tasks-services.html",
+        "motivo": "Menor tamaño de tarea con 1 vCPU completa. En la clase cómputo solo el cómputo por defecto (AWS Lambda) va sin justificar: elegir esta fila exige una razón de su nivel",
+        "consultado": "2026-11-04"
+      },
+      "disponibilidad": {
+        "1 vCPU y 2 GB": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "AWS Fargate",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-api-gateway",
+      "nombre_oficial": "Amazon API Gateway",
+      "capa": "aplicacion_integracion",
+      "servicecode_precios": "AmazonApiGateway",
+      "referencia_url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
+      "referencia_titulo": "What is Amazon API Gateway? - Amazon API Gateway",
+      "alias": [
+        "API Gateway"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "http-api",
+          "filtro": "servicecode eq 'AmazonApiGateway' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-ApiGatewayHttpRequest' and termType eq 'OnDemand'",
+          "concepto": "EUC1-ApiGatewayHttpRequest",
+          "descripcion": "HTTP API, peticiones (dos tramos)",
+          "impulsor": "volumen",
+          "unidad": "Requests",
+          "divisor": 1,
+          "factor_estandar": "api.solicitudes_por_consulta"
+        },
+        {
+          "id": "rest-api",
+          "filtro": "servicecode eq 'AmazonApiGateway' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-ApiGatewayRequest' and termType eq 'OnDemand'",
+          "concepto": "EUC1-ApiGatewayRequest",
+          "descripcion": "REST API, peticiones (cuatro tramos)",
+          "impulsor": "volumen",
+          "unidad": "Requests",
+          "divisor": 1,
+          "factor_estandar": "api.solicitudes_por_consulta"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "HTTP API",
+          "plantillas": [
+            "http-api"
+          ],
+          "limites": [
+            "sin claves de API, limitación por cliente, validación de peticiones, AWS WAF ni puntos de conexión privados"
+          ],
+          "fuente_url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+          "consultado": "2026-11-04",
+          "medidores_obligatorios": [
+            "http-api"
+          ]
+        },
+        {
+          "nivel": "REST API",
+          "plantillas": [
+            "rest-api"
+          ],
+          "limites": [
+            "más cara por petición que HTTP API"
+          ],
+          "fuente_url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+          "consultado": "2026-11-04",
+          "medidores_obligatorios": [
+            "rest-api"
+          ],
+          "razones_subida": [
+            {
+              "id": "claves_api",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "claves de API",
+                "clave de API",
+                "limitación por cliente",
+                "planes de uso"
+              ],
+              "fuente": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+              "texto": "AWS: «Choose REST APIs if you need features such as API keys, per-client throttling…»"
+            },
+            {
+              "id": "waf",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "AWS WAF",
+                "WAF",
+                "cortafuegos de aplicaciones web"
+              ],
+              "fuente": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+              "texto": "AWS: «… AWS WAF integration …» solo en REST API"
+            },
+            {
+              "id": "validacion_peticiones",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "validación de peticiones",
+                "validar las peticiones"
+              ],
+              "fuente": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+              "texto": "AWS: «… request validation …» solo en REST API"
+            },
+            {
+              "id": "api_privada",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "API privada",
+                "punto de conexión privado",
+                "red privada"
+              ],
+              "fuente": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+              "texto": "AWS: «… or private API endpoints» solo en REST API"
+            }
+          ]
+        }
+      ],
+      "nivel_por_defecto": {
+        "nivel": "HTTP API",
+        "fuente": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+        "motivo": "AWS: las HTTP API «are designed with minimal features so that they can be offered at a lower price»; REST solo si hace falta una de sus funciones",
+        "consultado": "2026-11-04"
+      },
+      "disponibilidad": {
+        "HTTP API": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon API Gateway",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        },
+        "REST API": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon API Gateway",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-step-functions",
+      "nombre_oficial": "AWS Step Functions",
+      "capa": "aplicacion_integracion",
+      "servicecode_precios": "AmazonStates",
+      "referencia_url": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html",
+      "referencia_titulo": "What is Step Functions? - AWS Step Functions",
+      "alias": [
+        "Step Functions"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "transiciones-estandar",
+          "filtro": "servicecode eq 'AmazonStates' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-StateTransition' and termType eq 'OnDemand'",
+          "concepto": "EUC1-StateTransition",
+          "descripcion": "flujos estándar, transiciones de estado",
+          "impulsor": "volumen",
+          "unidad": "StateTransitions",
+          "divisor": 1,
+          "factor_estandar": "orquestacion.transiciones_por_ejecucion"
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "flujos exprés (peticiones y GB-segundo)",
+          "motivo": "fuera_del_primer_conjunto"
+        },
+        {
+          "concepto": "capa gratuita de 4.000 transiciones al mes",
+          "motivo": "capa_gratuita_no_aplicada"
+        }
+      ],
+      "disponibilidad": {
+        "estándar": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "AWS Step Functions",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-sqs",
+      "nombre_oficial": "Amazon Simple Queue Service",
+      "capa": "aplicacion_integracion",
+      "servicecode_precios": "AWSQueueService",
+      "referencia_url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+      "referencia_titulo": "What is Amazon Simple Queue Service? - Amazon Simple Queue Service",
+      "alias": [
+        "Amazon SQS",
+        "SQS"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "estandar",
+          "filtro": "servicecode eq 'AWSQueueService' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Requests-Tier1' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Requests-Tier1",
+          "descripcion": "cola estándar, peticiones (tres tramos)",
+          "impulsor": "volumen",
+          "unidad": "Requests",
+          "divisor": 1,
+          "factor_estandar": "integracion.solicitudes_por_mensaje"
+        }
+      ],
+      "no_valorables": [
+        {
+          "concepto": "primer millón de peticiones gratuito al mes",
+          "motivo": "capa_gratuita_no_aplicada"
+        }
+      ],
+      "disponibilidad": {
+        "estándar": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon Simple Queue Service (SQS)",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-s3",
+      "nombre_oficial": "Amazon Simple Storage Service",
+      "capa": "datos_conocimiento",
+      "servicecode_precios": "AmazonS3",
+      "referencia_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "referencia_titulo": "What is Amazon S3? - Amazon Simple Storage Service",
+      "alias": [
+        "Amazon S3",
+        "S3"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "estandar-datos",
+          "filtro": "servicecode eq 'AmazonS3' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-TimedStorage-ByteHrs' and termType eq 'OnDemand'",
+          "concepto": "EUC1-TimedStorage-ByteHrs",
+          "descripcion": "S3 Standard, GB al mes (tres tramos)",
+          "impulsor": "volumen",
+          "unidad": "GB-Mo",
+          "divisor": 1,
+          "factor_estandar": "almacen_documentos.gb_por_documento"
+        },
+        {
+          "id": "estandar-escrituras",
+          "filtro": "servicecode eq 'AmazonS3' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Requests-Tier1' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Requests-Tier1",
+          "descripcion": "peticiones PUT, COPY, POST o LIST",
+          "impulsor": "volumen",
+          "unidad": "Requests",
+          "divisor": 1,
+          "factor_estandar": "almacen_documentos.escrituras_por_documento"
+        },
+        {
+          "id": "estandar-lecturas",
+          "filtro": "servicecode eq 'AmazonS3' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-Requests-Tier2' and termType eq 'OnDemand'",
+          "concepto": "EUC1-Requests-Tier2",
+          "descripcion": "peticiones GET y demás",
+          "impulsor": "volumen",
+          "unidad": "Requests",
+          "divisor": 1,
+          "factor_estandar": "almacen_documentos.lecturas_por_documento"
+        }
+      ],
+      "medidores_obligatorios": [
+        "estandar-datos"
+      ],
+      "disponibilidad": {
+        "S3 Standard": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon Simple Storage Service (S3)",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-dynamodb",
+      "nombre_oficial": "Amazon DynamoDB",
+      "capa": "datos_conocimiento",
+      "servicecode_precios": "AmazonDynamoDB",
+      "referencia_url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+      "referencia_titulo": "What is Amazon DynamoDB? - Amazon DynamoDB",
+      "alias": [
+        "DynamoDB"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "bajo-demanda-escrituras",
+          "filtro": "servicecode eq 'AmazonDynamoDB' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-WriteRequestUnits' and termType eq 'OnDemand'",
+          "concepto": "EUC1-WriteRequestUnits",
+          "descripcion": "modo bajo demanda, unidades de petición de escritura",
+          "impulsor": "volumen",
+          "unidad": "WriteRequestUnits",
+          "divisor": 1,
+          "factor_estandar": "historial_chat.escrituras_por_consulta"
+        },
+        {
+          "id": "bajo-demanda-lecturas",
+          "filtro": "servicecode eq 'AmazonDynamoDB' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-ReadRequestUnits' and termType eq 'OnDemand'",
+          "concepto": "EUC1-ReadRequestUnits",
+          "descripcion": "modo bajo demanda, unidades de petición de lectura",
+          "impulsor": "volumen",
+          "unidad": "ReadRequestUnits",
+          "divisor": 1,
+          "factor_estandar": "historial_chat.lecturas_por_consulta"
+        },
+        {
+          "id": "almacenamiento",
+          "filtro": "servicecode eq 'AmazonDynamoDB' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-TimedStorage-ByteHrs' and termType eq 'OnDemand'",
+          "concepto": "EUC1-TimedStorage-ByteHrs",
+          "descripcion": "almacenamiento estándar, GB al mes (los primeros 25 GB a 0)",
+          "impulsor": "volumen",
+          "unidad": "GB-Mo",
+          "divisor": 1,
+          "factor_estandar": "historial_chat.gb_por_consulta"
+        }
+      ],
+      "medidores_obligatorios": [
+        "bajo-demanda-escrituras",
+        "bajo-demanda-lecturas",
+        "almacenamiento"
+      ],
+      "no_valorables": [
+        {
+          "concepto": "modo de capacidad aprovisionada",
+          "motivo": "fuera_del_primer_conjunto"
+        }
+      ],
+      "disponibilidad": {
+        "bajo demanda": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon DynamoDB",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-opensearch-serverless",
+      "nombre_oficial": "Amazon OpenSearch Serverless",
+      "capa": "datos_conocimiento",
+      "servicecode_precios": "AmazonES",
+      "referencia_url": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html",
+      "referencia_titulo": "What is Amazon OpenSearch Serverless? - Amazon OpenSearch Service",
+      "alias": [
+        "OpenSearch Serverless",
+        "almacén vectorial de OpenSearch"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "ocu-indexacion",
+          "filtro": "servicecode eq 'AmazonES' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-IndexingOCU' and termType eq 'OnDemand'",
+          "concepto": "EUC1-IndexingOCU",
+          "descripcion": "OCU de indexación por hora",
+          "impulsor": "tiempo",
+          "unidad": "OCU-hours",
+          "divisor": 1,
+          "periodo": "hora",
+          "por_instancia": {
+            "valor": 1,
+            "unidad": "OCU mínima de indexación configurada",
+            "fuente_url": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-scaling.html"
+          }
+        },
+        {
+          "id": "ocu-busqueda",
+          "filtro": "servicecode eq 'AmazonES' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-SearchOCU' and termType eq 'OnDemand'",
+          "concepto": "EUC1-SearchOCU",
+          "descripcion": "OCU de búsqueda por hora",
+          "impulsor": "tiempo",
+          "unidad": "OCU-hours",
+          "divisor": 1,
+          "periodo": "hora",
+          "por_instancia": {
+            "valor": 1,
+            "unidad": "OCU mínima de búsqueda configurada",
+            "fuente_url": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-scaling.html"
+          }
+        }
+      ],
+      "medidores_obligatorios": [
+        "ocu-indexacion",
+        "ocu-busqueda"
+      ],
+      "no_valorables": [
+        {
+          "concepto": "almacenamiento gestionado de las colecciones",
+          "motivo": "medidor_no_identificado_sin_ambiguedad"
+        },
+        {
+          "concepto": "OCU por encima del mínimo configurado (escalado automático)",
+          "motivo": "depende_de_la_carga"
+        }
+      ],
+      "disponibilidad": {
+        "colección de búsqueda vectorial": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon OpenSearch Serverless",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04",
+          "nota": "AWS: el mínimo de OCU se fija por grupo de colecciones, por separado para indexación y búsqueda, y puede ser 0 (serverless-scaling.html); la plantilla valora el mínimo configurado"
+        }
+      }
+    },
+    {
+      "id": "aws-textract",
+      "nombre_oficial": "Amazon Textract",
+      "capa": "ia",
+      "servicecode_precios": "AmazonTextract",
+      "referencia_url": "https://docs.aws.amazon.com/textract/latest/dg/what-is.html",
+      "referencia_titulo": "What is Amazon Textract? - Amazon Textract",
+      "alias": [
+        "Textract"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "texto",
+          "filtro": "servicecode eq 'AmazonTextract' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-SyncTextPagesProcessed' and termType eq 'OnDemand'",
+          "concepto": "EUC1-SyncTextPagesProcessed",
+          "descripcion": "detección de texto (DetectDocumentText), páginas (dos tramos)",
+          "impulsor": "volumen",
+          "unidad": "Pages",
+          "divisor": 1,
+          "factor_estandar": "documentos.paginas_por_documento"
+        },
+        {
+          "id": "formularios",
+          "filtro": "servicecode eq 'AmazonTextract' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-SyncFormsPagesProcessed' and termType eq 'OnDemand'",
+          "concepto": "EUC1-SyncFormsPagesProcessed",
+          "descripcion": "análisis de formularios, páginas (dos tramos)",
+          "impulsor": "volumen",
+          "unidad": "Pages",
+          "divisor": 1,
+          "factor_estandar": "documentos.paginas_por_documento"
+        }
+      ],
+      "disponibilidad": {
+        "síncrono": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon Textract",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04",
+          "nota": "eu-north-1 y eu-south-1: isNotExpandingIn el 2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-cognito",
+      "nombre_oficial": "Amazon Cognito",
+      "capa": "identidad_seguridad_red",
+      "servicecode_precios": "AmazonCognito",
+      "referencia_url": "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html",
+      "referencia_titulo": "What is Amazon Cognito? - Amazon Cognito",
+      "alias": [
+        "Cognito",
+        "grupos de usuarios de Cognito"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "essentials-mau",
+          "filtro": "servicecode eq 'AmazonCognito' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-CognitoEssentialsMAU' and termType eq 'OnDemand'",
+          "concepto": "EUC1-CognitoEssentialsMAU",
+          "descripcion": "plan Essentials, usuarios activos al mes",
+          "impulsor": "volumen",
+          "unidad": "CognitoUserPoolsMAU",
+          "divisor": 1,
+          "factor_estandar": "identidad.mau_por_usuario"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Essentials",
+          "plantillas": [
+            "essentials-mau"
+          ],
+          "limites": [
+            "plan por defecto de los grupos de usuarios nuevos"
+          ],
+          "fuente_url": "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html",
+          "consultado": "2026-11-04",
+          "medidores_obligatorios": [
+            "essentials-mau"
+          ]
+        }
+      ],
+      "nivel_por_defecto": {
+        "nivel": "Essentials",
+        "fuente": "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html",
+        "motivo": "AWS: «The default plan selection for new user pools is Essentials.»",
+        "consultado": "2026-11-04"
+      },
+      "no_valorables": [
+        {
+          "concepto": "planes Lite y Plus, y capa gratuita de usuarios activos",
+          "motivo": "fuera_del_primer_conjunto"
+        }
+      ],
+      "disponibilidad": {
+        "Essentials": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon Cognito user pools",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-secrets-manager",
+      "nombre_oficial": "AWS Secrets Manager",
+      "capa": "identidad_seguridad_red",
+      "servicecode_precios": "AWSSecretsManager",
+      "referencia_url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "referencia_titulo": "What is AWS Secrets Manager? - AWS Secrets Manager",
+      "alias": [
+        "Secrets Manager"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "secreto",
+          "filtro": "servicecode eq 'AWSSecretsManager' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-AWSSecretsManager-Secrets' and termType eq 'OnDemand'",
+          "concepto": "EUC1-AWSSecretsManager-Secrets",
+          "descripcion": "secreto guardado, al mes",
+          "impulsor": "tiempo",
+          "unidad": "Secrets",
+          "divisor": 1,
+          "periodo": "mes",
+          "por_instancia": {
+            "valor": 1,
+            "unidad": "secreto",
+            "fuente_url": "https://aws.amazon.com/secrets-manager/pricing/"
+          }
+        },
+        {
+          "id": "llamadas-api",
+          "filtro": "servicecode eq 'AWSSecretsManager' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-AWSSecretsManagerAPIRequest' and termType eq 'OnDemand'",
+          "concepto": "EUC1-AWSSecretsManagerAPIRequest",
+          "descripcion": "llamadas a la API",
+          "impulsor": "volumen",
+          "unidad": "API Requests",
+          "divisor": 1,
+          "factor_estandar": "operacion.llamadas_secretos_por_consulta"
+        }
+      ],
+      "medidores_obligatorios": [
+        "secreto"
+      ],
+      "disponibilidad": {
+        "estándar": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "AWS Secrets Manager",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-kms",
+      "nombre_oficial": "AWS Key Management Service",
+      "capa": "identidad_seguridad_red",
+      "servicecode_precios": "awskms",
+      "referencia_url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "referencia_titulo": "AWS Key Management Service - AWS Key Management Service",
+      "alias": [
+        "AWS KMS",
+        "KMS"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "clave",
+          "filtro": "servicecode eq 'awskms' and regionCode eq 'eu-central-1' and usagetype eq 'eu-central-1-KMS-Keys' and termType eq 'OnDemand'",
+          "concepto": "eu-central-1-KMS-Keys",
+          "descripcion": "clave gestionada por el cliente (versión de clave), al mes",
+          "impulsor": "tiempo",
+          "unidad": "Keys",
+          "divisor": 1,
+          "periodo": "mes",
+          "por_instancia": {
+            "valor": 1,
+            "unidad": "clave gestionada por el cliente",
+            "fuente_url": "https://aws.amazon.com/kms/pricing/"
+          }
+        },
+        {
+          "id": "solicitudes",
+          "filtro": "servicecode eq 'awskms' and regionCode eq 'eu-central-1' and usagetype eq 'eu-central-1-KMS-Requests' and termType eq 'OnDemand'",
+          "concepto": "eu-central-1-KMS-Requests",
+          "descripcion": "peticiones simétricas",
+          "impulsor": "volumen",
+          "unidad": "Requests",
+          "divisor": 1,
+          "factor_estandar": "operacion.solicitudes_kms_por_consulta"
+        }
+      ],
+      "medidores_obligatorios": [
+        "clave"
+      ],
+      "disponibilidad": {
+        "estándar": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "AWS Key Management Service (KMS)",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    },
+    {
+      "id": "aws-cloudwatch-logs",
+      "nombre_oficial": "Amazon CloudWatch Logs",
+      "capa": "operacion_observabilidad",
+      "servicecode_precios": "AmazonCloudWatch",
+      "referencia_url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html",
+      "referencia_titulo": "What is Amazon CloudWatch Logs? - Amazon CloudWatch Logs",
+      "alias": [
+        "CloudWatch Logs",
+        "Amazon CloudWatch"
+      ],
+      "region_ue": "eu-central-1",
+      "plantillas_precio": [
+        {
+          "id": "ingesta",
+          "filtro": "servicecode eq 'AmazonCloudWatch' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-DataProcessing-Bytes' and termType eq 'OnDemand'",
+          "concepto": "EUC1-DataProcessing-Bytes",
+          "descripcion": "ingesta de registros personalizados, clase Standard, GB",
+          "impulsor": "volumen",
+          "unidad": "GB",
+          "divisor": 1,
+          "factor_estandar": "operacion.gb_registros_por_consulta"
+        },
+        {
+          "id": "almacenamiento",
+          "filtro": "servicecode eq 'AmazonCloudWatch' and regionCode eq 'eu-central-1' and usagetype eq 'EUC1-TimedStorage-ByteHrs' and termType eq 'OnDemand'",
+          "concepto": "EUC1-TimedStorage-ByteHrs",
+          "descripcion": "almacenamiento de registros, GB al mes",
+          "impulsor": "volumen",
+          "unidad": "GB-Mo",
+          "divisor": 1,
+          "factor_estandar": "operacion.gb_registros_por_consulta"
+        }
+      ],
+      "medidores_obligatorios": [
+        "ingesta",
+        "almacenamiento"
+      ],
+      "disponibilidad": {
+        "Standard": {
+          "regiones": [
+            "eu-central-1",
+            "eu-west-1",
+            "eu-west-3",
+            "eu-north-1",
+            "eu-south-1",
+            "eu-south-2"
+          ],
+          "alcance": "servicio",
+          "producto_mcp": "Amazon CloudWatch Logs",
+          "fuente": "aws___get_regional_availability (AWS Knowledge MCP Server, https://knowledge-mcp.global.api.aws)",
+          "consultado": "2026-11-04"
+        }
+      }
+    }
+  ]
+}

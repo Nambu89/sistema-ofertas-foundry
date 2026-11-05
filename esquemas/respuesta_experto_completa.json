@@ -1,0 +1,902 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:respuesta_experto_completa:5",
+  "title": "Respuesta del experto completada por el núcleo (carga.respuestas_expertos.azure.respuesta), contrato v5",
+  "description": "Lo que guarda el núcleo tras registrar una respuesta v4 (experto.completar): los campos del modelo tal cual (salvo lo que el núcleo normaliza o sustituye, anotado en valoracion_nucleo.ajustes) más lo que pone el código desde el catálogo y la instantánea de precios: filtro, precio, moneda, unidad, región, vigencia, concepto, cantidad_mensual, supuesto_cantidad y el factor de volumen de cada precio; la referencia de cada componente del catálogo y la de la arquitectura elegida (origen «catalogo» o «arquitectura»). Quitando lo del núcleo (experto.proyectar_modelo) sale exactamente lo que escribió el modelo: así la puerta recompone y compara (LES-G-097). docs/I1/CAMBIOS-I17-P.md. Con precio por tramos en la instantánea, precio es el precio medio de la cantidad valorada por tramos (8 decimales) y precio_tramos lleva los tramos. v5 (I1.9): existente_del_cliente en cada componente, motivo «existente_del_cliente» en lugar de «a_cargo_del_cliente» (sin motivo_cita), justificacion_nivel {nivel, razon, cita} y referencia_id null solo para un recurso del cliente fuera del catálogo (lo comprueba el núcleo). La v4 queda en historico/respuesta_experto_completa_v4.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "brief_recibido",
+    "brief_id",
+    "agente",
+    "arquitectura_id",
+    "referencias",
+    "componentes",
+    "flujos",
+    "decisiones",
+    "alternativas_descartadas",
+    "supuestos",
+    "riesgos",
+    "preguntas",
+    "tareas_propuestas",
+    "precios",
+    "herramientas_usadas",
+    "valoracion_nucleo"
+  ],
+  "properties": {
+    "brief_recibido": {
+      "type": "string",
+      "minLength": 200,
+      "maxLength": 20480
+    },
+    "brief_id": {
+      "type": "string",
+      "pattern": "^BRF-OF-[A-Z0-9]{2,20}-[0-9]{3}-[A-Z]-AZ-R[1-3]$"
+    },
+    "agente": {
+      "enum": [
+        "preventa-experto-azure"
+      ]
+    },
+    "arquitectura_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,59}$"
+    },
+    "referencias": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 40,
+      "items": {
+        "$ref": "#/$defs/referencia"
+      }
+    },
+    "componentes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/componente"
+      }
+    },
+    "flujos": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "$ref": "#/$defs/flujo"
+      }
+    },
+    "decisiones": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 400
+      }
+    },
+    "alternativas_descartadas": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 400
+      }
+    },
+    "supuestos": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/supuesto"
+      }
+    },
+    "riesgos": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "$ref": "#/$defs/riesgo"
+      }
+    },
+    "preguntas": {
+      "type": "array",
+      "maxItems": 15,
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 400
+      }
+    },
+    "tareas_propuestas": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 40,
+      "items": {
+        "$ref": "#/$defs/tarea"
+      }
+    },
+    "precios": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "$ref": "#/$defs/precio"
+      }
+    },
+    "herramientas_usadas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "microsoft_docs_search",
+        "microsoft_docs_fetch"
+      ],
+      "properties": {
+        "microsoft_docs_search": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "microsoft_docs_fetch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        }
+      }
+    },
+    "valoracion_nucleo": {
+      "$ref": "#/$defs/valoracion_nucleo"
+    }
+  },
+  "$defs": {
+    "referencia": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "url",
+        "titulo",
+        "fecha_consulta",
+        "origen"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^REF-[0-9]{2}$"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://learn\\.microsoft\\.com/"
+        },
+        "titulo": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200
+        },
+        "fecha_consulta": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "origen": {
+          "enum": [
+            "experto",
+            "catalogo",
+            "arquitectura"
+          ]
+        }
+      }
+    },
+    "componente": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "catalogo_id",
+        "servicio",
+        "capa",
+        "sku",
+        "region",
+        "cantidad",
+        "unidad",
+        "referencia_id",
+        "desviacion_justificada",
+        "motivo_no_valoracion",
+        "existente_del_cliente",
+        "incluido_en",
+        "justificacion_nivel"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "catalogo_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^az-[a-z0-9-]{2,40}$"
+        },
+        "servicio": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "capa": {
+          "enum": [
+            "usuarios_canales",
+            "aplicacion_integracion",
+            "ia",
+            "datos_conocimiento",
+            "identidad_seguridad_red",
+            "operacion_observabilidad"
+          ]
+        },
+        "sku": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^([a-z]+[a-z0-9]*|global)$"
+        },
+        "cantidad": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unidad": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "referencia_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^REF-[0-9]{2}$"
+        },
+        "desviacion_justificada": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 30,
+          "maxLength": 600
+        },
+        "motivo_no_valoracion": {
+          "enum": [
+            "no_aplica",
+            "depende_del_volumen",
+            "sin_medidor_publico",
+            "existente_del_cliente",
+            "incluido_en_otro_componente",
+            "licencia_fuera_de_azure",
+            "fuera_del_catalogo"
+          ]
+        },
+        "existente_del_cliente": {
+          "$ref": "#/$defs/existente_del_cliente"
+        },
+        "incluido_en": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "justificacion_nivel": {
+          "$ref": "#/$defs/justificacion_nivel"
+        }
+      }
+    },
+    "flujo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origen",
+        "destino",
+        "descripcion"
+      ],
+      "properties": {
+        "origen": {
+          "type": "string",
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "destino": {
+          "type": "string",
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        }
+      }
+    },
+    "supuesto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "texto",
+        "confianza",
+        "hechos"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^S-[0-9]{2}$"
+        },
+        "texto": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "confianza": {
+          "enum": [
+            "ALTA",
+            "MEDIA",
+            "BAJA"
+          ]
+        },
+        "hechos": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/id_hecho"
+          }
+        }
+      }
+    },
+    "riesgo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "texto",
+        "mitigacion",
+        "hechos"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^RG-[0-9]{2}$"
+        },
+        "texto": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "mitigacion": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "hechos": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/id_hecho"
+          }
+        }
+      }
+    },
+    "tarea": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "fase",
+        "tarea",
+        "perfil",
+        "horas_base",
+        "reuniones_h",
+        "descripcion",
+        "entregable"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^T-[0-9]{2}$"
+        },
+        "fase": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "tarea": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "perfil": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "horas_base": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 400
+        },
+        "reuniones_h": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 80
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 400
+        },
+        "entregable": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        }
+      }
+    },
+    "precio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "componente_id",
+        "plantilla_id",
+        "instancias",
+        "base_volumen",
+        "factor_override",
+        "plantilla",
+        "filtro",
+        "precio",
+        "moneda",
+        "unidad",
+        "region",
+        "effectiveStartDate",
+        "concepto",
+        "cantidad_mensual",
+        "supuesto_cantidad",
+        "sha256_articulo",
+        "precio_tramos"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^P-[0-9]{2}$"
+        },
+        "componente_id": {
+          "type": "string",
+          "pattern": "^C-[0-9]{2}$"
+        },
+        "plantilla_id": {
+          "type": "string",
+          "pattern": "^(az-[a-z0-9-]{2,40}/)?[a-z0-9][a-z0-9.-]{0,59}$"
+        },
+        "instancias": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0,
+          "maximum": 1000
+        },
+        "base_volumen": {
+          "$ref": "#/$defs/base_volumen"
+        },
+        "factor_override": {
+          "$ref": "#/$defs/factor_override"
+        },
+        "plantilla": {
+          "type": "string",
+          "pattern": "^az-[a-z0-9-]{2,40}/[a-z0-9][a-z0-9.-]{0,59}$"
+        },
+        "filtro": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500
+        },
+        "precio": {
+          "type": "number",
+          "minimum": 0
+        },
+        "moneda": {
+          "enum": [
+            "EUR"
+          ]
+        },
+        "unidad": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "region": {
+          "type": "string",
+          "pattern": "^([a-z]+[a-z0-9]*|global)$"
+        },
+        "effectiveStartDate": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9:.]+Z?)?$"
+        },
+        "concepto": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "cantidad_mensual": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "supuesto_cantidad": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        },
+        "sha256_articulo": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "precio_tramos": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "desde",
+              "precio_unitario"
+            ],
+            "properties": {
+              "desde": {
+                "type": "number",
+                "minimum": 0
+              },
+              "precio_unitario": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "base_volumen": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "cita",
+        "cantidad_base",
+        "unidad_base",
+        "factor"
+      ],
+      "properties": {
+        "cita": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 600
+        },
+        "cantidad_base": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1000000000000
+        },
+        "unidad_base": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "factor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "valor",
+            "unidad",
+            "justificacion",
+            "fuente",
+            "origen",
+            "caso_uso"
+          ],
+          "properties": {
+            "valor": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "unidad": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            "justificacion": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 400
+            },
+            "fuente": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 300
+            },
+            "origen": {
+              "enum": [
+                "catalogo",
+                "experto"
+              ]
+            },
+            "caso_uso": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 80
+            }
+          }
+        }
+      }
+    },
+    "factor_override": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "valor",
+        "cita",
+        "justificacion"
+      ],
+      "properties": {
+        "valor": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1000000000
+        },
+        "cita": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 600
+        },
+        "justificacion": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 300
+        }
+      }
+    },
+    "justificacion_nivel": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "nivel",
+        "razon",
+        "cita"
+      ],
+      "properties": {
+        "nivel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "razon": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_.-]{0,59}$"
+        },
+        "cita": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 600
+        }
+      }
+    },
+    "existente_del_cliente": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "entrada"
+      ],
+      "properties": {
+        "entrada": {
+          "type": "string",
+          "pattern": "^EX-[0-9]{2}$"
+        }
+      }
+    },
+    "id_hecho": {
+      "type": "string",
+      "pattern": "^(R-[a-z_]+|REF-[0-9]{2}|C-[0-9]{2}|P-[0-9]{2})$"
+    },
+    "valoracion_nucleo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "instantanea",
+        "arquitectura",
+        "ajustes",
+        "modelos"
+      ],
+      "properties": {
+        "instantanea": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fecha_consulta",
+            "fecha",
+            "sha256",
+            "moneda",
+            "fuente"
+          ],
+          "properties": {
+            "fecha_consulta": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9:.]+Z$"
+            },
+            "fecha": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "moneda": {
+              "enum": [
+                "EUR"
+              ]
+            },
+            "fuente": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 300
+            },
+            "pilar": {
+              "enum": [
+                "azure",
+                "gcp",
+                "aws"
+              ],
+              "description": "Multinube (esquemas/MULTINUBE.md): solo fuera de Azure; la copia el núcleo de la instantánea."
+            },
+            "fuente_moneda": {
+              "enum": [
+                "gcp_catalog_eur",
+                "aws_usd_convertido_bce"
+              ]
+            },
+            "tipo_bce": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "fecha_tipo_bce": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            }
+          }
+        },
+        "arquitectura": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "url",
+            "titulo",
+            "referencia_id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 60
+            },
+            "url": {
+              "type": "string",
+              "pattern": "^https://learn\\.microsoft\\.com/"
+            },
+            "titulo": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 200
+            },
+            "referencia_id": {
+              "type": "string",
+              "pattern": "^REF-[0-9]{2}$"
+            }
+          }
+        },
+        "ajustes": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "campo",
+              "recibido",
+              "puesto",
+              "motivo"
+            ],
+            "properties": {
+              "campo": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 120
+              },
+              "recibido": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 600
+              },
+              "puesto": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 600
+              },
+              "motivo": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 300
+              }
+            }
+          }
+        },
+        "modelos": {
+          "type": "array",
+          "maxItems": 30,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "plantilla",
+              "ga",
+              "retirada",
+              "fuente"
+            ],
+            "properties": {
+              "plantilla": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 110
+              },
+              "ga": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              },
+              "retirada": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              },
+              "fuente": {
+                "type": "string",
+                "minLength": 5,
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

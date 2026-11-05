@@ -1,0 +1,4 @@
+# Herramientas locales del comercial y del integrador (NO van en el ZIP del agente).
+-r requirements.txt
+azure-ai-projects==2.8.0
+pytest==9.1.1

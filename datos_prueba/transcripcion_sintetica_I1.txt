@@ -1,0 +1,101 @@
+WEBVTT
+
+NOTE
+Transcripción SINTÉTICA para las pruebas de I1. Empresa, personas y datos inventados.
+Forma tomada de una exportación .vtt de Teams; ver datos_prueba/alta_I1.md.
+
+00:00:04.200 --> 00:00:11.900
+<v Responsable comercial>Buenos días a todos. Gracias por el hueco. La idea de hoy es entender bien qué queréis resolver antes de proponeros nada.</v>
+
+00:00:12.300 --> 00:00:19.600
+<v Marta Olmedo>Perfecto. Yo dirijo I+D en Kelvara Ensayos Industriales y conmigo están Iker, de sistemas, y Nuria, de calidad.</v>
+
+00:00:20.100 --> 00:00:31.400
+<v Marta Olmedo>Somos un laboratorio de ensayos de materiales: hormigones, aditivos y recubrimientos. Cada ensayo acaba en un informe técnico firmado, y llevamos años acumulando informes, procedimientos y normas.</v>
+
+00:00:32.000 --> 00:00:44.800
+<v Marta Olmedo>El objetivo es que nuestros técnicos encuentren en segundos lo que ya sabemos, con un asistente de IA que responda en lenguaje natural y cite siempre el informe o la norma de donde sale la respuesta.</v>
+
+00:00:45.300 --> 00:00:52.100
+<v Responsable comercial>Entendido. ¿Y hoy cómo lo hacen? ¿Preguntan al compañero que se acuerda?</v>
+
+00:00:52.600 --> 00:01:03.900
+<v Nuria Castells>Exacto. Buscamos a mano en carpetas y en el correo, y muchas veces repetimos un ensayo que ya estaba hecho porque nadie lo encontró a tiempo.</v>
+
+00:01:04.400 --> 00:01:12.700
+<v Responsable comercial>Vale. En cuanto a plataforma, ¿tenéis preferencia de nube o algo ya montado?</v>
+
+00:01:13.200 --> 00:01:24.500
+<v Iker Salaverri>Todo lo nuestro está en Microsoft: Microsoft 365 y una suscripción de Azure. Queremos que esto viva en Azure, no queremos abrir otra nube para un piloto.</v>
+
+00:01:25.000 --> 00:01:34.300
+<v Iker Salaverri>La suscripción la tenemos con un contrato Enterprise Agreement directo con Microsoft, no a través de un revendedor.</v>
+
+00:01:35.000 --> 00:01:41.200
+<v Responsable comercial>Muy bien, eso nos simplifica bastante. Vamos al alcance: ¿qué tendría que hacer el asistente el primer día?</v>
+
+00:01:41.800 --> 00:01:53.600
+<v Marta Olmedo>Primero, buscar en los informes de ensayo y en los procedimientos internos y responder con la cita al documento y a la página.</v>
+
+00:01:54.100 --> 00:02:05.400
+<v Marta Olmedo>Segundo, resumir un informe largo en un párrafo que entienda un comercial. Y tercero, comparar dos ensayos del mismo material y decir qué ha cambiado entre ellos.</v>
+
+00:02:06.000 --> 00:02:14.800
+<v Nuria Castells>Para mí es clave que diga claramente cuando no encuentra la respuesta, en vez de inventarse algo. En calidad no podemos permitirnos una cifra inventada.</v>
+
+00:02:15.300 --> 00:02:22.900
+<v Responsable comercial>Totalmente de acuerdo, eso lo diseñamos desde el principio. ¿Desde dónde lo usarían? ¿Una web, Teams?</v>
+
+00:02:23.400 --> 00:02:31.700
+<v Iker Salaverri>Desde Microsoft Teams, que es donde trabaja todo el mundo. Una web aparte no la va a abrir nadie.</v>
+
+00:02:32.300 --> 00:02:41.900
+<v Responsable comercial>¿Y hay algo que queráis dejar fuera de esta primera fase, para no mezclar?</v>
+
+00:02:42.400 --> 00:02:54.200
+<v Iker Salaverri>La integración con el LIMS, el sistema de gestión del laboratorio, queda fuera de esta fase. Primero queremos ver que el asistente responde bien con documentos.</v>
+
+00:02:54.800 --> 00:03:02.100
+<v Marta Olmedo>Y nada de SAP por ahora. Eso sería, como mucho, una fase posterior.</v>
+
+00:03:02.700 --> 00:03:11.300
+<v Responsable comercial>Apuntado. Pregunta importante para la parte legal: ¿dónde están las personas que lo van a usar?</v>
+
+00:03:11.900 --> 00:03:23.600
+<v Marta Olmedo>Todos los usuarios son técnicos de nuestros laboratorios de Zaragoza y Tarragona, es decir, todos están en España. No hay usuarios fuera.</v>
+
+00:03:24.200 --> 00:03:35.800
+<v Nuria Castells>Por tanto aplica el RGPD. Y nos pedirán que los datos se queden en la Unión Europea, eso es innegociable para dirección.</v>
+
+00:03:36.400 --> 00:03:44.900
+<v Responsable comercial>Perfecto, lo tendremos en cuenta en la región y en el despliegue de modelos. ¿Y a nivel de red?</v>
+
+00:03:45.500 --> 00:03:57.200
+<v Iker Salaverri>Queremos que los servicios no queden expuestos a internet: acceso privado desde nuestra red, con puntos de conexión privados donde se pueda.</v>
+
+00:03:57.800 --> 00:04:06.100
+<v Responsable comercial>Entendido. ¿Tenéis una fecha en la cabeza para el piloto?</v>
+
+00:04:06.700 --> 00:04:16.400
+<v Marta Olmedo>Nos gustaría tener el piloto funcionando en unos tres meses desde que arranquemos, para enseñarlo en el comité de dirección.</v>
+
+00:04:17.000 --> 00:04:28.700
+<v Marta Olmedo>En presupuesto, para el piloto manejamos una cifra orientativa de entre cuarenta y cincuenta mil euros, sin contar el consumo de Azure.</v>
+
+00:04:29.300 --> 00:04:38.600
+<v Responsable comercial>Muy útil, gracias. ¿Y cuántas personas lo usarían y cuántos documentos hay, más o menos?</v>
+
+00:04:39.200 --> 00:04:49.900
+<v Marta Olmedo>Eso no lo tengo ahora mismo, prefiero no darte una cifra al aire. Lo miro con Iker y te lo paso por correo esta semana.</v>
+
+00:04:50.500 --> 00:04:58.800
+<v Responsable comercial>Sin problema. Y la propuesta, ¿la preparamos en castellano?</v>
+
+00:04:59.300 --> 00:05:05.700
+<v Marta Olmedo>Sí, la propuesta en castellano, por favor.</v>
+
+00:05:06.300 --> 00:05:15.900
+<v Responsable comercial>Genial. Con esto os preparo una primera propuesta con arquitectura, alcance y precio cerrado, y la revisamos juntos.</v>
+
+00:05:16.400 --> 00:05:20.100
+<v Marta Olmedo>Estupendo. Gracias, el comercial.</v>

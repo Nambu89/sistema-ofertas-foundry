@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": { "value": "swedencentral" },
+    "prefijo": { "value": "pmn" },
+    "conFirewall": { "value": true },
+    "hubCidr": { "value": "10.10.0.0/24" },
+    "githubOrg": { "value": "<ORGANIZACION_GITHUB>" },
+    "githubRepo": { "value": "<REPOSITORIO_GITHUB>" },
+    "contactosPresupuesto": { "value": ["<CORREO_AVISOS_PRESUPUESTO>"] },
+    "pilares": {
+      "value": [
+        { "id": "azure", "cidr": "10.11.0.0/16", "presupuestoMensualEur": 600, "fqdnsMcp": ["learn.microsoft.com"] },
+        { "id": "gcp", "cidr": "10.12.0.0/16", "presupuestoMensualEur": 600, "fqdnsMcp": ["learn.microsoft.com", "developerknowledge.googleapis.com"] },
+        { "id": "aws", "cidr": "10.13.0.0/16", "presupuestoMensualEur": 600, "fqdnsMcp": ["learn.microsoft.com", "knowledge-mcp.global.api.aws"] }
+      ]
+    }
+  }
+}

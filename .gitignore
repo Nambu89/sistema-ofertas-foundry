@@ -2,25 +2,20 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
-.eggs/
-build/
-dist/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .coverage
 htmlcov/
 
-# Entornos virtuales
+# Entornos virtuales y dependencias del frontal
 .venv/
 venv/
 env/
+node_modules/
+frontal/web/dist/
 
-# Paquetes de despliegue (los ZIP se generan y se identifican por su SHA-256)
-*.zip
-*.whl
-
-# Variables de entorno y secretos: ninguna excepción, tampoco ficheros de ejemplo
+# Secretos: nunca se versionan, tampoco como ejemplo
 .env
 .env.*
 *.env
@@ -29,37 +24,34 @@ env/
 *.pfx
 *.p12
 
-# Resultados en bruto que pueden contener respuestas completas de los agentes
-resultados/
+# Paquetes y ZIP generados (se identifican por su SHA-256); excepciones versionadas abajo
+*.zip
+*.whl
+!sandbox/MontserratVF.zip
+!frontal/bff/reproduccion/paquete/*.zip
+
+# Salidas generadas por las pruebas y los scripts (aquí va también la tarifa real: salidas/rate-card.json)
 salidas/
-bruto/
-turnos/
-respuestas/
-trazas/
-**/REAL/
-*.respuesta.json
+_salidas/
 *.log
+frontal/evidencias/
+frontal/.descargas/
+frontal/web/test-results/
+frontal/web/playwright-report/
+
+# Configuración real: solo local. Se versionan únicamente las plantillas *.ejemplo*
+config/entorno.local.json
+config/*.local.*
+!config/*.local.txt.ejemplo
+manifiesto.json
+agentes/despliegue.json
+
+# Evidencias de pruebas reales y líneas base de entornos concretos: no se publican
+pruebas/
+_baseline/
 
 # Sistema y editores
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
-
-# Arnés del paso 0a: construcción del ZIP del hosted y salidas locales
-pruebas/paso0a/hosted_prueba/_build/
-pruebas/paso0a/_salidas/
-
-# Pasos manuales de Fernando: identificadores locales de otros proyectos (sin secretos, pero con nombres)
-pasos-fernando/local.conf
-
-# Pruebas: lista local de nombres reales de clientes (revela relaciones comerciales), copias de editor
-# incluidas. Solo se versiona la plantilla .ejemplo, con nombres ficticios
-config/nombres-reales.local*
-!config/nombres-reales.local.txt.ejemplo
-
-# Entorno real (tenant, suscripción, recursos y nombres protegidos de otros proyectos): solo local.
-# Se versiona únicamente la plantilla config/entorno.ejemplo.json, con valores ficticios
-config/entorno.local.json
-config/entorno.local.json.*
-config/entorno.local.json~

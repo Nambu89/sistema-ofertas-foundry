@@ -1,0 +1,13 @@
+{
+  "id": "D-002",
+  "linea": "DECISION | Responsable de preventa | APROBADA | 2026-10-09 | 43600de4966d4fa35445a0ae59e821bf49d7b08064c8fa31236b2a38f7818692 | Arquitectura y precios revisados; sin comentarios.",
+  "revisor": "Responsable de preventa",
+  "tipo": "APROBADA",
+  "fecha": "2026-10-09",
+  "hash_citado": "43600de4966d4fa35445a0ae59e821bf49d7b08064c8fa31236b2a38f7818692",
+  "comentarios": "Arquitectura y precios revisados; sin comentarios.",
+  "version": "A",
+  "estado_antes": "EN_REVISION_PREVENTA",
+  "estado_despues": "EN_APROBACION_AREA",
+  "registrada_ts": "2026-10-09T09:15:00+02:00"
+}

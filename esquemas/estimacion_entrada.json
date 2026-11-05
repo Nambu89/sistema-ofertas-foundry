@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:estimacion_entrada:1",
+  "title": "Entrada del generador canónico de estimación (I1)",
+  "description": "El JSON que prepara el modelo en entrada/estimacion_entrada.json. Es el esquema del LEEME del generador canónico, más estricto: id, perfil, descripción y entregable obligatorios por tarea; sin condiciones_pago ni validez_dias (salen de la tarifa); sin ningún campo de contingencia. Las reglas cruzadas (trazabilidad con tareas_propuestas, PM >= 8 h, hitos de la tarifa, ajuste solo con decisión) están en CONTRATOS.md §13 (P6).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["codigo", "cliente", "titulo", "fecha", "duracion_semanas", "fases", "tareas", "hitos", "gantt"],
+  "properties": {
+    "codigo": {"type": "string", "pattern": "^OF-[A-Z0-9]{2,20}-[0-9]{3}-[A-Z]$"},
+    "cliente": {"type": "string", "minLength": 2, "maxLength": 120},
+    "titulo": {"type": "string", "minLength": 5, "maxLength": 160},
+    "fecha": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "duracion_semanas": {"type": "integer", "minimum": 1, "maximum": 104},
+    "fases": {"type": "array", "minItems": 1, "maxItems": 12, "uniqueItems": true, "items": {"type": "string", "minLength": 3, "maxLength": 80}},
+    "tareas": {"type": "array", "minItems": 1, "maxItems": 60, "items": {"$ref": "#/$defs/tarea"}},
+    "hitos": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"$ref": "#/$defs/hito"}},
+    "gantt": {"type": "array", "minItems": 1, "maxItems": 12, "items": {"$ref": "#/$defs/gantt"}},
+    "validaciones": {"type": "array", "maxItems": 10, "items": {"$ref": "#/$defs/validacion"}},
+    "asunciones": {"type": "array", "maxItems": 30, "items": {"type": "string", "minLength": 5, "maxLength": 400}},
+    "exclusiones": {"type": "array", "maxItems": 30, "items": {"type": "string", "minLength": 5, "maxLength": 400}},
+    "objetivo": {"type": "string", "minLength": 5, "maxLength": 600},
+    "cobertura": {"type": "string", "minLength": 5, "maxLength": 600},
+    "riesgo": {"type": "string", "minLength": 5, "maxLength": 600},
+    "perfiles": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 3}},
+    "ajuste_comercial_eur": {"type": "number"},
+    "ajuste_comercial_motivo": {"type": "string", "minLength": 10, "maxLength": 400}
+  },
+  "$defs": {
+    "tarea": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "fase", "tarea", "perfil", "tecnicas_h", "reuniones_h", "descripcion", "entregable"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^(T|PM)-[0-9]{2}$"},
+        "fase": {"type": "string", "minLength": 3, "maxLength": 80},
+        "tarea": {"type": "string", "minLength": 3, "maxLength": 160},
+        "perfil": {"type": "string", "minLength": 3, "maxLength": 80},
+        "tecnicas_h": {"type": "number", "minimum": 0, "maximum": 400},
+        "reuniones_h": {"type": "number", "minimum": 0, "maximum": 80},
+        "descripcion": {"type": "string", "minLength": 10, "maxLength": 400},
+        "entregable": {"type": "string", "minLength": 3, "maxLength": 200}
+      }
+    },
+    "hito": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nombre", "porcentaje"],
+      "properties": {
+        "nombre": {"type": "string", "pattern": "^Hito [0-9] - .{3,120}$"},
+        "porcentaje": {"type": "number", "exclusiveMinimum": 0, "maximum": 100}
+      }
+    },
+    "gantt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fase", "contenido", "semanas"],
+      "properties": {
+        "fase": {"type": "string", "minLength": 3, "maxLength": 80},
+        "contenido": {"type": "string", "minLength": 3, "maxLength": 200},
+        "semanas": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer", "minimum": 1, "maximum": 104}}
+      }
+    },
+    "validacion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nombre", "descripcion"],
+      "properties": {
+        "nombre": {"type": "string", "minLength": 3, "maxLength": 120},
+        "descripcion": {"type": "string", "minLength": 5, "maxLength": 400}
+      }
+    }
+  }
+}

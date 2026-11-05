@@ -1,0 +1,58 @@
+{
+  "schema": "preventa-manifiesto-paquete/1",
+  "codigo": "OF-KELVARA-001-A",
+  "version": "A",
+  "estado": "LISTA_PARA_REVISION",
+  "hash_contenido": "43600de4966d4fa35445a0ae59e821bf49d7b08064c8fa31236b2a38f7818692",
+  "estado_json_sha256": "84d4e658cd1bdb81f7be034c6c7e86dd10d2ab471389a11d3e2243cf8df2775f",
+  "ficheros": [
+    {
+      "nombre": "OF-KELVARA-001-A-Estimacion.xlsx",
+      "sha256": "5fdfa0baf1bfb50bac68734b4c69a4fb34e98a7981d466a9d662881eb3943a73",
+      "bytes": 1032
+    },
+    {
+      "nombre": "OF-KELVARA-001-A-Anexo-Consumo.xlsx",
+      "sha256": "b80f8360ddc9bed168ebc56de78de3a005152cf9c7c9bbc72eb789498c2b1789",
+      "bytes": 1035
+    },
+    {
+      "nombre": "OF-KELVARA-001-A-Anexo-Consumo.json",
+      "sha256": "3142eb9e23f77736259eb82e1bf1660ad5d46165e275238abca347f21859ea70",
+      "bytes": 1035
+    },
+    {
+      "nombre": "OF-KELVARA-001-A-Revision.pptx",
+      "sha256": "bf56bed7665cf263e2e8dd45fbadf9551317aa71908345447e03d6a622797085",
+      "bytes": 1030
+    },
+    {
+      "nombre": "OF-KELVARA-001-A-Nota-Revision.docx",
+      "sha256": "c2c3c32cd2a5527379276cf460cd4d9e02e9522c568943ca91e732628c7d015e",
+      "bytes": 1035
+    },
+    {
+      "nombre": "estado.json",
+      "sha256": "84d4e658cd1bdb81f7be034c6c7e86dd10d2ab471389a11d3e2243cf8df2775f",
+      "bytes": 71785
+    },
+    {
+      "nombre": "mensaje_revisor.txt",
+      "sha256": "e7ea3ff33e939fbeeadc2a9e0ee25edcb2eda8f2a7cf485acddf7ab527c35ab5",
+      "bytes": 1019
+    },
+    {
+      "nombre": "mensaje_aprobador.txt",
+      "sha256": "582a47861c131ba16b0678fce4e62c28cf1a8bedbc85cd416b97c566d3b1b200",
+      "bytes": 1021
+    }
+  ],
+  "montados": {
+    "rate_card_sha256": "45491cc035cc6b0e2ff32621b35a347fd9214ad98bff4664f79469122c9866d4",
+    "generador_sha256": "50aa3ac88be8fba0eb96b8d61126e7d5b810221a26acceb4abc9e37f116e65f3",
+    "plantilla_sha256": "fbb1e2c0fb0308e975a606670c66d0b35261512c59d92e980d16f0cddbe55602",
+    "catalogo_sha256": "4742c92eaad3d073879838cdd3288cc1515f45e5e7392d389fb8cd7ed76250e1",
+    "precios_instantanea_sha256": "97cc4684d033233dbbe9ba4156d2044c165d2e1b3ebab4c7f05c064cecf26aad"
+  },
+  "generado_ts": "2026-10-08T10:11:00+02:00"
+}
