@@ -1,0 +1,8 @@
+# Plantilla de la lista LOCAL de términos que no pueden publicarse. Cópiala a
+# config/terminos-prohibidos.local.txt (ignorado por git) o guárdala fuera del repositorio y pásala con
+# --terminos. Sustituye estas líneas por los términos reales.
+# Un término por línea: literal, sensible a mayúsculas y con límites de palabra.
+# Con el prefijo «re:» la línea es una expresión regular. Las líneas con «#» al principio se ignoran.
+termino-ejemplo-persona
+termino-ejemplo-cliente
+re:termino-ejemplo-[0-9]+

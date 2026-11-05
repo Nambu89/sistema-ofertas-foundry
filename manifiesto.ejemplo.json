@@ -1,0 +1,235 @@
+{
+  "schema": "preventa-manifiesto/1",
+  "proyecto": "proyecto-ejemplo",
+  "nota": "PLANTILLA con valores ficticios. El real (manifiesto.json, ignorado por git) lo escribe desplegar.py con el SHA-256 y el file_id de cada fichero montado en el coordinador.",
+  "ficheros": {
+    "MontserratVF.zip": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 297034,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "fuente corporativa en ZIP determinista (la API rechaza .ttf)"
+    },
+    "OF-PLANTILLA-ESTIMACION-MCLOUD.xlsx": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 9131,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "canónico sin modificar"
+    },
+    "catalogo_componentes.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 193449,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "catálogo derivado (catalogo/derivar.py)"
+    },
+    "esquema_anexo_consumo.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 3069,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/anexo_consumo.json"
+    },
+    "esquema_brief.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 6353,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/brief.json"
+    },
+    "esquema_catalogo_componentes.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 43702,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/catalogo_componentes.json"
+    },
+    "esquema_decision.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 8717,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/decision.json"
+    },
+    "esquema_estado.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 14119,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/estado.json"
+    },
+    "esquema_estimacion_entrada.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 4294,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/estimacion_entrada.json"
+    },
+    "esquema_manifiesto_paquete.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 2886,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/manifiesto_paquete.json"
+    },
+    "esquema_precios_instantanea.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 4766,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/precios_instantanea.json"
+    },
+    "esquema_requisitos.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 4341,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/requisitos.json"
+    },
+    "esquema_respuesta_experto.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 11126,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/respuesta_experto.json"
+    },
+    "esquema_respuesta_experto_completa.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 21119,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/respuesta_experto_completa.json"
+    },
+    "esquema_respuesta_verificador.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 3682,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/respuesta_verificador.json"
+    },
+    "esquema_textos_cliente.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 8051,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "esquemas/textos_cliente.json"
+    },
+    "generar_estimacion.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 47742,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "canónico sin modificar"
+    },
+    "nucleo_anexo_consumo.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 46241,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/anexo_consumo.py"
+    },
+    "nucleo_brief.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 36768,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/brief.py"
+    },
+    "nucleo_decision.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 21425,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/decision.py"
+    },
+    "nucleo_errores.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 1320,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/errores.py"
+    },
+    "nucleo_esquema.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 8837,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/esquema.py"
+    },
+    "nucleo_estado.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 29104,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/estado.py"
+    },
+    "nucleo_estimacion.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 47716,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/estimacion.py"
+    },
+    "nucleo_experto.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 219072,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/experto.py"
+    },
+    "nucleo_hashes.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 2580,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/hashes.py"
+    },
+    "nucleo_init.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 355,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/__init__.py"
+    },
+    "nucleo_mensajes.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 5284,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/mensajes.py"
+    },
+    "nucleo_nota_revision.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 48686,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/nota_revision.py"
+    },
+    "nucleo_paquete.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 15088,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/paquete.py"
+    },
+    "nucleo_pptx_revision.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 134297,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/pptx_revision.py"
+    },
+    "nucleo_restaurar.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 29324,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/restaurar.py"
+    },
+    "nucleo_suficiencia.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 32371,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/suficiencia.py"
+    },
+    "nucleo_textos_cliente.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 110684,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/textos_cliente.py"
+    },
+    "nucleo_verificacion.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 59299,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox/nucleo/verificacion.py"
+    },
+    "precios_instantanea.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 75558,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "instantánea de precios del despliegue (catalogo/instantanea_precios.py)"
+    },
+    "preventa_run.py": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 59785,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "sandbox I1"
+    },
+    "rate-card.json": {
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "bytes": 2531,
+      "file_id": "assistant-EJEMPLO",
+      "origen": "skill rate-card v4 (B2), sha256 3be796a04d3ac5a046a1f0d4d92925f1d89447db3efa9435fadce6d7229819d8"
+    }
+  }
+}

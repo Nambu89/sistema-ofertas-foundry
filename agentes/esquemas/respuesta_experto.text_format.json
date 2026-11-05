@@ -1,0 +1,441 @@
+{
+  "type": "json_schema",
+  "name": "respuesta_experto",
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "brief_recibido",
+      "brief_id",
+      "agente",
+      "arquitectura_id",
+      "referencias",
+      "componentes",
+      "flujos",
+      "decisiones",
+      "alternativas_descartadas",
+      "supuestos",
+      "riesgos",
+      "preguntas",
+      "tareas_propuestas",
+      "precios",
+      "herramientas_usadas"
+    ],
+    "properties": {
+      "brief_recibido": {
+        "type": "string"
+      },
+      "brief_id": {
+        "type": "string"
+      },
+      "agente": {
+        "type": "string",
+        "enum": [
+          "preventa-experto-azure"
+        ]
+      },
+      "arquitectura_id": {
+        "type": "string"
+      },
+      "referencias": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "url",
+            "titulo",
+            "fecha_consulta"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "titulo": {
+              "type": "string"
+            },
+            "fecha_consulta": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "componentes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "catalogo_id",
+            "servicio",
+            "capa",
+            "sku",
+            "region",
+            "cantidad",
+            "unidad",
+            "referencia_id",
+            "desviacion_justificada",
+            "motivo_no_valoracion",
+            "existente_del_cliente",
+            "incluido_en",
+            "justificacion_nivel"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "catalogo_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "servicio": {
+              "type": "string"
+            },
+            "capa": {
+              "type": "string",
+              "enum": [
+                "usuarios_canales",
+                "aplicacion_integracion",
+                "ia",
+                "datos_conocimiento",
+                "identidad_seguridad_red",
+                "operacion_observabilidad"
+              ]
+            },
+            "sku": {
+              "type": "string"
+            },
+            "region": {
+              "type": "string"
+            },
+            "cantidad": {
+              "type": "number"
+            },
+            "unidad": {
+              "type": "string"
+            },
+            "referencia_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "desviacion_justificada": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "motivo_no_valoracion": {
+              "type": "string",
+              "enum": [
+                "no_aplica",
+                "depende_del_volumen",
+                "sin_medidor_publico",
+                "existente_del_cliente",
+                "incluido_en_otro_componente",
+                "licencia_fuera_de_azure",
+                "fuera_del_catalogo"
+              ]
+            },
+            "existente_del_cliente": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "required": [
+                "entrada"
+              ],
+              "properties": {
+                "entrada": {
+                  "type": "string"
+                }
+              }
+            },
+            "incluido_en": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "justificacion_nivel": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "required": [
+                "nivel",
+                "razon",
+                "cita"
+              ],
+              "properties": {
+                "nivel": {
+                  "type": "string"
+                },
+                "razon": {
+                  "type": "string"
+                },
+                "cita": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "flujos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "origen",
+            "destino",
+            "descripcion"
+          ],
+          "properties": {
+            "origen": {
+              "type": "string"
+            },
+            "destino": {
+              "type": "string"
+            },
+            "descripcion": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "decisiones": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "alternativas_descartadas": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "supuestos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "texto",
+            "confianza",
+            "hechos"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "texto": {
+              "type": "string"
+            },
+            "confianza": {
+              "type": "string",
+              "enum": [
+                "ALTA",
+                "MEDIA",
+                "BAJA"
+              ]
+            },
+            "hechos": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "riesgos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "texto",
+            "mitigacion",
+            "hechos"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "texto": {
+              "type": "string"
+            },
+            "mitigacion": {
+              "type": "string"
+            },
+            "hechos": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "preguntas": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "tareas_propuestas": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "fase",
+            "tarea",
+            "perfil",
+            "horas_base",
+            "reuniones_h",
+            "descripcion",
+            "entregable"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "fase": {
+              "type": "string"
+            },
+            "tarea": {
+              "type": "string"
+            },
+            "perfil": {
+              "type": "string"
+            },
+            "horas_base": {
+              "type": "number"
+            },
+            "reuniones_h": {
+              "type": "number"
+            },
+            "descripcion": {
+              "type": "string"
+            },
+            "entregable": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "precios": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "componente_id",
+            "plantilla_id",
+            "instancias",
+            "base_volumen",
+            "factor_override"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "componente_id": {
+              "type": "string"
+            },
+            "plantilla_id": {
+              "type": "string"
+            },
+            "instancias": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "base_volumen": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "required": [
+                "cita",
+                "cantidad_base",
+                "unidad_base"
+              ],
+              "properties": {
+                "cita": {
+                  "type": "string"
+                },
+                "cantidad_base": {
+                  "type": "number"
+                },
+                "unidad_base": {
+                  "type": "string"
+                }
+              }
+            },
+            "factor_override": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "additionalProperties": false,
+              "required": [
+                "valor",
+                "cita",
+                "justificacion"
+              ],
+              "properties": {
+                "valor": {
+                  "type": "number"
+                },
+                "cita": {
+                  "type": "string"
+                },
+                "justificacion": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "herramientas_usadas": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "microsoft_docs_search",
+          "microsoft_docs_fetch"
+        ],
+        "properties": {
+          "microsoft_docs_search": {
+            "type": "number"
+          },
+          "microsoft_docs_fetch": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
+  "strict": true
+}

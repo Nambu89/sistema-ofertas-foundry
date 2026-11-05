@@ -1,226 +1,275 @@
-# Arquitectura de referencia
+# Arquitectura objetivo de la preventa multinube
 
-![Sistema multiagente de preventa y arquitectura de IA en Microsoft Foundry](arquitectura.es.png)
+![Preventa multinube en Microsoft Foundry: una instancia independiente por pilar](arquitectura.es.png)
 
 Versión en inglés: [arquitectura.en.png](arquitectura.en.png). Editable en diagrams.net:
-[arquitectura.drawio](arquitectura.drawio), con una página por idioma.
+[arquitectura.drawio](arquitectura.drawio), con una página por idioma. SVG y HTML autocontenidos:
+`arquitectura.es.svg`, `arquitectura.en.svg`, `arquitectura.es.html`, `arquitectura.en.html`.
 
-Este diagrama es la **arquitectura de referencia** del sistema, con las buenas prácticas de Azure ya
-aplicadas. No es una foto de lo que hoy está desplegado: lo que ya se ha probado en Azure lleva una marca
-verde, y lo que la implementación actual hace de otra manera se explica al final, en
+Este diagrama es la **arquitectura objetivo** del sistema de preventa cuando se monte como un proyecto real:
+**una instancia independiente por pilar** (Microsoft, Google Cloud y AWS), todas ejecutándose en Microsoft
+Foundry. No es una foto de lo que hoy está desplegado: lo que ya se ha probado en Azure lleva un sello verde
+y lo que la implementación actual hace de otra manera se explica en
 [En qué difiere hoy la implementación](#en-qué-difiere-hoy-la-implementación).
 
-Es documentación técnica, no una pieza de marketing. Los términos de los iconos de Microsoft Entra lo
-exigen (ver [ICONOS.md](ICONOS.md)). La especificación ([arquitectura.json](arquitectura.json)) no
-contiene nombres de empresas ni de personas, identificadores de tenant o de suscripción, tarifas, correos
-ni secretos.
+Es documentación técnica, no una pieza de marketing (los términos de los iconos lo exigen, ver
+[ICONOS.md](ICONOS.md)). La especificación ([arquitectura.json](arquitectura.json)) no contiene nombres de
+empresas, clientes ni personas, identificadores de tenant o de suscripción, tarifas, correos ni secretos.
+
+**Fuentes.** Todo lo que dice el diagrama sale de dos estudios internos verificados el 04-11-2026 (Azure por un
+lado; AWS y Google Cloud por otro), que no se publican. Los identificadores entre paréntesis (ID-4, RED-3, T5…)
+remiten a esos estudios. Cada práctica y cada enlace a Microsoft Learn que aparece en el diagrama está en
+[arquitectura.json](arquitectura.json) con su URL y su cita literal, y `verificar_citas.py` las comprueba.
 
 ## Cómo leerlo
 
+**Se dibuja una instancia de pilar en detalle, marcada «×3 · una instancia por pilar»** (las dos tarjetas de
+detrás indican que se repite). Las tres instancias son el mismo módulo Bicep con parámetros distintos; lo
+único que cambia entre ellas está en el recuadro **«Qué cambia en cada pilar»**, a la derecha.
+
 **Los límites van de fuera adentro.** Cada marco es un límite de seguridad y de gobierno:
 
-1. **Tenant de Microsoft Entra.** Dentro está Microsoft Entra ID, que da a cada agente su identidad de
-   agente y autoriza el acceso con Azure RBAC de mínimo privilegio, sin claves. Es un servicio global del
-   tenant, no de una región; por eso queda fuera de la suscripción. La flecha de Entra ID al marco de
-   Foundry representa esa identidad de agente.
-2. **Suscripción de Azure.** Aquí actúan los presupuestos y las alertas de Microsoft Cost Management. Un
-   presupuesto avisa al pasar un umbral, pero no detiene el consumo: Learn lo dice así en REF-09.
-3. **Grupo de recursos.** Contiene todos los recursos de la carga y se despliega entero con azd y Bicep.
-   Por eso la flecha «despliega» de GitHub Actions termina en este marco, no en la suscripción.
-4. **Región de la UE.** Contiene el recurso y el proyecto de Microsoft Foundry y los servicios de datos y
-   observabilidad. Los modelos se despliegan en la Data Zone de la UE, así que la inferencia no sale de
-   la UE.
+1. **Tenant de Microsoft Entra del proyecto de Foundry.** Dentro, los servicios globales de identidad:
+   Microsoft Entra ID (identidad de agente, RBAC de mínimo privilegio, sin claves locales, OIDC para la
+   CI/CD), Acceso condicional con MFA resistente a la suplantación y Privileged Identity Management con roles
+   elegibles (ID-1 a ID-8).
+2. **Suscripción de Azure, la misma para los tres pilares** (opción B del estudio de Azure). Aquí actúan Azure
+   Policy (guardarraíl obligatorio, modelos aprobados, sin clave local y red cerrada, con `Deny` sobre el
+   grupo de recursos de cada pilar), Microsoft Defender for Cloud (plan AI services, que es un conmutador de
+   suscripción) y Microsoft Cost Management (un presupuesto por grupo de recursos de pilar; avisa, no corta).
+3. **Dos tipos de grupo de recursos, hermanos dentro de la suscripción.** El de **plataforma compartida**
+   (Azure Front Door con WAF y Azure Firewall en la red *hub*) y el **del pilar**, que se repite tres veces.
+4. **Región de la UE**, con los modelos en Data Zone UE.
+5. **Red privada del pilar** (Azure Virtual Network): montaje estándar con red privada, sin salida pública
+   del agente (RED-2). Dentro están el frontal web de preventa, los endpoints privados y el recurso y proyecto de
+   Microsoft Foundry del pilar. Storage, AI Search, Cosmos DB, Key Vault, Container Registry, Application
+   Insights y Log Analytics son del pilar pero quedan fuera del marco de la red: se llega a ellos por sus
+   endpoints privados (RED-3, RED-4).
 
-Los canales y la cadena de desarrollo quedan **fuera del tenant**:
+**Fuera del tenant del proyecto:**
 
-- **Canales.** OpenCode en el puesto del arquitecto, el portal de Foundry y, más adelante, Teams.
-- **Cadena de desarrollo.** GitHub y GitHub Actions entran por federación OIDC con Microsoft Entra, sin
-  secretos guardados.
+- **Personas y acceso.** Los comerciales y la revisión humana, desde el navegador con su cuenta de Google
+  Workspace corporativa, e **Sign in with Google** (OpenID Connect), el proveedor de identidad. No necesitan
+  cuenta de Entra ni permisos de Foundry.
+- **CI/CD.** GitHub Actions con OIDC de Entra (una identidad de despliegue por pilar, sin secretos) y azd con
+  Bicep (un módulo por pilar). La CI/CD también descarga la instantánea de precios al desplegar.
 
-**Lo que dibuja cada forma:**
-
-- Los **iconos** son los oficiales de Microsoft, cada uno con el nombre completo de su servicio en su
-  etiqueta o en la cabecera de su grupo: «Foundry Agent Service» en el coordinador y en la cabecera de los
-  especialistas, «Foundry Models» en la de los modelos. El generador lo comprueba y falla si falta.
-- Las **formas neutras con texto** son terceros o piezas sin icono propio: OpenCode («CLI»), GitHub,
-  GitHub Actions, azd y Bicep, y la Azure Retail Prices API, que no tiene icono oficial y no toma prestado
-  el de otro producto.
-- **Límites:** el tenant se dibuja con trazo continuo y los marcos de dentro (suscripción, grupo de
-  recursos y región) con trazo discontinuo. La leyenda muestra las dos variantes.
-- Las **cajas claras dentro del coordinador** son código determinista, no modelos.
+**Lo que dibuja cada forma:** iconos oficiales con el nombre completo del servicio junto a cada uno; formas
+neutras con texto para terceros o piezas sin icono oficial (Google Cloud, GitHub Actions, azd y Bicep); el
+botón oficial completo de Sign in with Google, nunca la «G» sola; cajas claras dentro del coordinador para el código determinista del núcleo; límites con trazo
+continuo (tenants) o discontinuo (suscripción, grupos de recursos, región y red privada).
 
 ## El flujo, paso a paso
 
-La persona que usa el sistema, el **arquitecto o la arquitecta de soluciones**, solo habla con un agente:
-el **Coordinador**. Es un *hosted agent* en Python. Todo lo que decide, guarda o recalcula es código; los
-modelos solo proponen.
+1. **El comercial entra en el frontal web de su pilar** con Sign in with Google y sube la transcripción. El
+   tráfico pasa por **Azure Front Door con WAF**, con un dominio por pilar.
+2. **Front Door lo lleva al frontal del pilar** (Azure Container Apps, por Private Link: N13). El frontal
+   **valida en el servidor** el ID token de Google: firma, `aud`, `iss` y `exp`, y además el claim **`hd`**
+   del dominio corporativo y `email_verified`. El parámetro `hd` de la petición solo optimiza la pantalla y
+   cualquiera lo puede quitar; Google dice del claim: «This must be used when restricting access to a resource
+   to only members of certain domains.», y que el dominio del correo no basta (el estudio de AWS y Google §6.A). La
+   autenticación integrada de Container Apps («Easy Auth») puede hacer el inicio de sesión con Google, pero no
+   restringe por dominio: deja la autorización al código («Finer authorization, such as role-specific
+   authorization, can be handled by inspecting the user's claims», `azure/container-apps/authentication`,
+   consultada el 04-11-2026; la restricción por `hd` es deducción de las dos fuentes). Después el frontal
+   autoriza con la lista de personas del pilar, usando el `sub` de Google como clave y no el correo, y encola
+   el trabajo en su propia cola (Azure Queue Storage).
+3. **El frontal llama al coordinador** con su identidad administrada, que solo tiene el rol Foundry Agent
+   Consumer sobre el coordinador de su pilar (N12, ID-4). La auditoría por persona (identificador de Google,
+   dominio, pilar, id de petición, huella de la transcripción, id de la ejecución) la lleva el frontal en su
+   tabla y en el Application Insights del pilar, porque Foundry solo ve la identidad del frontal (estudio de Azure
+   §6b.4).
+4. **El coordinador delega en el experto del pilar por A2A** con un brief anonimizado. El coordinador es un
+   *hosted agent* con núcleo determinista: el intérprete clasifica sin modelo, la máquina de estados decide
+   cada paso por sesión y versión, la puerta recalcula y el escriba es el único que escribe el estado. El
+   experto busca primero arquitecturas de referencia oficiales en la documentación de su nube por MCP.
+5. **El verificador contrasta** cada referencia y componente, con otro modelo (`gpt-5.6-luna`).
+6. **La respuesta verificada pasa a la puerta.** Los precios los pone el código desde la instantánea, nunca
+   el modelo.
+7. **La puerta solo deja pasar con 0 fallos** y el escriba guarda el resultado.
+8. **Revisión humana, por rol.** El paquete de revisión (PPTX, DOCX y XLSX) se ve y se descarga en el mismo
+   frontal, también tras Front Door y con inicio de sesión de Google: lo revisa el responsable de preventa y
+   lo aprueba el Area Manager. El sistema nunca envía nada al cliente (IA-8).
+9. **Respuesta y descarga en el frontal** para quien lo pidió, cuando la versión está aprobada.
 
-1. **Pide.** Lo hace desde OpenCode como cliente (un plugin pone el token de Entra y el parámetro
-   `api-version=v1`) o desde el playground del portal de Foundry. Teams, mediante Azure Bot Service,
-   queda para más adelante; el recurso de Bot Service se dibuja en «Canales» por claridad, pero se
-   desplegará en el grupo de recursos, como indica su rótulo.
-2. **El intérprete clasifica la orden.** Prueba primero una gramática cerrada. Si no casa,
-   Microsoft-Decision-1 clasifica la orden. Decision-1 solo clasifica: puede bloquear o escalar, pero nunca
-   aprobar. La orden solo se ejecuta tras una confirmación «SÍ» de la persona. Como Decision-1 está en
-   *preview*, se trata como una dependencia sustituible.
-3. **Delega por A2A v1.0.** Quien delega es la máquina de estados del coordinador, y lo hace en seis
-   especialistas, todos *prompt agents* de Foundry Agent Service: Facilitador, Investigador, Experto en
-   Azure, Arquitecto de IA, Estimador y Verificador. Cada delegación abre un contexto nuevo, y ningún
-   especialista escribe nada.
-4. **Los especialistas investigan.** Usan el MCP de Microsoft Learn, Web Search (solo con consultas
-   genéricas, sin datos de cliente), la Azure Retail Prices API (OpenAPI) y Foundry IQ, el conocimiento
-   corporativo indexado en Azure AI Search.
-5. **El Verificador contrasta** cada hecho con su fuente, con un modelo distinto del de los generadores.
-6. **La puerta recalcula.** Son comprobaciones deterministas: horas y holguras, cobertura de requisitos,
-   presencia de cada nodo del diagrama, precios contra el catálogo de Azure, citas contra Learn, fechas de
-   retirada de los modelos… Solo pasa con 0 fallos.
-7. **El escriba guarda** el estado del proyecto, la memoria de cada agente y las lecciones en Azure
-   Storage, con versiones de blobs y borrado temporal. Es el único escritor.
-8. **La persona revisa y aprueba** los entregables (estimación XLSX y diagrama). Es el humano en el bucle:
-   nada se entrega sin su aprobación explícita.
+## Una instancia por pilar: qué se comparte, qué se repite y qué cambia
 
-Además:
+**Se comparte (plataforma):** el tenant de Entra, la suscripción, Azure Policy, Defender for Cloud, Cost
+Management (con un presupuesto por pilar), Azure Front Door con WAF, Azure Firewall en la red *hub* y la
+CI/CD con GitHub Actions, OIDC, azd y Bicep.
 
-- **Guardarraíles.** Todas las llamadas a modelos pasan por los guardarraíles de Foundry, que usan Azure AI
-  Content Safety y Prompt Shields para filtrar entradas y salidas.
-- **Observabilidad.** El proyecto envía trazas y evaluaciones de todos los agentes a Application Insights,
-  que guarda la telemetría en un área de trabajo de Log Analytics (Azure Monitor).
-- **Secretos.** Solo los secretos que lo exijan (por ejemplo, una conexión que no admita Entra) viven en
-  un Azure Key Vault propio conectado a Foundry. La conexión es del recurso de Foundry (REF-05), y por eso
-  la flecha «conexiones» sale del marco de Foundry y no del recuadro de herramientas. Todo lo demás va con
-  identidad de Entra y RBAC, sin claves.
-- **Versiones y escalado.** Cada agente se publica como una versión, y se puede volver a la anterior. El
-  coordinador, como *hosted agent*, escala a cero cuando no hay turnos (REF-15).
+**Se repite en cada pilar (el grupo de recursos apilado):** un recurso de Foundry con su proyecto, red
+privada propia con subred delegada de agentes y subred de endpoints privados, Storage, AI Search y Cosmos DB
+propios (≥ 3000 RU/s; el vínculo del proyecto con los tres no se puede cambiar después, RED-5), Key Vault,
+Container Registry Premium, Application Insights y Log Analytics propios, el frontal web con su identidad,
+cola y tabla, el coordinador, el experto, el verificador, los despliegues de `gpt-6-luna` y
+`gpt-5.6-luna` en Data Zone UE y la política de guardarraíles con Prompt Shields. Learn lo marca como regla
+para producción: «For production, treat isolation as the default.» (A4).
+
+**Cambia por pilar** (recuadro «Qué cambia en cada pilar»):
+
+| Pilar | Experto | Documentación oficial | Precios (instantánea al desplegar) | Moneda | Credencial |
+|---|---|---|---|---|---|
+| Microsoft Azure | Experto en Azure | MCP de Microsoft Learn | Azure Retail Prices API | EUR | Ninguna |
+| Google Cloud | Experto en Google Cloud | Developer Knowledge MCP (`developerknowledge.googleapis.com/mcp`) | Cloud Billing Catalog API con `currencyCode=EUR` | EUR tal como lo devuelve Google | Clave de API en el Key Vault del pilar |
+| AWS | Experto en AWS | AWS Knowledge MCP Server (`knowledge-mcp.global.api.aws`) | Ficheros públicos de la AWS Price List, **solo las 6 regiones de la UE** por lista blanca (`eu-central-1`, `eu-west-1`, `eu-west-3`, `eu-north-1`, `eu-south-1`, `eu-south-2`) | USD convertidos a EUR con el tipo de referencia del BCE de su fecha; si el BCE no responde, falla en alto | Ninguna |
+
+## Seguridad por capas
+
+| Capa | Qué se aplica (id de el estudio de Azure) | Dónde se ve en el diagrama |
+|---|---|---|
+| Identidad | Entra como único proveedor, sin claves (ID-1); identidad de agente sin permisos al nacer (ID-2); RBAC por proyecto y Foundry Agent Consumer para el frontal (ID-4); A2A con el rol de consumidor (ID-5); Acceso condicional con MFA (ID-6); PIM con roles elegibles (ID-7) | Columna de identidad del tenant; identidad administrada del frontal |
+| Acceso de las personas | Sign in with Google con validación del ID token y del claim `hd` en el servidor, `sub` como identificador estable (el estudio de AWS y Google §6.A); lista de personas del pilar; Front Door con WAF delante; HTTPS siempre (N27); el frontal solo es accesible por Front Door (Private Link, N13) | Personas y acceso; Front Door; frontal |
+| Red | Entrada privada (RED-1); sin salida pública del agente (RED-2); Storage, Search y Cosmos DB propios (RED-3) con endpoints privados creados aparte (RED-4); subred delegada por recurso (RED-6); salida por Azure Firewall con FQDN permitidos por pilar (RED-9) | Red privada del pilar; endpoints privados; Azure Firewall |
+| Datos | Data Zone UE (DAT-1, DAT-2); Key Vault propio conectado a Foundry, con protección contra purga (DAT-5, DAT-6); versiones y borrado temporal de blobs (DAT-7) | Datos del pilar; modelos |
+| IA | Guardarraíles con Prompt Shields (IA-1, IA-2), obligatorios por Azure Policy (IA-3); Defender plan AI services (IA-4); solo modelos aprobados (IA-6); humano en el bucle (IA-8) | Azure AI Content Safety; Azure Policy; Defender; revisión humana |
+| Operación | Application Insights y Log Analytics por pilar, porque quien lee un área de trabajo lo lee todo (OP-1, OP-2); presupuesto por pilar que avisa y no corta, y TPM fijado por despliegue como tope real (OP-4, OP-5) | Application Insights; Log Analytics; Cost Management |
+| Cadena de entrega | GitHub Actions con OIDC, una identidad por pilar (CAD-1); azd y Bicep (CAD-2, CAD-3); evaluaciones como puerta (CAD-5) | CI/CD |
 
 ## Validado en Azure
 
-Lo que ya se ha probado en Azure lleva un sello verde con aro en el diagrama y aparece en la banda
-inferior. El icono oficial de Azure AI Content Safety trae de serie una marca verde que no se puede
-quitar sin alterarlo; no significa que los guardarraíles estén validados, y la leyenda lo aclara junto
-al sello «Validado en Azure».
+Solo lleva el sello lo que el [README del sistema](../../README.md) da por probado en real (tandas I1.7 a
+I1.9, camino B, con datos sintéticos):
 
-- Microsoft-Decision-1, con Entra y sin clave.
-- El MCP de Learn y Web Search en un *prompt agent*.
-- La salida HTTP del *hosted agent*.
-- Un turno largo de 6 minutos en segundo plano.
-- El parámetro `api-version=v1`, que el endpoint del *hosted agent* exige.
-- OpenCode como cliente del *hosted agent*.
+- **Coordinador hosted (camino B)** con su núcleo determinista: intérprete, máquina de estados y puerta (en
+  I1.9 la sesión H1 llegó a LISTA con la puerta en rc 0; `pruebas/I19/PRUEBA-REAL.md`).
+- **A2A con el experto de Azure y con el verificador.**
+- **MCP de Microsoft Learn** en *prompt agent* (experto y verificador).
+- **Instantánea de Azure Retail Prices** tomada al desplegar.
+- **Generador canónico de la estimación** y los documentos del paquete.
+- **Trazas en Application Insights**, leídas con `lib/appi.py` (`pruebas/I0/B4-trazas.md` y la medición de
+  I1.7 con `medir_agentes.py`; en I1.9 no se pudieron leer porque ARM pidió MFA).
 
-Lo demás es la arquitectura prevista. El canal de Teams, con trazo discontinuo, queda para más adelante.
+En el dibujo llevan el sello el coordinador, el intérprete, la máquina de estados, la puerta, el experto (el
+de Azure, como dice su rótulo), el verificador, Application Insights y la fila de Microsoft Azure del
+recuadro de pilares. **Todo lo demás es previsto:** los expertos de Google Cloud y AWS, el frontal web (su
+v1 local se está construyendo ahora), el inicio de sesión con Google, Front Door, la red privada, el Firewall, los recursos propios, Policy, Defender, Cost
+Management y la CI/CD. Tampoco llevan sello el escriba (el README no lo describe como pieza propia) ni los
+modelos (el README confirma `gpt-6-luna` y `gpt-5.6-luna`, no el tipo de despliegue Data Zone).
 
-## Buenas prácticas aplicadas (Well-Architected)
+## Buenas prácticas aplicadas (Well-Architected y Microsoft Learn)
 
-La banda inferior del diagrama muestra seis pilares con nombre propio. Desarrollo y Mantenibilidad son las
-dos caras de *Operational Excellence*; Escalado corresponde a *Performance Efficiency*. Cada práctica sale
-del catálogo verificado de buenas prácticas (versión 2026-10-18): la URL es de Learn y la cita, literal,
-se ha comprobado en esa página (HTTP 200 y cita encontrada en las 30 prácticas del catálogo). En la banda
-del diagrama cada práctica aparece abreviada para caber en 1920×1080 con letra de 13 px como mínimo; aquí
-va completa. En el SVG y el HTML, cada línea de la banda lleva su URL y su cita como texto emergente.
+La banda inferior muestra seis pilares. Desarrollo y Mantenibilidad son las dos caras de *Operational
+Excellence*; Escalado corresponde a *Performance Efficiency*. Cada URL y cada cita salen de
+el estudio de Azure §2 y §4 o del README de la arquitectura de referencia anterior, y se han comprobado de nuevo el
+04-11-2026 con `verificar_citas.py` (HTTP 200 y cita encontrada en el texto visible: 16 de 16). En el SVG y
+el HTML cada línea de la banda lleva su URL y su cita como texto emergente.
 
 | Pilar | Id | Cómo se aplica | Fuente en Learn | Cita literal |
 |---|---|---|---|---|
-| Desarrollo (Operational Excellence) | DES-03 (OE:05) | IaC con azd y Bicep para todo el grupo de recursos | [well-architected/operational-excellence/checklist](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist) | «Use a standardized infrastructure as code (IaC) approach to prepare resources and configurations.» |
-| Desarrollo (Operational Excellence) | DES-04 (OE:06) | CI/CD en GitHub Actions con evaluaciones como puerta | [well-architected/operational-excellence/checklist](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist) | «Ensure these pipelines test and promote changes across all environments and quality gates.» |
-| Desarrollo (Operational Excellence) | DES-05 (OE:11) | Versiones de agente pequeñas y con vuelta atrás | [well-architected/operational-excellence/checklist](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist) | «Focus on small, incremental releases with quality gates.» |
-| Mantenibilidad (Operational Excellence) | MAN-02 (OE:02) | Máquina de estados: un paso por turno, predecible | [well-architected/operational-excellence/checklist](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist) | «Use standardization as a way to make routine, ad-hoc, and emergency operations consistent and predictable.» |
-| Mantenibilidad (Operational Excellence) | MAN-03 (OE:07) | Trazas de cada agente en Application Insights | [well-architected/operational-excellence/checklist](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist) | «Design a monitoring stack that captures operational telemetry, metrics, and logs» |
-| Mantenibilidad (Operational Excellence) | MAN-05 (OE:10) | Automatización segura: OIDC con Entra, sin secretos | [well-architected/operational-excellence/checklist](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist) | «Design automation to be reliable, secure, and maintainable across the workload lifecycle.» |
-| Escalado (Performance Efficiency) | ESC-03 (PE:03) | Modelo adecuado a cada función: clasificar o generar | [well-architected/performance-efficiency/checklist](https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/checklist) | «The services, infrastructure, and tier selections must support your ability to reach the workload's performance targets» |
-| Escalado (Performance Efficiency) | ESC-04 (PE:05) | Unidad de escala: el proyecto; el hosted agent escala a cero | [well-architected/performance-efficiency/checklist](https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/checklist) | «The scale unit design of the workload is the basis of the scaling and partitioning strategy.» |
-| Escalado (Performance Efficiency) | ESC-05 (PE:08) | Índice de conocimiento en Azure AI Search (Foundry IQ) | [well-architected/performance-efficiency/checklist](https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/checklist) | «Optimize data stores, partitions, and indexes for their intended and actual use in the workload.» |
-| Seguridad (Security) | SEG-02 (SE:04) | Segmentación por suscripción y región (límites: tenant, suscripción, grupo de recursos y región) | [well-architected/security/checklist](https://learn.microsoft.com/en-us/azure/well-architected/security/checklist) | «Create intentional segmentation and perimeters in your architecture design» |
-| Seguridad (Security) | SEG-03 (SE:05) | Identidad de Entra por agente y RBAC mínimo, sin claves | [well-architected/security/checklist](https://learn.microsoft.com/en-us/azure/well-architected/security/checklist) | «Implement strict, conditional, and auditable identity and access management (IAM)» |
-| Seguridad (Security) | SEG-05 (SE:09) | Secretos y conexiones en Azure Key Vault | [well-architected/security/checklist](https://learn.microsoft.com/en-us/azure/well-architected/security/checklist) | «Protect application secrets by hardening their storage and restricting access and manipulation» |
-| Coste (Cost Optimization) | COS-01 (CO:02) | Modelo de costes con presupuesto | [well-architected/cost-optimization/checklist](https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/checklist) | «A cost model should estimate the initial cost, run rates, and ongoing costs.» |
-| Coste (Cost Optimization) | COS-02 (CO:03) | Alertas de coste real y previsto | [well-architected/cost-optimization/checklist](https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/checklist) | «Automate alerts to trigger notifications at key thresholds» |
-| Fiabilidad (Reliability) | FIA-01 (RE:01) | Diseño simple: un coordinador y un único escritor | [well-architected/reliability/checklist](https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist) | «Focus your workload design on simplicity and efficiency.» |
-| Fiabilidad (Reliability) | FIA-04 (RE:07) | Versiones y borrado temporal nativos de Azure Storage para recuperar | [well-architected/reliability/checklist](https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist) | «Use built-in features and well-established cloud patterns to help your workload remain functional» |
+| Desarrollo | DES-03 (OE:05) | Un módulo Bicep parametrizado por pilar | [well-architected/operational-excellence/checklist](https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/checklist) | «Use a standardized infrastructure as code (IaC) approach to prepare resources and configurations.» |
+| Desarrollo | DES-06 | Versiones del *hosted agent* con vuelta atrás | [foundry/agents/concepts/hosted-agents](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) | «containerization, web server setup, security, memory persistence, scaling, instrumentation, and version rollbacks» |
+| Desarrollo | DES-07 | Evaluaciones como puerta en la CI/CD | [foundry/concepts/observability](https://learn.microsoft.com/en-us/azure/foundry/concepts/observability) | «You can trace, evaluate, integrate automated quality gates into CI/CD pipelines» |
+| Mantenibilidad | MAN-05 | OIDC con una identidad de despliegue por pilar, sin secretos | [developer/github/connect-from-azure-openid-connect](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect) | «To use Azure Login action with OIDC, you need to configure a federated identity credential on a Microsoft Entra application or a user-assigned managed identity.» |
+| Mantenibilidad | MAN-06 | Un área de trabajo de Log Analytics por pilar | [azure-monitor/logs/workspace-design](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/workspace-design) | «Data ownership You might choose to create separate workspaces to define data ownership.» |
+| Mantenibilidad | MAN-07 | Políticas por defecto en código | [foundry/concepts/planning](https://learn.microsoft.com/en-us/azure/foundry/concepts/planning) | «Use infrastructure as code to provision core resources and policy defaults.» |
+| Escalado | ESC-04 (PE:05) | La unidad de escala es el pilar | [well-architected/performance-efficiency/checklist](https://learn.microsoft.com/en-us/azure/well-architected/performance-efficiency/checklist) | «The scale unit design of the workload is the basis of the scaling and partitioning strategy.» |
+| Escalado | ESC-06 | El coordinador, como *hosted agent*, escala a cero | [foundry/agents/concepts/hosted-agents](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) | «enabling scale-to-zero with stateful resume and predictable cold starts.» |
+| Seguridad | SEG-06 | Un recurso de Foundry por pilar | [foundry/concepts/planning](https://learn.microsoft.com/en-us/azure/foundry/concepts/planning) | «For production, treat isolation as the default.» |
+| Seguridad | SEG-07 | Montaje estándar con red privada: sin salida pública del agente | [foundry/agents/how-to/virtual-networks](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/virtual-networks) | «No public egress : Foundational infrastructure provides the right authentication and security for your agents and tools, without requiring trusted service bypass.» |
+| Seguridad | SEG-08 | Revisión humana antes de entregar | [well-architected/ai/responsible-ai](https://learn.microsoft.com/en-us/azure/well-architected/ai/responsible-ai) | «Human-in-the-loop checkpoints where agents pause execution for validation before proceeding with high-risk or high-impact actions.» |
+| Coste | COS-02 (CO:03) | Alertas de coste real y previsto | [well-architected/cost-optimization/checklist](https://learn.microsoft.com/en-us/azure/well-architected/cost-optimization/checklist) | «Automate alerts to trigger notifications at key thresholds» |
+| Coste | COS-03 | Presupuesto por grupo de recursos de pilar (avisa; no detiene el consumo) | [cost-management-billing/costs/tutorial-acm-create-budgets](https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets) | «You can configure alerts based on your actual cost or forecasted cost to ensure that your spending is within your organizational spending limit.» |
+| Fiabilidad | FIA-01 (RE:01) | Diseño simple: un coordinador y un único escritor | [well-architected/reliability/checklist](https://learn.microsoft.com/en-us/azure/well-architected/reliability/checklist) | «Focus your workload design on simplicity and efficiency.» |
+| Fiabilidad | FIA-06 | Versiones de blobs en el Storage del pilar | [storage/blobs/versioning-overview](https://learn.microsoft.com/en-us/azure/storage/blobs/versioning-overview) | «When you enable blob versioning, you can access earlier versions of a blob to recover your data if it's modified or deleted.» |
+| Fiabilidad | FIA-07 | Un pilar se contiene y se retira sin tocar los otros | [foundry/concepts/planning](https://learn.microsoft.com/en-us/azure/foundry/concepts/planning) | «Production workloads that require strict operational containment, independent access control, and independent quota or cost boundaries» |
 
-### Prácticas adicionales que muestra el diagrama
-
-Estas prácticas no están en el catálogo, así que se han comprobado aparte en learn.microsoft.com el
-19-10-2026: la página devolvió HTTP 200 y la cita aparece literal en su texto visible. El SHA-256 de cada
-página descargada está en la sección `practicas.referencia` de [arquitectura.json](arquitectura.json).
-
-| Id | Pilar | Práctica | Fuente en Learn | Cita literal |
-|---|---|---|---|---|
-| REF-01 | Seguridad | Guardarraíles de contenido de Foundry sobre Azure AI Content Safety | [azure/foundry/guardrails/guardrails-overview](https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview) | «Guardrails leverage classification models from Azure AI Content Safety to detect harmful content across supported risk categories.» |
-| REF-02 | Seguridad | Prompt Shields contra ataques de instrucciones | [azure/ai-services/content-safety/concepts/jailbreak-detection](https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection) | «Prompt Shields detect attempts to manipulate your model's behavior through adversarial inputs.» |
-| REF-03 | Seguridad | Identidad de agente de Microsoft Entra para cada agente | [azure/foundry/agents/concepts/agent-identity](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity) | «An agent identity is a specialized identity type in Microsoft Entra ID that's designed specifically for AI agents.» |
-| REF-04 | Seguridad | Azure RBAC de mínimo privilegio | [azure/role-based-access-control/best-practices](https://learn.microsoft.com/en-us/azure/role-based-access-control/best-practices) | «it's a best practice to grant users the least privilege to get their work done.» |
-| REF-05 | Seguridad | Conexión de Azure Key Vault propio en Foundry | [azure/foundry/how-to/set-up-key-vault-connection](https://learn.microsoft.com/en-us/azure/foundry/how-to/set-up-key-vault-connection) | «To manage your own secrets, connect your Azure Key Vault to Foundry.» |
-| REF-06 | Desarrollo | GitHub Actions con OIDC y credencial federada de Entra | [azure/developer/github/connect-from-azure-openid-connect](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect) | «To use Azure Login action with OIDC, you need to configure a federated identity credential on a Microsoft Entra application or a user-assigned managed identity.» |
-| REF-07 | Mantenibilidad | Application Insights sobre un área de trabajo de Log Analytics | [azure/azure-monitor/app/create-workspace-resource](https://learn.microsoft.com/en-us/azure/azure-monitor/app/create-workspace-resource) | «Application Insights integrates with Log Analytics and sends telemetry to a common Log Analytics workspace.» |
-| REF-08 | Mantenibilidad | Trazas, evaluaciones y puertas de calidad en CI/CD | [azure/foundry/concepts/observability](https://learn.microsoft.com/en-us/azure/foundry/concepts/observability) | «You can trace, evaluate, integrate automated quality gates into CI/CD pipelines» |
-| REF-09 | Coste | Presupuestos con alertas de coste real y previsto (avisan; no detienen el consumo) | [azure/cost-management-billing/costs/tutorial-acm-create-budgets](https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/tutorial-acm-create-budgets) | «You can configure alerts based on your actual cost or forecasted cost to ensure that your spending is within your organizational spending limit.» |
-| REF-10 | Seguridad | Residencia de datos: despliegues Data Zone en la UE | [azure/foundry/foundry-models/concepts/deployment-types](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types) | «Data Zone types: The service processes data only within the Microsoft-specified data zone (US, EU, or Asia Pacific (APAC)).» |
-| REF-11 | Fiabilidad | Versiones de blobs para recuperar datos | [azure/storage/blobs/versioning-overview](https://learn.microsoft.com/en-us/azure/storage/blobs/versioning-overview) | «When you enable blob versioning, you can access earlier versions of a blob to recover your data if it's modified or deleted.» |
-| REF-12 | Fiabilidad | Borrado temporal de blobs | [azure/storage/blobs/soft-delete-blob-overview](https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview) | «Blob soft delete protects an individual blob, snapshot, or version from accidental deletes or overwrites by keeping the deleted data in the system for a specified period of time.» |
-| REF-13 | Desarrollo | Versiones de hosted agent con vuelta atrás | [azure/foundry/agents/concepts/hosted-agents](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) | «containerization, web server setup, security, memory persistence, scaling, instrumentation, and version rollbacks» |
-| REF-14 | Seguridad | Humano en el bucle antes de acciones de alto impacto | [azure/well-architected/ai/responsible-ai](https://learn.microsoft.com/en-us/azure/well-architected/ai/responsible-ai) | «Human-in-the-loop checkpoints where agents pause execution for validation before proceeding with high-risk or high-impact actions.» |
-| REF-15 | Escalado | Hosted agent con sesiones aisladas que escala a cero | [azure/foundry/agents/concepts/hosted-agents](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) | «enabling scale-to-zero with stateful resume and predictable cold starts.» |
+El HTML de Learn deja un espacio antes de algunos signos de puntuación (`egress :`); `verificar_citas.py`
+normaliza ese espacio al comparar.
 
 ## En qué difiere hoy la implementación
 
-El diagrama muestra el destino. La implementación actual se aparta de él en estos puntos, y cada uno es
-una decisión consciente o una limitación de permisos, no un descuido:
+| Arquitectura objetivo | Implementación actual (según el README del sistema) |
+|---|---|
+| Tres instancias, una por pilar, cada una con su recurso de Foundry | Un único proyecto de Foundry de demostración en Sweden Central. Solo existe el experto de Azure |
+| Montaje estándar con red privada, recursos propios y Firewall | Sin red privada. Ojo: en red privada BYO, Code Interpreter no sube ni descarga ficheros (RED-11), así que el camino A de respaldo no serviría tal cual |
+| Frontal web por pilar en Azure Container Apps, tras Front Door, con Sign in with Google y claim `hd` comprobado en el servidor | La v1 del frontal se está construyendo y es **local y sin inicio de sesión**: no hay Front Door, ni autenticación, ni lista de personas, ni auditoría por persona. Hasta ahora, quien opera usa la CLI y la API, y el paquete de revisión lo reenvía una persona |
+| Expertos de Google Cloud y AWS con su MCP y sus precios en EUR | No existen todavía; solo la instantánea de Azure Retail Prices |
+| Coordinador hosted (camino B) con A2A, MCP de Learn, puerta e instantánea | **Igual: es lo validado.** El camino A (prompt agent con Code Interpreter) sigue como respaldo congelado y sin probar en real |
+| Key Vault propio, guardarraíles, Policy, Defender, presupuestos, CI/CD con OIDC y Bicep | El README del sistema no los describe; se despliega con `desplegar.py` y `hosted/desplegar_hosted.py` |
+| Revisión por rol (responsable de preventa revisa, Area Manager aprueba) | El ciclo de revisión existe en el núcleo (decisiones sobre la versión), pero en I1.9 no llegó a probarse en real |
 
-| Arquitectura de referencia | Implementación actual | Motivo |
-|---|---|---|
-| Acceso a los datos con identidad de Entra y Azure RBAC, sin claves (SEG-03) | Las conexiones a Storage y a Azure AI Search usan clave: clave de cuenta solo para firmar SAS de minutos por contenedor, y *query key* de solo lectura para la búsqueda. La ingesta de Foundry IQ solo admite clave | No hay permisos para asignar roles de datos sobre esos recursos. Se compensa con SAS por turno y contenedor y con pruebas negativas que esperan un 403 |
-| Secretos en un Azure Key Vault propio conectado a Foundry (SEG-05) | No hay un Key Vault propio conectado: el repositorio no crea ni usa ninguno. El valor de cada conexión llega al proceso como variable de entorno; el coordinador la lee, la borra del entorno y comprueba que funciona antes de trabajar | Pendiente. Learn indica que, sin esa conexión, Foundry guarda los datos de conexión en un Key Vault gestionado por Microsoft, fuera de la suscripción (REF-05) |
-| CI/CD con GitHub Actions y federación OIDC (DES-04, MAN-05) | El coordinador se despliega por ZIP (con dependencias empaquetadas y sus hashes) desde el portátil de desarrollo | Todavía no hay canalización. La vuelta atrás es manual: se vuelve a la versión anterior del agente, al ZIP anterior por su hash y a la versión anterior del blob |
-| Infraestructura como código con azd y Bicep (DES-03) | Los recursos, las conexiones y las asignaciones de roles se crean a mano con scripts de la CLI de Azure documentados en el repositorio | El repositorio aún no tiene plantillas azd ni Bicep |
-| Grupo de recursos propio con mínimo privilegio (SEG-02) | Tenant y suscripción compartidos con otras cargas, con varias identidades con rol de propietario o colaborador | Es el entorno disponible. Por eso las trazas no llevan datos de cliente: cualquiera con lectura de Log Analytics podría verlas |
-| Guardarraíles de contenido con Prompt Shields (REF-01, REF-02) | No se ha configurado ni probado una política propia | Pendiente |
-| Presupuestos y alertas de Microsoft Cost Management (COS-01, COS-02) | No están configurados | Pendiente |
-| Evaluaciones como puerta de calidad (REF-08) | La calidad de los modelos se mide con un banco de pruebas propio (comprobaciones deterministas y juicio A/B ciego), que se lanza a mano | Las evaluaciones de Foundry aún no forman parte de una canalización |
-| Modelos GPT-6 en Data Zone UE | La comparativa entre modelos sigue en curso | Decisión pendiente |
+## Avisos abiertos (de las investigaciones)
+
+- Piezas del montaje seguro en *preview*: control de salida de los *hosted agents* (RED-9), guardarraíles de
+  agentes (IA-1) y la API de ajustes de capacidad (CAD-4).
+- Learn se contradice sobre si Purview recibe datos de agentes (IA-5 e IA-5b): por eso Purview no se dibuja
+  ni se promete.
+- La fecha de retirada de `gpt-6-luna` no figura aún en la tabla de Learn; la de `gpt-5.6-luna` es
+  2028-01-11.
+- Inicio de sesión con Google: hace falta un cliente OAuth en un proyecto de Google Cloud con pantalla de
+  consentimiento interna, y que el administrador de Workspace no bloquee la aplicación; no está verificado
+  que no exija su aprobación (el estudio de AWS y Google §6.A). Pedirlo en la semana 1. Con la autenticación integrada de
+  Container Apps, el secreto del cliente OAuth va como secreto de la app con referencia a Key Vault.
+- Que un MCP remoto y público funcione desde un *prompt agent* con inyección de red es una inferencia de la
+  tabla de Learn: solo se comprueba ejecutándolo.
+- El coste fijo (Cosmos DB, AI Search, Firewall, endpoints privados, ACR Premium por pilar) no se ha
+  calculado y se multiplica por tres.
+- Límites del AWS Knowledge MCP Server no publicados; estado GA de la Developer Knowledge API no declarado.
+
+## Lo que no se dibuja y por qué
+
+Para que la lámina se lea en 1920×1080 con letra de 13 px como mínimo, estas piezas del diseño están en las
+investigaciones y en este README, pero no en el dibujo:
+
+- **Microsoft Purview** (contradicción de Learn, arriba), **VPN o ExpressRoute y Azure Bastion** para el
+  acceso de las personas, y los **grupos de seguridad de Entra** por pilar y rol.
+- **Zonas DNS privadas** por pilar (el juego V24 no trae un icono de zona privada; van con los endpoints
+  privados en el texto).
+- Flechas que se deducen de los rótulos: las de cada agente hacia los modelos y los guardarraíles, Key Vault
+  hacia el frontal (secreto del cliente OAuth de Google), el frontal hacia su cola, la auditoría del frontal
+  hacia Application Insights, la validación del ID token contra las claves públicas de Google, Application Insights hacia Log Analytics, la de Container Registry
+  hacia el coordinador, la federación OIDC de GitHub Actions con Entra y el token de Entra a la identidad
+  administrada.
+- La salida del frontal por el Firewall hacia Google (claves públicas para validar el token).
+- La salida del experto hacia el MCP de su nube se dibuja directa hasta el recuadro de pilares con el rótulo
+  «(sale por el Firewall)», en lugar de dar la vuelta por la red *hub*.
+- El portal de Foundry y la CLI de los operadores (con cuenta de Entra), y el camino A de respaldo.
 
 ## Cómo regenerarlo
 
-Hacen falta los dos juegos oficiales de iconos descomprimidos fuera del repositorio (ver
-[ICONOS.md](ICONOS.md)). Desde la raíz del repositorio:
+Hacen falta los cuatro juegos oficiales descomprimidos fuera del repositorio (ver [ICONOS.md](ICONOS.md)).
+Desde esta carpeta:
 
 ```bash
-python docs/arquitectura/generar_diagrama.py   --iconos "<carpeta>/Azure_Public_Service_Icons/Icons"   --iconos-entra "<carpeta>/Microsoft Entra architecture icons - Oct 2023" --png
+python3 -I generar_diagrama.py --png
 ```
 
-- Sin `--iconos`, usa la variable `ICONOS_AZURE`; sin `--iconos-entra`, la variable `ICONOS_ENTRA`. Cada
-  icono de [arquitectura.json](arquitectura.json) indica de qué juego sale, y su SHA-256 se comprueba en
-  los dos juegos.
-- `--png` renderiza `arquitectura.es.png` y `arquitectura.en.png` (1920×1080) con Microsoft Edge en modo
-  headless. La ruta de Edge se cambia con `--edge` o con `EDGE_PATH`.
-- El generador solo usa la biblioteca estándar y es determinista: la misma entrada produce los mismos
-  bytes.
-- **Código de salida = veredicto.**
-  - 0: todo correcto.
-  - 1: la especificación o una salida no pasan las comprobaciones.
-  - 2: error de entorno (falta un juego de iconos o Edge, o no se puede leer o escribir un fichero).
-- Antes de escribir, comprueba:
-  - que todo nodo, toda arista, su texto y su paso aparecen en cada salida, y que el flujo va del 1 al 8
-    sin repetir;
-  - que los límites están anidados en orden (tenant, suscripción, grupo de recursos, región), que nada
-    pisa la cabecera de su límite y que ningún nodo invade un grupo que no es el suyo;
-  - que la banda tiene seis pilares con 2 o 3 prácticas cada uno, con URL de Learn y cita, y que cada
-    práctica que cita un nodo existe;
-  - que ningún texto se sale de su marco ni pisa otro nodo o el título de un grupo, que las bandas de abajo
-    no pisan el diagrama, que los id son únicos y que no hay marcado activo.
+- Por defecto busca los iconos en `~/Developer/demos/_iconos-azure/V24/Azure_Public_Service_Icons/Icons`,
+  `~/Developer/demos/_iconos-azure/entra/Oct2023/Microsoft Entra architecture icons - Oct 2023` y
+  `~/Developer/demos/_iconos-aws/pkg` y `~/Developer/demos/_iconos-google/signin-2026-11-04/x`. Se cambian
+  con `--iconos`, `--iconos-entra`, `--iconos-aws` y `--iconos-google` o con las variables `ICONOS_AZURE`,
+  `ICONOS_ENTRA`, `ICONOS_AWS` e `ICONOS_GOOGLE_SIGNIN`. El SHA-256 de cada icono se comprueba.
+- `--png` renderiza `arquitectura.es.png` y `arquitectura.en.png` (1920×1080) con un Chromium en modo
+  headless: Google Chrome en macOS por defecto. Se cambia con `--navegador` (o `--edge`) o con `EDGE_PATH`.
+- Solo biblioteca estándar y salida determinista: la misma entrada produce los mismos bytes.
+- **Código de salida = veredicto:** 0 todo correcto; 1 la especificación o una salida no pasan las
+  comprobaciones; 2 error de entorno (falta un juego de iconos o el navegador, o no se puede leer o escribir).
+- Antes de escribir comprueba que todo nodo, toda arista, su texto y su paso aparecen en cada salida y que
+  el flujo va del 1 al 9 sin repetir; que ningún tramo de arista atraviesa el icono o la etiqueta de un
+  nodo que no es su origen ni su destino; que el texto de cada forma neutra cabe en su recuadro; que el
+  botón de Google (PNG oficial) se dibuja en su proporción, sin deformar, y que ninguna imagen es externa; que la cadena de límites (tenant, suscripción, grupo de recursos del
+  pilar, región, red privada) está anidada en orden y nada pisa la cabecera de su límite; que el grupo
+  apilado lleva su insignia y sus tarjetas y no se sale de su padre; que ningún nodo invade un grupo ajeno;
+  que la banda tiene seis pilares con 2 o 3 prácticas con URL de Learn y cita; que ningún texto se sale de su
+  marco ni pisa otro; y que no hay marcado activo. Si algo falla, no escribe nada.
+- Las medidas de texto son prudentes también para Helvetica Neue o Arial (macOS), más anchas que Segoe UI.
 
-  Si algo falla, no escribe nada.
-
-Las pruebas están en `tests/test_diagrama.py`:
+Comprobar las citas de la banda contra Learn (necesita red):
 
 ```bash
-.venv/Scripts/python.exe -m pytest tests/test_diagrama.py
+python3 -I verificar_citas.py arquitectura.json
 ```
 
-La prueba que compara la banda con el catálogo verificado de buenas prácticas busca
-`catalogo_practicas.json` y `catalogo_evidencia.json` en `pruebas/modelos/`, en la variable
-`CATALOGO_PRACTICAS` o en la copia vecina del repositorio; si no los encuentra, se salta y lo dice.
+Pruebas (sin red; la que usa los iconos reales se salta si no están):
+
+```bash
+uv run --no-project --with pytest python -I -m pytest -q -p no:cacheprovider --rootdir tests tests/test_diagrama.py
+```
 
 ## Crédito de los iconos
 
-Iconos: **Microsoft Azure Architecture Icons** (V24) y **Microsoft Entra architecture icons** (octubre de
-2023), usados según sus términos de uso. Los términos se reproducen literalmente en
-[ICONOS.md](ICONOS.md), junto con la lista de iconos y cómo se respetan.
+Iconos: **Microsoft Azure Architecture Icons** (V24), **Microsoft Entra architecture icons** (octubre de
+2023), **AWS Architecture Icons** (julio de 2026) y el botón oficial **Sign in with Google**, usados según
+sus términos. Los términos se reproducen
+literalmente en [ICONOS.md](ICONOS.md), junto con la lista de iconos y cómo se respetan.

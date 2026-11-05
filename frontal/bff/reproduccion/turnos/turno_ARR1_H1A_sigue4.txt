@@ -1,0 +1,37 @@
+A2A SendMessage a preventa-verificador: HTTP 200 · 17.2 s · task_id resp_ejemplo0000000000000000000000000000000000000000004 · context_id ctxt_ejemplo0000000000000000000000004 · estado TASK_STATE_COMPLETED · enviado SHA-256 301541e39ca216714f9653e7c6a8d0061ccd92529847d4061ad33b4f2e3285cc · no bloqueante con 3 sondeo(s) GetTask
+
+Relectura GetTask de resp_ejemplo0000000000000000000000000000000000000000004: el texto coincide (SHA-256 26b7496ce987ab20f451c32b2f87051d644431adb5dceee5d02c2cd420adba78).
+
+$ registrar-verificacion → rc 0
+```
+LOTE CNS-OF-HOSTELIA-001-A-R1-L4 registrado. Faltan 2: CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: EN_VERIFICACION
+version: A
+hash_contenido: 4e3222b803eca471920384c64b9c6b7030240190c121d14ad1768b198515eb5d
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=VALIDA
+verificacion: ronda 0/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L5 (5 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L5.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L5.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L5.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6
+=== FIN ESTADO ===
+```
+
+Quedan 2 envíos al verificador. Escribe SIGUE para continuar.
+
+```
+=== ESTADO PREVENTA ===
+codigo: OF-HOSTELIA-001-A
+estado: EN_VERIFICACION
+version: A
+hash_contenido: 4e3222b803eca471920384c64b9c6b7030240190c121d14ad1768b198515eb5d
+intentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3
+expertos: azure=VALIDA
+verificacion: ronda 0/3
+decisiones: 0
+SIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L5 (5 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L5.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L5.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L5.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6
+=== FIN ESTADO ===
+```
+
+SIGUIENTE PASO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L5 (5 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L5.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L5.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L5.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6

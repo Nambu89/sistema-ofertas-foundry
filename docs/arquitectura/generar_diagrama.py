@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Genera el diagrama de arquitectura a partir de arquitectura.json.
+"""Genera el diagrama de arquitectura multinube (una instancia por pilar) a partir de arquitectura.json.
 
 Salidas (en la carpeta de este fichero, o en --salida):
   arquitectura.es.svg, arquitectura.en.svg    SVG con los iconos oficiales incrustados
   arquitectura.es.html, arquitectura.en.html  HTML autocontenido con título y pie
   arquitectura.drawio                         editable en diagrams.net (una página por idioma)
-  arquitectura.es.png, arquitectura.en.png    solo con --png (Microsoft Edge en modo headless)
+  arquitectura.es.png, arquitectura.en.png    solo con --png (Chromium headless: Google Chrome o Microsoft Edge)
 
 Reglas:
 - Solo biblioteca estándar y salida determinista: misma entrada, mismos bytes.
-- Los iconos oficiales (Azure V24 y Microsoft Entra, oct. 2023) se incrustan sin alterar su dibujo. Su SHA-256 tiene que coincidir con
+- Los iconos oficiales (Azure V24, Microsoft Entra oct. 2023 y AWS Architecture Icons jul. 2026) se incrustan sin alterar su dibujo. Su SHA-256 tiene que coincidir con
   el de arquitectura.json; la única transformación es prefijar sus id (y las referencias a ellos) por
   aparición, y se comprueba que quitar el prefijo devuelve el original byte a byte. El escalado es
   uniforme y va por fuera, en un <svg> envoltorio con el mismo viewBox cuadrado.
@@ -43,21 +43,28 @@ import xml.etree.ElementTree as ET
 
 AQUI = Path(__file__).resolve().parent
 SPEC_DEFECTO = AQUI / "arquitectura.json"
+DEMOS = Path.home() / "Developer" / "demos"
 ICONOS_DEFECTO = os.environ.get(
-    "ICONOS_AZURE", "C:/demos/_iconos-azure/V24/Azure_Public_Service_Icons/Icons")
+    "ICONOS_AZURE", str(DEMOS / "_iconos-azure/V24/Azure_Public_Service_Icons/Icons"))
 ICONOS_ENTRA_DEFECTO = os.environ.get(
-    "ICONOS_ENTRA", "C:/demos/_iconos-azure/entra/Oct2023/Microsoft Entra architecture icons - Oct 2023")
-JUEGOS = ("azure_v24", "entra_oct2023")
+    "ICONOS_ENTRA", str(DEMOS / "_iconos-azure/entra/Oct2023/Microsoft Entra architecture icons - Oct 2023"))
+ICONOS_AWS_DEFECTO = os.environ.get("ICONOS_AWS", str(DEMOS / "_iconos-aws/pkg"))
+ICONOS_GOOGLE_DEFECTO = os.environ.get("ICONOS_GOOGLE_SIGNIN", str(DEMOS / "_iconos-google/signin-2026-11-04/x"))
+JUEGOS = ("azure_v24", "entra_oct2023", "aws_07312026", "google_signin_2026")
+PREFIJO_PNG = "data:image/png;base64,"  # iconos oficiales que solo existen bien formados en PNG (botón de Google)
 EDGE_DEFECTO = os.environ.get(
-    "EDGE_PATH", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe")
+    "EDGE_PATH", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 IDIOMAS = ("es", "en")
 ESTADOS = {"validado", "previsto", "futuro"}
-LIMITES = ("tenant", "suscripcion", "grupo_recursos", "region")
+# Cadena obligatoria de límites, de fuera adentro; «tenant_externo» es un límite suelto (otro tenant).
+LIMITES = ("tenant", "suscripcion", "grupo_recursos", "region", "red_privada")
+LIMITES_SUELTOS = ("tenant_externo",)
 ESTILOS = {"flujo", "normal", "futuro", "traza"}
 TIPOS = {"icono", "contenedor", "pieza", "neutro"}
 RE_ID = re.compile(r"^[a-z][a-z0-9_]*$")
 
-FUENTE = "'Segoe UI', 'Segoe UI Web (West European)', -apple-system, 'Helvetica Neue', Arial, sans-serif"
+# Sin -apple-system: en macOS la letra del sistema es más ancha que Segoe UI y rompería las medidas de ancho_texto.
+FUENTE = "'Segoe UI', 'Segoe UI Web (West European)', 'Helvetica Neue', Arial, sans-serif"
 AZUL = "#0078D4"
 TEXTO = "#1B1B1B"
 TEXTO_2 = "#505050"
@@ -93,7 +100,7 @@ class ErrorEntorno(Exception):
 
 def ancho_texto(s: str, tam: float, negrita: bool = False) -> float:
     """Estimación prudente del ancho en px (Segoe UI): sirve para detectar desbordes y solapes."""
-    factor = 0.58 if negrita else 0.53
+    factor = 0.62 if negrita else 0.57  # prudente también con Helvetica Neue o Arial (macOS), más anchas que Segoe UI
     estrechas = sum(1 for c in s if c in "ilI.,:;·'|!()[] ")
     return (len(s) - estrechas * 0.45) * tam * factor
 
@@ -125,12 +132,34 @@ def a_xyxy(caja: list) -> tuple:
     return (x, y, x + w, y + h)
 
 
+APILADO = ((12, -12), (6, -6))  # desplazamiento de las dos tarjetas de detrás de un grupo «apilado» (×3)
+
+
+def cajas_apilado(g: dict) -> list[tuple]:
+    """Cajas de las tarjetas de detrás de un grupo apilado (vacía si no lo es)."""
+    if not g.get("apilado"):
+        return []
+    x, y, w, h = g["caja"]
+    return [(x + dx, y + dy, x + dx + w, y + dy + h) for dx, dy in APILADO]
+
+
+def caja_total(g: dict) -> tuple:
+    """Caja del grupo más sus tarjetas de detrás: lo que ocupa de verdad en el dibujo."""
+    cajas = [a_xyxy(g["caja"])] + cajas_apilado(g)
+    return (min(c[0] for c in cajas), min(c[1] for c in cajas), max(c[2] for c in cajas), max(c[3] for c in cajas))
+
+
 # ------------------------------------------------------------------------------------- geometría
 
 def caja_icono(n: dict) -> tuple:
     x, y = n["pos"]
-    m = n["lado"] / 2
-    return (x - m, y - m, x + m, y + m)
+    m, a = n["lado"] / 2, alto_icono(n) / 2
+    return (x - m, y - a, x + m, y + a)
+
+
+def alto_icono(n: dict) -> float:
+    """Alto del icono: igual al lado salvo en los iconos rectangulares (botón de Google), que declaran «alto»."""
+    return n.get("alto", n["lado"])
 
 
 def lineas_etiqueta(n: dict, idioma: str) -> list[str]:
@@ -138,7 +167,7 @@ def lineas_etiqueta(n: dict, idioma: str) -> list[str]:
 
 
 def y_primera_linea(n: dict) -> float:
-    return n["pos"][1] + n["lado"] / 2 + 17
+    return n["pos"][1] + alto_icono(n) / 2 + 17
 
 
 def caja_etiqueta(n: dict, idioma: str) -> tuple:
@@ -198,8 +227,21 @@ def punto_paso(a: dict) -> tuple:
 
 # ------------------------------------------------------------------------------ especificación
 
+def _rechaza_constante(nombre: str):
+    # NaN o Infinity compararían en falso con todo y colarían cajas fuera del lienzo (LES-G-099).
+    raise ValueError(f"valor numérico no finito en la especificación: {nombre}")
+
+
+def _decimal_finito(texto: str) -> float:
+    valor = float(texto)
+    if valor in (float("inf"), float("-inf")):  # 1e999 llega como infinito sin pasar por parse_constant
+        _rechaza_constante(texto)
+    return valor
+
+
 def cargar_spec(ruta: Path) -> dict:
-    return json.loads(Path(ruta).read_text(encoding="utf-8"))
+    return json.loads(Path(ruta).read_text(encoding="utf-8"), parse_constant=_rechaza_constante,
+                      parse_float=_decimal_finito)
 
 
 def validar_spec(spec: dict) -> list[str]:
@@ -249,8 +291,10 @@ def validar_spec(spec: dict) -> list[str]:
         if g.get("padre"):
             if g["padre"] not in grupos:
                 e.append(f"grupo {g['id']}: padre desconocido {g['padre']}")
-            elif not dentro(a_xyxy(g["caja"]), a_xyxy(grupos[g["padre"]]["caja"])):
+            elif not dentro(caja_total(g), a_xyxy(grupos[g["padre"]]["caja"])):
                 e.append(f"grupo {g['id']}: se sale de su grupo padre")
+        if g.get("apilado") and not all(str((g.get("insignia") or {}).get(i, "")).strip() for i in IDIOMAS):
+            e.append(f"grupo {g['id']}: un grupo apilado necesita su insignia (p. ej. «×3») en los dos idiomas")
 
     for n in spec["nodos"]:
         nid = n["id"]
@@ -269,8 +313,13 @@ def validar_spec(spec: dict) -> list[str]:
         if "nombre_lineas" in n and (not isinstance(k, int) or isinstance(k, bool) or k < 1 or n["tipo"] == "pieza"
                                      or any(k >= len(n.get("etiqueta", {}).get(i) or []) for i in IDIOMAS)):
             e.append(f"nodo {nid}: nombre_lineas tiene que ser un entero entre 1 y las líneas de la etiqueta menos una")
+        if "alto" in n and (not isinstance(n["alto"], (int, float)) or isinstance(n["alto"], bool) or n["alto"] <= 0
+                            or n["tipo"] != "icono"):
+            e.append(f"nodo {nid}: «alto» solo vale para iconos y tiene que ser un número positivo")
         if n["tipo"] == "neutro" and not str(n.get("texto_neutro", "")).strip():
             e.append(f"nodo {nid}: forma neutra sin texto")
+        elif n["tipo"] == "neutro" and ancho_texto(n["texto_neutro"], T_DETALLE, True) > n.get("lado", 0) - 2:
+            e.append(f"nodo {nid}: el texto de la forma neutra no cabe en su recuadro")
         g = n.get("grupo")
         if g is not None and g not in grupos:
             e.append(f"nodo {nid}: grupo desconocido {g}")
@@ -359,13 +408,42 @@ def validar_spec(spec: dict) -> list[str]:
             caja = a_xyxy(grupos[ref]["caja"]) if ref in grupos else caja_nodo(nodos[ref], "es")
             if distancia_a_caja(p, caja) > TOLERANCIA:
                 e.append(f"arista {aid}: el {extremo} {p} no toca {ref}")
-    if sorted(pasos) != list(range(1, 9)):
-        e.append(f"los pasos del flujo tienen que ser 1 a 8 sin repetir; hay {sorted(pasos)}")
+    e += aristas_que_pisan_nodos(spec, nodos)
+    n_pasos = spec.get("pasos")
+    if not isinstance(n_pasos, int) or isinstance(n_pasos, bool) or n_pasos < 1:
+        e.append("pasos: tiene que ser el número de pasos del flujo (entero positivo)")
+    elif sorted(pasos) != list(range(1, n_pasos + 1)):
+        e.append(f"los pasos del flujo tienen que ser 1 a {n_pasos} sin repetir; hay {sorted(pasos)}")
     e += validar_limites(spec)
     e += validar_nombres_de_servicio(spec)
     e += validar_practicas(spec)
     e += validar_bandas(spec)
     return e
+
+
+def obstaculos_nodo(n: dict, idioma: str) -> list[tuple]:
+    """Lo que una arista ajena no puede atravesar: el icono y la etiqueta (de un contenedor, solo esos dos)."""
+    if n["tipo"] == "contenedor":
+        return [caja_icono(n), caja_etiqueta(n, idioma)]
+    return cajas_nodo(n, idioma)
+
+
+def aristas_que_pisan_nodos(spec: dict, nodos: dict) -> list[str]:
+    """LES-G-062: un tramo de arista que cruza el icono o la etiqueta de un nodo que no es su origen ni su
+    destino no da error en el dibujo, pero dice otra cosa (parece que el flujo pasa por ese nodo)."""
+    e: list[str] = []
+    for idioma in IDIOMAS:
+        for a in spec["aristas"]:
+            pts = a.get("puntos", [])
+            extremos = {a.get("origen"), a.get("destino")}
+            for p, q in zip(pts, pts[1:]):
+                tramo = (min(p[0], q[0]), min(p[1], q[1]), max(p[0], q[0]), max(p[1], q[1]))
+                for n in spec["nodos"]:
+                    if n["id"] in extremos or (n["tipo"] == "pieza" and n.get("dentro") in extremos):
+                        continue
+                    if any(solapan(tramo, c) for c in obstaculos_nodo(n, idioma)):
+                        e.append(f"[{idioma}] arista {a['id']}: el tramo {p} → {q} atraviesa el nodo {n['id']}")
+    return sorted(set(e), key=e.index)
 
 
 RE_PRACTICA = re.compile(r"^[A-Z]{3}-\d{2}$")
@@ -471,6 +549,16 @@ def caja_titulo_grupo(g: dict, idioma: str) -> tuple:
     return (x + 8, y + 4, x0 + ancho, y + alto_cabecera(g) - 4)
 
 
+def ancho_insignia(g: dict, idioma: str) -> float:
+    return ancho_texto(g["insignia"][idioma], T_DETALLE, True) + 20
+
+
+def caja_insignia(g: dict, idioma: str) -> tuple:
+    x, y, w, _ = g["caja"]
+    ancho = ancho_insignia(g, idioma)
+    return (x + w - 12 - ancho, y + 4, x + w - 12, y + 24)
+
+
 def textos_cercanos(spec: dict, n: dict, idioma: str) -> str:
     """Texto que acompaña al icono de un nodo: su etiqueta y la cabecera de su grupo (título y subtítulo)."""
     grupos = {g["id"]: g for g in spec["grupos"]}
@@ -518,7 +606,7 @@ def validar_limites(spec: dict) -> list[str]:
     for g in spec["grupos"]:
         if g.get("icono") is not None and g["icono"] not in spec["iconos"]:
             e.append(f"grupo {g['id']}: icono desconocido {g['icono']!r}")
-        if g.get("limite") is not None and g["limite"] not in LIMITES:
+        if g.get("limite") is not None and g["limite"] not in LIMITES + LIMITES_SUELTOS:
             e.append(f"grupo {g['id']}: límite desconocido {g['limite']!r}")
         cadena, gid = [], g["id"]
         while gid in grupos and gid not in cadena:
@@ -526,18 +614,22 @@ def validar_limites(spec: dict) -> list[str]:
             gid = grupos[gid].get("padre")
         if gid in cadena:
             e.append(f"grupo {g['id']}: ciclo de padres")
-    # El orden de los límites: cada uno dentro del anterior (tenant ⊃ suscripción ⊃ grupo ⊃ región).
+    # La cadena de límites: limites.orden lista los id de grupo de fuera adentro (tenant ⊃ suscripción ⊃
+    # grupo de recursos del pilar ⊃ región ⊃ red privada); cada uno es hijo del anterior. Otros grupos pueden
+    # llevar límite (el grupo de recursos compartido, el tenant corporativo) sin estar en la cadena.
     orden = spec.get("limites", {}).get("orden", [])
-    if list(orden) != list(LIMITES):
-        e.append(f"limites.orden tiene que ser {list(LIMITES)}")
-    por_limite = {g["limite"]: g for g in spec["grupos"] if g.get("limite")}
-    for i, lim in enumerate(LIMITES):
-        g = por_limite.get(lim)
+    if not isinstance(orden, list) or len(orden) != len(LIMITES):
+        e.append(f"limites.orden tiene que listar {len(LIMITES)} grupos, uno por límite: {list(LIMITES)}")
+        orden = []
+    for i, gid in enumerate(orden):
+        g = grupos.get(gid)
         if g is None:
-            e.append(f"falta el límite {lim}")
+            e.append(f"limites.orden: grupo desconocido {gid!r}")
             continue
-        if i and por_limite.get(LIMITES[i - 1]) and g.get("padre") != por_limite[LIMITES[i - 1]]["id"]:
-            e.append(f"límite {lim}: su padre tiene que ser el límite {LIMITES[i - 1]}")
+        if g.get("limite") != LIMITES[i]:
+            e.append(f"limites.orden: el grupo {gid} tiene que ser el límite {LIMITES[i]}")
+        if i and g.get("padre") != orden[i - 1]:
+            e.append(f"límite {LIMITES[i]}: su padre tiene que ser {orden[i - 1]}")
     if e:
         return e
     for g in spec["grupos"]:
@@ -550,7 +642,10 @@ def validar_limites(spec: dict) -> list[str]:
         for g in spec["grupos"]:
             x, y, w, h = g["caja"]
             cab = (x, y, x + w, y + alto_cabecera(g))
-            if caja_titulo_grupo(g, idioma)[2] > x + w - 8:
+            fin_titulo = caja_titulo_grupo(g, idioma)[2]
+            if g.get("insignia"):
+                fin_titulo += 16 + ancho_insignia(g, idioma)
+            if fin_titulo > x + w - 8:
                 e.append(f"[{idioma}] grupo {g['id']}: el título no cabe en su cabecera")
             for h_ in spec["grupos"]:
                 if h_.get("padre") == g["id"] and solapan(a_xyxy(h_["caja"]), cab):
@@ -564,7 +659,7 @@ def validar_limites(spec: dict) -> list[str]:
             for h_ in lista[i + 1:]:
                 if g["id"] in ancestros(grupos, h_["id"]) or h_["id"] in ancestros(grupos, g["id"]):
                     continue
-                if solapan(a_xyxy(g["caja"]), a_xyxy(h_["caja"])):
+                if solapan(caja_total(g), caja_total(h_)):
                     e.append(f"los grupos {g['id']} y {h_['id']} se solapan sin estar anidados")
         # Un nodo no puede invadir un grupo que no sea el suyo ni uno de sus antepasados.
         for n in spec["nodos"]:
@@ -572,7 +667,7 @@ def validar_limites(spec: dict) -> list[str]:
                 continue
             propios = set(ancestros(grupos, n["grupo"]))
             for g in spec["grupos"]:
-                if g["id"] not in propios and any(solapan(c, a_xyxy(g["caja"])) for c in cajas_nodo(n, idioma)):
+                if g["id"] not in propios and any(solapan(c, caja_total(g)) for c in cajas_nodo(n, idioma)):
                     e.append(f"[{idioma}] nodo {n['id']}: invade el grupo {g['id']}, que no es el suyo")
         # El texto de una arista no puede tapar el título de un grupo.
         for a in spec["aristas"]:
@@ -618,7 +713,7 @@ PROHIBIDO_ICONO = re.compile(
 
 
 # Lista blanca: lo único que usan los iconos oficiales revisados. Cualquier otra cosa falla cerrado.
-ELEMENTOS_ICONO = {"svg", "defs", "linearGradient", "radialGradient", "stop", "path", "rect", "circle",
+ELEMENTOS_ICONO = {"svg", "defs", "linearGradient", "radialGradient", "stop", "path", "rect", "circle", "clipPath",
                    "ellipse", "polygon", "polyline", "line", "g", "title"}
 
 
@@ -681,10 +776,54 @@ def cargar_iconos(spec: dict, carpetas: dict[str, Path] | Path) -> dict[str, str
         sha = hashlib.sha256(datos).hexdigest()
         if sha != ic["sha256"]:
             raise ErrorDiagrama(f"icono {clave}: SHA-256 {sha} distinto del esperado {ic['sha256']}")
+        if ruta.suffix.lower() == ".png":
+            medidas_png(datos, clave)  # falla si no es un PNG
+            salida[clave] = PREFIJO_PNG + base64.b64encode(datos).decode("ascii")
+            continue
         texto = limpia_cabecera(datos.decode("utf-8"))
         comprueba_icono(texto, clave)
         salida[clave] = texto
     return salida
+
+
+def medidas_png(datos: bytes, nombre: str) -> tuple[int, int]:
+    """Firma, IHDR con su CRC, al menos un IDAT y el IEND final: un PNG truncado se dibujaría vacío sin error."""
+    import zlib
+    if len(datos) < 33 or datos[:8] != b"\x89PNG\r\n\x1a\n" or datos[12:16] != b"IHDR":
+        raise ErrorDiagrama(f"icono {nombre}: no es un PNG válido")
+    pos, tipos = 8, []
+    while pos < len(datos):  # recorre todos los trozos y comprueba el CRC de cada uno
+        if pos + 12 > len(datos):
+            raise ErrorDiagrama(f"icono {nombre}: PNG truncado")
+        largo = struct.unpack(">I", datos[pos:pos + 4])[0]
+        fin = pos + 12 + largo
+        if fin > len(datos) or struct.unpack(">I", datos[fin - 4:fin])[0] != zlib.crc32(datos[pos + 4:fin - 4]):
+            raise ErrorDiagrama(f"icono {nombre}: PNG dañado en el trozo {datos[pos + 4:pos + 8]!r}")
+        tipos.append(datos[pos + 4:pos + 8])
+        pos = fin
+    if tipos[0] != b"IHDR" or b"IDAT" not in tipos or tipos[-1] != b"IEND":
+        raise ErrorDiagrama(f"icono {nombre}: PNG truncado (sin IDAT o sin IEND)")
+    return struct.unpack(">II", datos[16:24])
+
+
+def es_png(icono: str) -> bool:
+    return icono.startswith(PREFIJO_PNG)
+
+
+def comprueba_proporcion(spec: dict, iconos: dict) -> list[str]:
+    """Un icono rectangular se escala sin deformarse: alto/lado tiene que ser la proporción del PNG oficial."""
+    e = []
+    for n in spec["nodos"]:
+        icono = iconos.get(n.get("icono") or "")
+        if icono is None:
+            continue
+        if es_png(icono):
+            w, h = medidas_png(base64.b64decode(icono[len(PREFIJO_PNG):]), n["icono"])
+            if abs(alto_icono(n) / n["lado"] - h / w) > 0.01:
+                e.append(f"nodo {n['id']}: el icono {n['icono']} se deformaría (alto/lado distinto de {h}/{w})")
+        elif "alto" in n and n["alto"] != n["lado"]:
+            e.append(f"nodo {n['id']}: un icono SVG cuadrado no admite un alto distinto del lado")
+    return e
 
 
 def icono_incrustado(original: str, prefijo: str, x: float, y: float, lado: float) -> str:
@@ -758,6 +897,8 @@ def nodo_svg(n: dict, idioma: str, iconos: dict) -> str:
                   + texto_svg(x + 14, y + 22, l[0], T_NOMBRE, TEXTO, True, "start"))
         if len(l) > 1:
             cuerpo += texto_svg(x + 14, y + 40, l[1], T_DETALLE, TEXTO_2, False, "start")
+        if n["estado"] == "validado":
+            cuerpo += marca_validado(x + w - 2, y + 2, 7)
         return f"<g {datos}>{cuerpo}</g>"
     partes = []
     if n["tipo"] == "contenedor":
@@ -775,8 +916,13 @@ def nodo_svg(n: dict, idioma: str, iconos: dict) -> str:
                       f'rx="8" fill="#FFFFFF" stroke="{GRIS}" stroke-width="1.5"/>'
                       + texto_svg(n["pos"][0], n["pos"][1] + 5, n["texto_neutro"], T_DETALLE, "#605E5C", True))
     else:
-        partes.append(f'<g data-icono="{n["icono"]}">'
-                      + icono_incrustado(iconos[n["icono"]], f"i-{nid}-", x0, y0, n["lado"]) + "</g>")
+        icono = iconos[n["icono"]]
+        if es_png(icono):  # botón oficial en PNG: sin deformar, en su proporción (comprueba_proporcion)
+            cuerpo = (f'<image x="{fmt(x0)}" y="{fmt(y0)}" width="{fmt(n["lado"])}" height="{fmt(alto_icono(n))}" '
+                      f'href="{icono}"/>')
+        else:
+            cuerpo = icono_incrustado(icono, f"i-{nid}-", x0, y0, n["lado"])
+        partes.append(f'<g data-icono="{n["icono"]}">' + cuerpo + "</g>")
     if n["estado"] == "validado":
         partes.append(marca_validado(x1 + 2, y0 + 2))
     partes.append(etiqueta_nodo_svg(n, idioma))
@@ -802,7 +948,10 @@ def grupo_svg(g: dict, idioma: str, iconos: dict) -> str:
     est = estilo_grupo(g)
     trazo = f' stroke-dasharray="{est["trazo"]}"' if est["trazo"] else ""
     limite = f' data-limite="{g["limite"]}"' if g.get("limite") else ""
-    partes = [f'<g id="g-{g["id"]}"{limite}><rect x="{fmt(x)}" y="{fmt(y)}" width="{fmt(w)}" height="{fmt(h)}" '
+    detras = "".join(f'<rect class="apilado" x="{fmt(c[0])}" y="{fmt(c[1])}" width="{fmt(w)}" height="{fmt(h)}" '
+                     f'rx="{est["rx"]}" fill="#FFFFFF" stroke="{est["borde"]}" stroke-width="{est["ancho"]}"{trazo}/>'
+                     for c in cajas_apilado(g))
+    partes = [f'<g id="g-{g["id"]}"{limite}>{detras}<rect x="{fmt(x)}" y="{fmt(y)}" width="{fmt(w)}" height="{fmt(h)}" '
               f'rx="{est["rx"]}" fill="{est["relleno"]}" stroke="{est["borde"]}" stroke-width="{est["ancho"]}"'
               f'{trazo}/>']
     xt = x + 14
@@ -814,6 +963,12 @@ def grupo_svg(g: dict, idioma: str, iconos: dict) -> str:
     if g.get("subtitulo"):
         partes.append(texto_svg(xt, y + 19 + INTERLINEA - 1, g["subtitulo"][idioma], T_DETALLE, TEXTO_2, False,
                                 "start"))
+    if g.get("insignia"):
+        x0, y0, x1, y1 = caja_insignia(g, idioma)
+        partes.append(f'<g class="insignia"><rect x="{fmt(x0)}" y="{fmt(y0)}" width="{fmt(x1 - x0)}" '
+                      f'height="{fmt(y1 - y0)}" rx="10" fill="{AZUL}"/>'
+                      + texto_svg((x0 + x1) / 2, y0 + 14.5, g["insignia"][idioma], T_DETALLE, "#FFFFFF", True)
+                      + "</g>")
     return "".join(partes) + "</g>"
 
 
@@ -847,6 +1002,8 @@ def marcadores() -> str:
 
 ESTILO_LIMITE = {
     "tenant": {"relleno": "#F7F7F7", "borde": "#605E5C", "trazo": None, "ancho": 1.4},
+    "tenant_externo": {"relleno": "#F6F4FA", "borde": "#6B5B95", "trazo": None, "ancho": 1.4},
+    "red_privada": {"relleno": "#F4FAF6", "borde": "#3C8C5A", "trazo": "5 3", "ancho": 1.4},
     "suscripcion": {"relleno": "#FFFFFF", "borde": "#8A8886", "trazo": "8 4", "ancho": 1.4},
     "grupo_recursos": {"relleno": "#FAFAFA", "borde": "#8A8886", "trazo": "3 3", "ancho": 1.4},
     "region": {"relleno": "#FFFFFF", "borde": "#2B88D8", "trazo": "6 3", "ancho": 1.4},
@@ -871,6 +1028,11 @@ def simbolo_leyenda(simbolo: str, x: float, y: float) -> tuple[str, float]:
                 f'stroke="{t["borde"]}" stroke-width="{t["ancho"]}"/>'
                 f'<rect x="{fmt(x + 5)}" y="{fmt(y - 5)}" width="20" height="10" rx="2" fill="{s["relleno"]}" '
                 f'stroke="{s["borde"]}" stroke-width="{s["ancho"]}" stroke-dasharray="4 2"/>'), 30
+    if simbolo == "apilado":
+        partes = "".join(f'<rect x="{fmt(x + 8 - d)}" y="{fmt(y - 10 + d)}" width="20" height="14" rx="3" '
+                         f'fill="#FFFFFF" stroke="#8A8886" stroke-width="1.2" stroke-dasharray="3 3"/>'
+                         for d in (0, 4, 8))
+        return partes, 30
     if simbolo == "pieza":
         return (f'<rect x="{fmt(x)}" y="{fmt(y - 9)}" width="30" height="18" rx="5" fill="#EEF5FC" '
                 f'stroke="#9CC3EB" stroke-width="1.2"/>'), 30
@@ -881,7 +1043,7 @@ def simbolo_leyenda(simbolo: str, x: float, y: float) -> tuple[str, float]:
 
 
 ANCHO_SIMBOLO = {"paso": 24, "flujo": 36, "normal": 36, "futuro": 36, "traza": 36, "validado": 22,
-                 "limite": 30, "pieza": 30, "neutro": 20}
+                 "limite": 30, "pieza": 30, "neutro": 20, "apilado": 30}
 
 
 def geometria_validado(spec: dict, idioma: str) -> tuple[list[tuple[str, float, float]], float]:
@@ -1140,11 +1302,20 @@ def pagina_drawio(spec: dict, idioma: str, iconos: dict) -> str:
         est = estilo_grupo(g)
         trazo = f"dashed=1;dashPattern={est['trazo']};" if est["trazo"] else ""
         sangria = 34 if g.get("icono") else 10
+        for k, caja in enumerate(cajas_apilado(g)):
+            c.append(celda(f"{pre}g-{g['id']}-apilado-{k}", "",
+                           f"rounded=1;arcSize=2;html=1;fillColor=#FFFFFF;strokeColor={est['borde']};"
+                           f"strokeWidth={est['ancho']};{trazo}", caja[0], caja[1], w, h))
         c.append(celda(pre + "g-" + g["id"], valor_grupo_drawio(g, idioma),
                        f"rounded=1;arcSize=2;html=1;whiteSpace=wrap;fillColor={est['relleno']};"
                        f"strokeColor={est['borde']};strokeWidth={est['ancho']};{trazo}verticalAlign=top;align=left;"
                        f"spacingLeft={sangria};spacingTop=2;fontStyle=1;fontSize={est['tam']};"
                        f"fontColor={est['color']};container=0;", x, y, w, h))
+        if g.get("insignia"):
+            x0, y0, x1, y1 = caja_insignia(g, idioma)
+            c.append(celda(pre + "g-" + g["id"] + "-insignia", f"<b>{escape(g['insignia'][idioma])}</b>",
+                           f"rounded=1;arcSize=50;html=1;fillColor={AZUL};strokeColor=none;fontColor=#FFFFFF;"
+                           "fontSize=13;", x0, y0, x1 - x0, y1 - y0))
         if g.get("icono"):
             datos = base64.b64encode(iconos[g["icono"]].encode("utf-8")).decode("ascii")
             c.append(celda(pre + "g-" + g["id"] + "-icono", "",
@@ -1172,13 +1343,16 @@ def pagina_drawio(spec: dict, idioma: str, iconos: dict) -> str:
             estilo = (f"rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor={GRIS};strokeWidth=1.5;"
                       f"{discontinuo}{etiqueta}")
         else:
-            datos = base64.b64encode(iconos[n["icono"]].encode("utf-8")).decode("ascii")
-            estilo = (f"shape=image;aspect=fixed;imageAspect=1;{etiqueta}"
-                      f"image=data:image/svg+xml,{datos};")
+            icono = iconos[n["icono"]]
+            if es_png(icono):
+                imagen = "data:image/png," + icono[len(PREFIJO_PNG):]
+            else:
+                imagen = "data:image/svg+xml," + base64.b64encode(icono.encode("utf-8")).decode("ascii")
+            estilo = f"shape=image;aspect=fixed;imageAspect=1;{etiqueta}image={imagen};"
         sufijo = "  ✔" if n["estado"] == "validado" else ""
         k = lineas_nombre(n)
         valor = valor_html(lineas[:k - 1] + [lineas[k - 1] + sufijo] + lineas[k:], k)
-        c.append(celda(nid, valor, estilo, x0, y0, n["lado"], n["lado"]))
+        c.append(celda(nid, valor, estilo, x0, y0, n["lado"], alto_icono(n)))
         if n["estado"] == "futuro":
             caja = caja_nodo(n, idioma)
             c.append(celda(nid + "-futuro", "", f"rounded=1;arcSize=8;fillColor=none;strokeColor={GRIS};dashed=1;",
@@ -1264,6 +1438,12 @@ PELIGROSO = [
     (re.compile(r"<[^>]*\son[a-z]+\s*=", re.I), "manejador on*"),
     (re.compile(r"javascript\s*:", re.I), "javascript:"),
     (re.compile(r"<\s*(iframe|object|embed|foreignObject)\b", re.I), "elemento activo"),
+    # Solo se admite una imagen incrustada como PNG en base64: nada de referencias a ficheros o URL externas.
+    (re.compile(r"<\s*image\b(?![^>]*(?<![\w-])href=\"data:image/png;base64,[A-Za-z0-9+/=]+\")[^>]*>", re.I),
+     "imagen no incrustada"),
+    # Y ningún otro atributo de enlace (xlink:href, href con comillas simples) puede apuntar a otra cosa.
+    (re.compile(r"<\s*image\b[^>]*(?<![\w-])(?:[a-z]+:)?href\s*=\s*(?!\"data:image/png;base64,[A-Za-z0-9+/=]+\")", re.I),
+     "imagen no incrustada"),
 ]
 
 
@@ -1305,7 +1485,8 @@ def comprueba_svg(spec: dict, idioma: str, svg: str, nombre: str) -> list[str]:
                 e.append(f"{nombre}: el nodo {n['id']} no muestra «{l}»")
         if n.get("icono"):
             iconos = [s for s in el.iter(ns + "svg")]
-            if len(iconos) < 2:  # envoltorio + svg original
+            png = [i for i in el.iter(ns + "image") if (i.get("href") or "").startswith(PREFIJO_PNG)]
+            if len(iconos) < 2 and not png:  # envoltorio + svg original, o el PNG oficial
                 e.append(f"{nombre}: el nodo {n['id']} no lleva su icono incrustado")
         if n["estado"] == "validado" and not any(g.get("class") == "validado" for g in el.iter(ns + "g")):
             e.append(f"{nombre}: el nodo {n['id']} no lleva la marca de validado")
@@ -1330,6 +1511,10 @@ def comprueba_svg(spec: dict, idioma: str, svg: str, nombre: str) -> list[str]:
             e.append(f"{nombre}: el grupo {g['id']} no muestra su subtítulo")
         elif g.get("icono") and len(list(el.iter(ns + "svg"))) < 2:
             e.append(f"{nombre}: el grupo {g['id']} no lleva su icono incrustado")
+        elif g.get("insignia") and g["insignia"][idioma] not in textos(el):
+            e.append(f"{nombre}: el grupo {g['id']} no muestra su insignia")
+        elif g.get("apilado") and len([r for r in el.iter(ns + "rect") if r.get("class") == "apilado"]) != len(APILADO):
+            e.append(f"{nombre}: el grupo {g['id']} no dibuja sus tarjetas apiladas")
     banda = por_id.get("banda-practicas")
     if banda is None or spec["practicas"]["titulo"][idioma] not in textos(banda):
         e.append(f"{nombre}: falta la banda de prácticas o su título")
@@ -1433,7 +1618,7 @@ def comprueba_drawio(spec: dict, drawio: str, nombre: str) -> list[str]:
             if n.get("icono"):
                 cid = pre + "n-" + n["id"] + ("-icono" if n["tipo"] == "contenedor" else "")
                 estilo = (celdas.get(cid).get("style") if cid in celdas else "") or ""
-                if "image=data:image/svg+xml," not in estilo:
+                if "image=data:image/svg+xml," not in estilo and "image=data:image/png," not in estilo:
                     e.append(f"{nombre} [{idioma}]: el nodo {n['id']} no lleva su icono incrustado")
         for a in spec["aristas"]:
             cel = celdas.get(pre + "e-" + a["id"])
@@ -1453,6 +1638,11 @@ def comprueba_drawio(spec: dict, drawio: str, nombre: str) -> list[str]:
                 e.append(f"{nombre} [{idioma}]: falta el grupo {g['id']}")
             elif valor_grupo_drawio(g, idioma) != valor(pre + "g-" + g["id"]):
                 e.append(f"{nombre} [{idioma}]: el grupo {g['id']} no muestra su título o su subtítulo")
+            insignia = valor(pre + "g-" + g["id"] + "-insignia")
+            if g.get("insignia") and f"<b>{escape(g['insignia'][idioma])}</b>" != insignia:
+                e.append(f"{nombre} [{idioma}]: el grupo {g['id']} no muestra su insignia")
+            if g.get("apilado") and any(f"{pre}g-{g['id']}-apilado-{k}" not in celdas for k in range(len(APILADO))):
+                e.append(f"{nombre} [{idioma}]: el grupo {g['id']} no dibuja sus tarjetas apiladas")
             icono = celdas.get(pre + "g-" + g["id"] + "-icono")
             if g.get("icono") and (icono is None or "image=data:image/svg+xml," not in (icono.get("style") or "")):
                 e.append(f"{nombre} [{idioma}]: el grupo {g['id']} no lleva su icono incrustado")
@@ -1473,7 +1663,7 @@ def comprueba_drawio(spec: dict, drawio: str, nombre: str) -> list[str]:
 
 def generar(spec: dict, iconos: dict) -> dict[str, str]:
     """Construye todas las salidas en memoria y las comprueba. No escribe nada."""
-    errores = validar_spec(spec)
+    errores = validar_spec(spec) + comprueba_proporcion(spec, iconos)
     if errores:
         raise ErrorDiagrama("especificación no válida:\n  " + "\n  ".join(errores))
     salidas: dict[str, str] = {}
@@ -1508,7 +1698,7 @@ def tamano_png(ruta: Path) -> tuple[int, int]:
 
 def renderizar_png(spec: dict, carpeta: Path, edge: str) -> None:
     if not Path(edge).is_file():
-        raise ErrorEntorno(f"no encuentro Microsoft Edge en {edge}")
+        raise ErrorEntorno(f"no encuentro el navegador (Chrome o Edge) en {edge}")
     ancho, alto = spec["lienzo"]["ancho"], spec["lienzo"]["alto"]
     for idioma in IDIOMAS:
         html = (carpeta / f"arquitectura.{idioma}.html").resolve()
@@ -1524,12 +1714,12 @@ def renderizar_png(spec: dict, carpeta: Path, edge: str) -> None:
             r = subprocess.run(cmd, check=False, timeout=80, stdout=subprocess.DEVNULL,
                                stderr=subprocess.PIPE)
         except subprocess.TimeoutExpired as ex:
-            raise ErrorEntorno(f"Edge no terminó en 80 s con {html.name}") from ex
+            raise ErrorEntorno(f"El navegador no terminó en 80 s con {html.name}") from ex
         if r.returncode != 0:
             detalle = r.stderr.decode("utf-8", "replace").strip()[-300:]
-            raise ErrorEntorno(f"Edge salió con {r.returncode} con {html.name}: {detalle}")
+            raise ErrorEntorno(f"El navegador salió con {r.returncode} con {html.name}: {detalle}")
         if not png.is_file():
-            raise ErrorEntorno(f"Edge no generó {png.name}")
+            raise ErrorEntorno(f"El navegador no generó {png.name}")
         if tamano_png(png) != (ancho, alto):
             raise ErrorDiagrama(f"{png.name}: mide {tamano_png(png)}, se esperaba {(ancho, alto)}")
 
@@ -1563,16 +1753,22 @@ def main(argv: list[str] | None = None) -> int:
                     help="carpeta Icons/ del juego oficial Azure Architecture Icons (también ICONOS_AZURE)")
     ap.add_argument("--iconos-entra", type=Path, default=Path(ICONOS_ENTRA_DEFECTO),
                     help="carpeta raíz del juego oficial Microsoft Entra architecture icons (también ICONOS_ENTRA)")
+    ap.add_argument("--iconos-aws", type=Path, default=Path(ICONOS_AWS_DEFECTO),
+                    help="carpeta raíz descomprimida del juego oficial AWS Architecture Icons (también ICONOS_AWS)")
+    ap.add_argument("--iconos-google", type=Path, default=Path(ICONOS_GOOGLE_DEFECTO),
+                    help="carpeta descomprimida del paquete oficial Sign in with Google (también ICONOS_GOOGLE_SIGNIN)")
     ap.add_argument("--salida", type=Path, default=AQUI)
-    ap.add_argument("--png", action="store_true", help="renderiza los PNG con Microsoft Edge en modo headless")
-    ap.add_argument("--edge", default=EDGE_DEFECTO)
+    ap.add_argument("--png", action="store_true", help="renderiza los PNG con un Chromium en modo headless")
+    ap.add_argument("--edge", "--navegador", dest="edge", default=EDGE_DEFECTO,
+                    help="ejecutable de Google Chrome o Microsoft Edge (también EDGE_PATH)")
     args = ap.parse_args(argv)
     try:
         spec = cargar_spec(args.spec)
         errores = validar_spec(spec)  # antes de los iconos: un JSON mal hecho es 1, no error de entorno
         if errores:
             raise ErrorDiagrama("especificación no válida:\n  " + "\n  ".join(errores))
-        iconos = cargar_iconos(spec, {"azure_v24": args.iconos, "entra_oct2023": args.iconos_entra})
+        iconos = cargar_iconos(spec, {"azure_v24": args.iconos, "entra_oct2023": args.iconos_entra,
+                                      "aws_07312026": args.iconos_aws, "google_signin_2026": args.iconos_google})
         salidas = generar(spec, iconos)
         with tempfile.TemporaryDirectory(prefix="diagrama-") as tmp:
             preparada = Path(tmp)

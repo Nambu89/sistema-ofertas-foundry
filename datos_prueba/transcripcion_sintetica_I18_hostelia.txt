@@ -1,0 +1,41 @@
+WEBVTT
+
+NOTE
+Transcripción SINTÉTICA y FICTICIA para la prueba real de I1.8 (generalización). Empresa, personas y datos inventados.
+Forma tomada de pruebas/I12/REAL/transcripcion_sintetica_I11V.txt; ver datos_prueba/alta_I18_hostelia.md.
+
+00:00:03.000 --> 00:00:10.200
+<v Responsable comercial>Buenos días. Quiero entender bien la necesidad antes de proponer nada.</v>
+
+00:00:10.800 --> 00:00:21.500
+<v Marina Couto>Buenos días. Soy la directora de Recursos Humanos de Hostelia Grupo Hotelero y me acompaña Rodrigo Valcárcel, de sistemas. Tenemos hoteles en España y Portugal.</v>
+
+00:00:22.000 --> 00:00:34.600
+<v Marina Couto>El objetivo es un asistente de RR. HH. con IA para nuestros empleados que responda en lenguaje natural sobre las políticas de Recursos Humanos y cite siempre el documento de origen.</v>
+
+00:00:35.100 --> 00:00:49.800
+<v Marina Couto>El primer día tiene que hacer tres cosas: responder sobre las políticas de RR. HH. con los documentos de SharePoint, consultar el saldo de vacaciones del empleado y registrar solicitudes de días libres.</v>
+
+00:00:50.300 --> 00:01:03.900
+<v Rodrigo Valcárcel>El saldo de vacaciones y las solicitudes de días libres van a través de la API REST de RR. HH. que ya tenemos en Azure, en un App Service propio, publicada con API Management.</v>
+
+00:01:04.400 --> 00:01:15.100
+<v Rodrigo Valcárcel>Queremos que la solución viva en Azure y que los empleados la usen desde Microsoft Teams.</v>
+
+00:01:15.600 --> 00:01:27.300
+<v Rodrigo Valcárcel>Los documentos de políticas están en SharePoint Online de nuestro tenant, con permisos por grupos de Entra ID, y el asistente debe respetar esos permisos.</v>
+
+00:01:27.800 --> 00:01:40.400
+<v Marina Couto>Los usuarios son unos 1.200 empleados de España y Portugal. Hay unos 800 documentos y calculamos unas 6.000 consultas y 1.500 acciones al mes.</v>
+
+00:01:40.900 --> 00:01:49.700
+<v Rodrigo Valcárcel>Aplicamos el RGPD y los datos tienen que quedarse en la Unión Europea.</v>
+
+00:01:50.200 --> 00:01:59.600
+<v Rodrigo Valcárcel>Ya tenemos licencias de Microsoft 365 E3 para todos los empleados, con Teams y SharePoint incluidos.</v>
+
+00:02:00.100 --> 00:02:08.800
+<v Marina Couto>El plazo que nos gustaría es de unas 10 semanas. La oferta, en castellano, por favor.</v>
+
+00:02:09.300 --> 00:02:14.000
+<v Responsable comercial>Perfecto, con esto preparamos la propuesta. Gracias a los dos.</v>

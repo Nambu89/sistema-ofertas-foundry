@@ -1,0 +1,23 @@
+CONSOLIDADO-PREVENTA/1
+consolidado_id: CNS-OF-KELVARA-001-A-R1
+brief_id: BRF-OF-KELVARA-001-A-AZ-R1
+ubicacion_usuarios: España (laboratorios de [SENSIBLE] y [SENSIBLE])
+marco_normativo: RGPD, con datos en la Unión Europea
+tipo_suscripcion: Enterprise Agreement directo con Microsoft
+sha256_cuerpo: baedda941795a785a3933ef426b341660bb4e2b25d2a9e32559fd81b0a3e137f
+---
+## Referencias
+REF-01 | https://learn.microsoft.com/azure/architecture/ai-ml/architecture/baseline-microsoft-foundry-chat | Arquitectura de referencia de chat con Microsoft Foundry
+REF-02 | https://learn.microsoft.com/azure/search/search-what-is-azure-search | Qué es Azure AI Search
+REF-03 | https://learn.microsoft.com/azure/bot-service/bot-overview | Qué es Azure AI Bot Service
+REF-04 | https://learn.microsoft.com/azure/private-link/private-link-overview | Qué es Azure Private Link
+REF-05 | https://learn.microsoft.com/azure/foundry/what-is-foundry | Qué es Microsoft Foundry
+REF-06 | https://learn.microsoft.com/azure/app-service/overview | Información general de Azure App Service
+REF-07 | https://learn.microsoft.com/entra/fundamentals/what-is-entra | Qué es Microsoft Entra
+## Componentes
+C-01 | Microsoft Foundry | sku: gpt-6-luna DataZoneStandard | region: swedencentral | motivo: depende_del_volumen | referencia: https://learn.microsoft.com/azure/foundry/what-is-foundry
+C-02 | Azure AI Search | sku: Standard S1 | region: francecentral | nivel: S1 | razon: privado_red («Learn (nota 1 de las conexiones privadas compartidas): «On Basic services, private connections to a Microsoft Foundry resource are unsupported»; S1 creado desde abril de 2024 sí») | cita: «Servicios sin exposición a internet, con acceso privado y puntos de conexión privados donde se pueda» | fuente_nivel: https://learn.microsoft.com/azure/search/search-limits-quotas-capacity | referencia: https://learn.microsoft.com/azure/search/search-what-is-azure-search
+C-03 | Azure AI Bot Service | sku: Estándar | region: westeurope | motivo: depende_del_volumen | referencia: https://learn.microsoft.com/azure/bot-service/bot-overview
+C-04 | Azure App Service | sku: B1 | region: swedencentral | referencia: https://learn.microsoft.com/azure/app-service/overview
+C-05 | Microsoft Entra ID | sku: Incluido en el tenant | region: global | referencia: https://learn.microsoft.com/entra/fundamentals/what-is-entra
+C-06 | Azure Private Link | sku: Punto de conexión privado | region: swedencentral | referencia: https://learn.microsoft.com/azure/private-link/private-link-overview

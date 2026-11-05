@@ -1,0 +1,91 @@
+{
+  "turno": "ARR1_H2_T1",
+  "serie": "h2",
+  "agente": "preventa-prueba-hosted",
+  "via": "endpoint",
+  "modo": "background",
+  "url": "https://recurso-ejemplo.services.ai.azure.com/api/projects/proyecto-ejemplo/agents/preventa-prueba-hosted/endpoint/protocols/openai/responses",
+  "mensaje": "H_T1_alta.txt",
+  "adjuntos": [
+    "transcripcion_sintetica_I18_hostelia.txt"
+  ],
+  "previa": null,
+  "inicio": "2026-10-18 03:12:02",
+  "inicio_utc": "2026-10-18T01:11:57Z",
+  "creada": {
+    "status": "in_progress",
+    "response_id": "caresp_ejemplo0000000000000000000000000000000000000000016",
+    "agent_session_id": "sesion-ejemplo-0002",
+    "latencia_s": 26.0
+  },
+  "sondeo": [
+    {
+      "n": 1,
+      "params": [
+        "api-version"
+      ],
+      "http": 200,
+      "status": "completed"
+    }
+  ],
+  "sondeo_variante": [
+    "api-version"
+  ],
+  "http": 200,
+  "latencia_s": 31.4,
+  "response_id": "caresp_ejemplo0000000000000000000000000000000000000000016",
+  "status": "completed",
+  "agent_session_id": "sesion-ejemplo-0002",
+  "usage": null,
+  "error": null,
+  "texto": "Adjuntos guardados en la sesión: transcripcion_sintetica_I18_hostelia.txt\n\n$ iniciar → rc 0\n```\nALTA: OK OF-HOSTELIA-001-A · fuente F1 transcripcion_sintetica_I18_hostelia.txt (2406 B, SHA-256 b11c0bea0e708dc0b9d1fd0b7c11263fe16a316355ac46a8c1809e7d8a5a28e9)\nTérminos sensibles: 6 (hablantes añadidos: Responsable comercial, Marina Couto, Rodrigo Valcárcel)\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: BORRADOR\nversion: A\nhash_contenido: 65da69fbc6bc966de8e492c44e56dd401421501a3e1c01faa2489d9d4ac97a19\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Rellenar entrada/requisitos.json con citas literales y ejecutar: suficiencia --requisitos entrada/requisitos.json\n=== FIN ESTADO ===\n```\n\nRequisitos propuestos por gpt-6-luna (respuesta resp_ejemplo0000000000000000000000000000000000000000015); el código comprueba cada cita.\n\n$ suficiencia → rc 1\n```\nSUFICIENCIA: INCOMPLETA. Faltan: red_privada, tipo_suscripcion, presupuesto_orientativo\n=== PREGUNTAS PARA EL COMERCIAL ===\nred_privada: ¿Hace falta red privada?\n  a) Sí, entrada y salida privadas\n  b) Solo entrada privada\n  c) No, acceso público con autenticación\n  d) otra: indicarla (ASUMIR: red_privada = valor)\ntipo_suscripcion: ¿Qué tipo de suscripción de Azure tiene el cliente?\n  a) Enterprise Agreement o MCA-E directo\n  b) CSP a través de un revendedor\n  c) Pago por uso\n  d) otra: indicarla (ASUMIR: tipo_suscripcion = valor)\npresupuesto_orientativo: ¿Hay un presupuesto orientativo?\n  a) Menos de 25.000 euros\n  b) Entre 25.000 y 60.000 euros\n  c) Más de 60.000 euros\n  d) otra: indicarla (ASUMIR: presupuesto_orientativo = valor)\n=== FIN PREGUNTAS ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: INFORMACION_INSUFICIENTE\nversion: A\nhash_contenido: 4c5a9f3aefd4ac51ce26cf4cd3da4ab75b62b6b6ae8e0051f15a1861b7907573\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...\n=== FIN ESTADO ===\n```\n\n```\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: INFORMACION_INSUFICIENTE\nversion: A\nhash_contenido: 4c5a9f3aefd4ac51ce26cf4cd3da4ab75b62b6b6ae8e0051f15a1861b7907573\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...\n=== FIN ESTADO ===\n```\n\nSIGUIENTE PASO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...",
+  "respuesta": {
+    "metadata": {},
+    "model": "",
+    "background": true,
+    "tools": [],
+    "id": "caresp_ejemplo0000000000000000000000000000000000000000016",
+    "object": "response",
+    "status": "completed",
+    "created_at": 1792285948,
+    "completed_at": 1792285948,
+    "error": null,
+    "incomplete_details": null,
+    "output": [
+      {
+        "type": "message",
+        "id": "msg_ejemplo0000000000000000000000000000000000000000015",
+        "agent_reference": {
+          "type": "agent_reference",
+          "name": "preventa-prueba-hosted",
+          "version": "19"
+        },
+        "response_id": "caresp_ejemplo0000000000000000000000000000000000000000016",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "output_text",
+            "text": "Adjuntos guardados en la sesión: transcripcion_sintetica_I18_hostelia.txt\n\n$ iniciar → rc 0\n```\nALTA: OK OF-HOSTELIA-001-A · fuente F1 transcripcion_sintetica_I18_hostelia.txt (2406 B, SHA-256 b11c0bea0e708dc0b9d1fd0b7c11263fe16a316355ac46a8c1809e7d8a5a28e9)\nTérminos sensibles: 6 (hablantes añadidos: Responsable comercial, Marina Couto, Rodrigo Valcárcel)\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: BORRADOR\nversion: A\nhash_contenido: 65da69fbc6bc966de8e492c44e56dd401421501a3e1c01faa2489d9d4ac97a19\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Rellenar entrada/requisitos.json con citas literales y ejecutar: suficiencia --requisitos entrada/requisitos.json\n=== FIN ESTADO ===\n```\n\nRequisitos propuestos por gpt-6-luna (respuesta resp_ejemplo0000000000000000000000000000000000000000015); el código comprueba cada cita.\n\n$ suficiencia → rc 1\n```\nSUFICIENCIA: INCOMPLETA. Faltan: red_privada, tipo_suscripcion, presupuesto_orientativo\n=== PREGUNTAS PARA EL COMERCIAL ===\nred_privada: ¿Hace falta red privada?\n  a) Sí, entrada y salida privadas\n  b) Solo entrada privada\n  c) No, acceso público con autenticación\n  d) otra: indicarla (ASUMIR: red_privada = valor)\ntipo_suscripcion: ¿Qué tipo de suscripción de Azure tiene el cliente?\n  a) Enterprise Agreement o MCA-E directo\n  b) CSP a través de un revendedor\n  c) Pago por uso\n  d) otra: indicarla (ASUMIR: tipo_suscripcion = valor)\npresupuesto_orientativo: ¿Hay un presupuesto orientativo?\n  a) Menos de 25.000 euros\n  b) Entre 25.000 y 60.000 euros\n  c) Más de 60.000 euros\n  d) otra: indicarla (ASUMIR: presupuesto_orientativo = valor)\n=== FIN PREGUNTAS ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: INFORMACION_INSUFICIENTE\nversion: A\nhash_contenido: 4c5a9f3aefd4ac51ce26cf4cd3da4ab75b62b6b6ae8e0051f15a1861b7907573\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...\n=== FIN ESTADO ===\n```\n\n```\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: INFORMACION_INSUFICIENTE\nversion: A\nhash_contenido: 4c5a9f3aefd4ac51ce26cf4cd3da4ab75b62b6b6ae8e0051f15a1861b7907573\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...\n=== FIN ESTADO ===\n```\n\nSIGUIENTE PASO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...",
+            "annotations": [],
+            "logprobs": []
+          }
+        ],
+        "status": "completed"
+      }
+    ],
+    "instructions": null,
+    "parallel_tool_calls": false,
+    "agent": {
+      "type": "agent_id",
+      "name": "preventa-prueba-hosted",
+      "version": "19"
+    },
+    "agent_session_id": "sesion-ejemplo-0002",
+    "agent_reference": {
+      "type": "agent_reference",
+      "name": "preventa-prueba-hosted",
+      "version": "19"
+    }
+  },
+  "fin": "2026-10-18 03:12:33"
+}

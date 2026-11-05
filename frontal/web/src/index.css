@@ -1,0 +1,40 @@
+@import "@fontsource-variable/montserrat";
+@import "tailwindcss";
+
+/* Marca Devoteam: Montserrat, Red Poppy #F8485E, Dark Grey #3C3C3A y blanco.
+   Blanco sobre #F8485E da 3,6:1 (no llega a AA en texto normal): el Poppy solo decora (barras, foco, marcas) y el
+   texto rojo pequeño usa poppy-texto (#B42338, 6,5:1 sobre blanco). Los botones principales van en grafito. */
+@theme {
+  --font-sans: "Montserrat Variable", "Montserrat", system-ui, sans-serif;
+  --color-poppy: #f8485e;
+  --color-poppy-texto: #b42338;
+  --color-poppy-suave: #fdecee;
+  --color-grafito: #3c3c3a;
+  --color-grafito-hover: #262625;
+  --color-tenue: #5f5f5c;
+  --color-borde: #d6d6d3;
+  --color-panel: #f6f6f5;
+  --color-hecho: #1f7a4d;
+  --color-hecho-suave: #e8f4ee;
+}
+
+@layer base {
+  html {
+    color: var(--color-grafito);
+    background: #ffffff;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-poppy);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

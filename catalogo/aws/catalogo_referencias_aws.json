@@ -1,0 +1,370 @@
+{
+  "schema": "preventa-catalogo-referencias-aws/1",
+  "fecha": "2026-11-04",
+  "metodo": "GET sin credenciales (urllib), HTTP 200, sin redirigir a otra ruta y <title> literal",
+  "arquitecturas_referencia": [
+    {
+      "id": "centro-arquitectura",
+      "titulo": "Reference Architecture Examples and Best Practices",
+      "url": "https://aws.amazon.com/architecture/",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Punto de partida: AWS Architecture Center, para buscar una arquitectura de referencia del caso antes de diseñar."
+    },
+    {
+      "id": "rag-opciones",
+      "titulo": "Retrieval Augmented Generation options and architectures on AWS - AWS Prescriptive Guidance",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/retrieval-augmented-generation-options/introduction.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Asistente con RAG: opciones de recuperación (Knowledge Bases, almacén vectorial propio) y su arquitectura."
+    },
+    {
+      "id": "asistente-agentes-kb",
+      "titulo": "Develop a fully automated chat-based assistant by using Amazon Bedrock agents and knowledge bases - AWS Prescriptive Guidance",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/develop-a-fully-automated-chat-based-assistant-by-using-amazon-bedrock-agents-and-knowledge-bases.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Asistente conversacional con agentes y bases de conocimiento de Bedrock."
+    },
+    {
+      "id": "patrones-ia-generativa",
+      "titulo": "Layer 4: Repeatable application patterns for common generative AI use cases - AWS Prescriptive Guidance",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-enterprise-ready-gen-ai-platform/patterns.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Patrones repetibles de aplicaciones de IA generativa en una plataforma empresarial."
+    },
+    {
+      "id": "waf-ia-generativa",
+      "titulo": "Generative AI Lens - AWS Well-Architected Framework - Generative AI Lens",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/generative-ai-lens/generative-ai-lens.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Buenas prácticas por pilar para cargas de IA generativa."
+    },
+    {
+      "id": "waf-ia-agentica",
+      "titulo": "Agentic AI Lens - AWS Well-Architected Framework - Agentic AI Lens",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentic-ai-lens.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Buenas prácticas por pilar para agentes de IA."
+    },
+    {
+      "id": "waf-sin-servidor",
+      "titulo": "Serverless Applications Lens - AWS Well-Architected Framework - Serverless Applications Lens",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/welcome.html",
+      "consultado": "2026-11-04",
+      "cuando_usar": "Aplicación sin servidor (Lambda, API Gateway, DynamoDB): el cómputo por defecto del catálogo."
+    }
+  ],
+  "urls": [
+    {
+      "url": "https://aws.amazon.com/architecture/",
+      "http": 200,
+      "final": "https://aws.amazon.com/architecture/",
+      "titulo": "Reference Architecture Examples and Best Practices",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://aws.amazon.com/bedrock/pricing/",
+      "http": 200,
+      "final": "https://aws.amazon.com/bedrock/pricing/",
+      "titulo": "Amazon Bedrock Pricing",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://aws.amazon.com/kms/pricing/",
+      "http": 200,
+      "final": "https://aws.amazon.com/kms/pricing/",
+      "titulo": "Pricing - AWS Key Management Service (KMS)",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://aws.amazon.com/secrets-manager/pricing/",
+      "http": 200,
+      "final": "https://aws.amazon.com/secrets-manager/pricing/",
+      "titulo": "Pricing | AWS Secrets Manager | Amazon Web Services (AWS)",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server",
+      "http": 200,
+      "final": "https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server",
+      "titulo": "AWS Knowledge MCP Server | Welcome to Open Source MCP Servers for AWS",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html",
+      "titulo": "What is Amazon Simple Queue Service? - Amazon Simple Queue Service",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html",
+      "titulo": "What is Amazon CloudWatch Logs? - Amazon CloudWatch Logs",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html",
+      "titulo": "Architect for AWS Fargate for Amazon ECS - Amazon Elastic Container Service",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-tasks-services.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-tasks-services.html",
+      "titulo": "Amazon ECS task definition differences for Fargate - Amazon Elastic Container Service",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+      "titulo": "What is Amazon S3? - Amazon Simple Storage Service",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+      "titulo": "What is Amazon DynamoDB? - Amazon DynamoDB",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/capacity-mode.html",
+      "titulo": "DynamoDB throughput capacity - Amazon DynamoDB",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html",
+      "titulo": "Choose between REST APIs and HTTP APIs - Amazon API Gateway",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
+      "titulo": "What is Amazon API Gateway? - Amazon API Gateway",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/using-the-aws-price-list-bulk-api-fetching-price-list-files-manually.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/using-the-aws-price-list-bulk-api-fetching-price-list-files-manually.html",
+      "titulo": "Getting price list files manually - AWS Billing",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html",
+      "titulo": "Route model inference requests across AWS Regions with cross-Region inference - Amazon Bedrock",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html",
+      "titulo": "Retrieve data and generate AI responses with Amazon Bedrock Knowledge Bases - Amazon Bedrock",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-lite.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-lite.html",
+      "titulo": "Nova 2 Lite - Amazon Bedrock",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-titan-text-embeddings-v2.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-titan-text-embeddings-v2.html",
+      "titulo": "Titan Text Embeddings V2 - Amazon Bedrock",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html",
+      "titulo": "Overview - Amazon Bedrock",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html",
+      "titulo": "User pool feature plans - Amazon Cognito",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html",
+      "titulo": "What is Amazon Cognito? - Amazon Cognito",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/kms/latest/developerguide/overview.html",
+      "titulo": "AWS Key Management Service - AWS Key Management Service",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-memory.html",
+      "titulo": "Configure Lambda Event Function memory - AWS Lambda",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html",
+      "titulo": "Configure Lambda Event Function timeout - AWS Lambda",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+      "titulo": "What is AWS Lambda? - AWS Lambda",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html",
+      "titulo": "What is Amazon OpenSearch Serverless? - Amazon OpenSearch Service",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-scaling.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-scaling.html",
+      "titulo": "Managing capacity limits for Amazon OpenSearch Serverless - Amazon OpenSearch Service",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/develop-a-fully-automated-chat-based-assistant-by-using-amazon-bedrock-agents-and-knowledge-bases.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/develop-a-fully-automated-chat-based-assistant-by-using-amazon-bedrock-agents-and-knowledge-bases.html",
+      "titulo": "Develop a fully automated chat-based assistant by using Amazon Bedrock agents and knowledge bases - AWS Prescriptive Guidance",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/retrieval-augmented-generation-options/introduction.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/prescriptive-guidance/latest/retrieval-augmented-generation-options/introduction.html",
+      "titulo": "Retrieval Augmented Generation options and architectures on AWS - AWS Prescriptive Guidance",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-enterprise-ready-gen-ai-platform/patterns.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-enterprise-ready-gen-ai-platform/patterns.html",
+      "titulo": "Layer 4: Repeatable application patterns for common generative AI use cases - AWS Prescriptive Guidance",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+      "titulo": "What is AWS Secrets Manager? - AWS Secrets Manager",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html",
+      "titulo": "What is Step Functions? - AWS Step Functions",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/textract/latest/dg/what-is.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/textract/latest/dg/what-is.html",
+      "titulo": "What is Amazon Textract? - Amazon Textract",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentic-ai-lens.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentic-ai-lens.html",
+      "titulo": "Agentic AI Lens - AWS Well-Architected Framework - Agentic AI Lens",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/generative-ai-lens/generative-ai-lens.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/wellarchitected/latest/generative-ai-lens/generative-ai-lens.html",
+      "titulo": "Generative AI Lens - AWS Well-Architected Framework - Generative AI Lens",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/welcome.html",
+      "http": 200,
+      "final": "https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/welcome.html",
+      "titulo": "Serverless Applications Lens - AWS Well-Architected Framework - Serverless Applications Lens",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://learn.microsoft.com/azure/foundry-classic/openai/concepts/use-your-data",
+      "http": 200,
+      "final": "https://learn.microsoft.com/en-us/azure/foundry-classic/openai/concepts/use-your-data",
+      "titulo": "Using your data with Azure OpenAI in Microsoft Foundry Models (classic) - Microsoft Foundry (classic) portal | Microsoft Learn",
+      "errores": [],
+      "fecha": "2026-11-04"
+    },
+    {
+      "url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+      "http": 200,
+      "final": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+      "titulo": "Euro foreign exchange reference rates",
+      "errores": [],
+      "fecha": "2026-11-04"
+    }
+  ]
+}

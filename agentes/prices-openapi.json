@@ -1,0 +1,25 @@
+{
+ "openapi": "3.0.3",
+ "info": {"title": "Azure Retail Prices", "version": "2023-01-01-preview", "description": "Precios minoristas publicos de Azure. Sin autenticacion."},
+ "servers": [{"url": "https://prices.azure.com"}],
+ "paths": {
+  "/api/retail/prices": {
+   "get": {
+    "operationId": "consultarPreciosAzure",
+    "description": "Usa SOLO el $filter exacto que te indican tus instrucciones (una plantilla de precio, o el filtro de la linea que verificas), caracter a caracter: cada uno devuelve un medidor. No pagines ni escribas filtros amplios: una consulta amplia puede dar 429 y abortar la respuesta.",
+    "parameters": [
+     {"name": "currencyCode", "in": "query", "required": true, "schema": {"type": "string", "enum": ["EUR","USD"], "default": "EUR"}, "description": "Moneda. Usa EUR."},
+     {"name": "$filter", "in": "query", "required": true, "schema": {"type": "string"}, "description": "Filtro OData: una plantilla exacta. Ejemplo: serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Standard S1 Unit'"},
+     {"name": "$skip", "in": "query", "required": false, "schema": {"type": "integer", "minimum": 0}, "description": "No lo uses: los filtros de plantilla no paginan."},
+     {"name": "api-version", "in": "query", "required": false, "schema": {"type": "string", "enum": ["2023-01-01-preview"]}, "description": "Version que incluye savingsPlan."}
+    ],
+    "responses": {"200": {"description": "Pagina de precios", "content": {"application/json": {"schema": {"type": "object", "properties": {
+      "BillingCurrency": {"type": "string"}, "Count": {"type": "integer"}, "NextPageLink": {"type": "string", "nullable": true},
+      "Items": {"type": "array", "items": {"type": "object", "properties": {
+        "serviceName": {"type": "string"}, "skuName": {"type": "string"}, "armSkuName": {"type": "string"}, "meterName": {"type": "string"},
+        "productName": {"type": "string"}, "retailPrice": {"type": "number"}, "unitOfMeasure": {"type": "string"},
+        "armRegionName": {"type": "string"}, "effectiveStartDate": {"type": "string"}, "type": {"type": "string"}, "isPrimaryMeterRegion": {"type": "boolean"}}}}}}}}}}
+   }
+  }
+ }
+}

@@ -1,0 +1,479 @@
+{
+  "schema": "preventa-catalogo/1",
+  "version": 1,
+  "fecha": "2026-10-08",
+  "factores_estandar": [
+    {
+      "id": "asistente_rag.tokens_entrada_por_consulta",
+      "caso_uso": "asistente_rag",
+      "valor": 2500,
+      "unidad": "tokens de entrada por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta"
+      ],
+      "tipo": "supuesto",
+      "fuente_url": "https://learn.microsoft.com/azure/foundry/openai/how-to/manage-costs",
+      "consultado": "2026-10-08",
+      "justificacion": "Pregunta, instrucciones del sistema y unos 5 fragmentos recuperados por consulta.",
+      "desglose": [
+        {
+          "parte": "pregunta, instrucciones y fragmentos recuperados",
+          "valor": 2500,
+          "origen": "valor de ejemplo del contrato"
+        }
+      ]
+    },
+    {
+      "id": "bot.mensajes_por_consulta",
+      "caso_uso": "bot",
+      "valor": 2,
+      "unidad": "mensajes por consulta",
+      "unidad_base": "consultas",
+      "base": [
+        "consulta"
+      ],
+      "tipo": "oficial",
+      "fuente_url": "https://learn.microsoft.com/azure/bot-service/bot-service-overview",
+      "consultado": "2026-10-08",
+      "justificacion": "La pregunta del usuario y la respuesta del bot: dos mensajes de canal por consulta.",
+      "desglose": [
+        {
+          "parte": "pregunta y respuesta",
+          "valor": 2,
+          "origen": "un mensaje de canal cada una"
+        }
+      ]
+    }
+  ],
+  "modelo_por_defecto": {
+    "componente": "az-foundry",
+    "modelo": "gpt-6-luna",
+    "plantillas": [
+      "gpt-6-luna-entrada"
+    ],
+    "region": "swedencentral",
+    "despliegue": "DataZoneStandard",
+    "motivo": "Decisión del comercial (13-10-2026): modelo por defecto de la propuesta.",
+    "fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+    "region_fuente_url": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability",
+    "consultado": "2026-10-08"
+  },
+  "computo_por_defecto": {
+    "componente": "az-app-service",
+    "nivel": "B1",
+    "plantillas": [
+      "b1-linux"
+    ],
+    "motivo": "La arquitectura básica de chat con Microsoft Foundry de Learn (piloto o prueba de concepto) usa el nivel Basic de App Service. Otro cómputo, otro nivel o más de una instancia solo con justificacion_nivel: una razón de razones_subida de ese nivel y la cita de los requisitos que la cumple.",
+    "fuente_url": "https://learn.microsoft.com/azure/architecture/ai-ml/architecture/basic-microsoft-foundry-chat",
+    "consultado": "2026-10-15",
+    "filas": [
+      "az-app-service",
+      "az-functions",
+      "az-container-apps",
+      "az-logic-apps",
+      "az-foundry-agent-service"
+    ]
+  },
+  "arquitecturas_referencia": [
+    {
+      "id": "foundry-chat-base",
+      "titulo": "Arquitectura de referencia de chat con Microsoft Foundry",
+      "url": "https://learn.microsoft.com/azure/architecture/ai-ml/architecture/baseline-microsoft-foundry-chat",
+      "consultado": "2026-10-08",
+      "cuando_usar": "Chat con Microsoft Foundry en producción, con red privada y alta disponibilidad."
+    }
+  ],
+  "componentes": [
+    {
+      "id": "az-foundry",
+      "nombre_oficial": "Microsoft Foundry",
+      "capa": "ia",
+      "service_name_precios": "Foundry Models",
+      "referencia_url": "https://learn.microsoft.com/azure/foundry/what-is-foundry",
+      "referencia_titulo": "What is Microsoft Foundry?",
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "gpt-6-luna-entrada",
+          "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna ShortCo Inp Std DZ 1M Tokens'",
+          "impulsor": "volumen",
+          "divisor": 1000000,
+          "por_defecto": true,
+          "modelo": "gpt-6-luna",
+          "contexto": "corto",
+          "factor_estandar": "asistente_rag.tokens_entrada_por_consulta",
+          "ciclo_vida": {
+            "ga": "2026-09-22",
+            "retirada": null,
+            "fuente": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+          },
+          "concepto": "6-luna ShortCo Inp Std DZ 1M Tokens"
+        }
+      ]
+    },
+    {
+      "id": "az-ai-search",
+      "nombre_oficial": "Azure AI Search",
+      "capa": "datos_conocimiento",
+      "service_name_precios": "Azure Cognitive Search",
+      "referencia_url": "https://learn.microsoft.com/azure/search/search-what-is-azure-search",
+      "referencia_titulo": "What is Azure AI Search?",
+      "producto_precios": "Azure AI Search",
+      "region_ue": "francecentral",
+      "plantillas_precio": [
+        {
+          "id": "s1",
+          "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Standard S1 Unit'",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "concepto": "Standard S1 Unit"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "Basic",
+          "plantillas": [
+            "basic"
+          ],
+          "limites": [
+            "15 GB de almacenamiento por partición (servicios creados desde abril de 2024)",
+            "5 GB de índice vectorial por partición",
+            "15 índices como máximo en servicios nuevos",
+            "3 particiones y 3 réplicas como máximo (9 unidades de búsqueda; nota 1 de Learn)",
+            "Learn también da 3 unidades de búsqueda en la tabla de la suscripción: con más de 3, comprobar en el portal"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+          "consultado": "2026-10-15",
+          "instancias_max": 9,
+          "razones_subida": [
+            {
+              "id": "sla_replicas",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "alta disponibilidad",
+                "SLA",
+                "acuerdo de nivel de servicio"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+              "texto": "Learn: «Service-level agreements (SLAs) apply to billable services that have two or more replicas for query workloads, or three or more replicas for query and indexing workloads»"
+            },
+            {
+              "id": "particiones_almacenamiento",
+              "tipo": "umbral",
+              "campo": "volumetria",
+              "unidad": [
+                "gigabytes"
+              ],
+              "unidad_corta": [
+                "GB"
+              ],
+              "limite": 15,
+              "por_instancia": 15,
+              "fuente": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+              "texto": "Learn: Basic, 15 GB de almacenamiento por partición (servicios creados desde abril de 2024) y 3 particiones como máximo (nota 1): con más de 15 GB citados, una partición por cada 15 GB (hasta 45)"
+            }
+          ]
+        },
+        {
+          "nivel": "S1",
+          "plantillas": [
+            "s1"
+          ],
+          "limites": [
+            "160 GB de almacenamiento por partición",
+            "35 GB de índice vectorial por partición",
+            "50 índices como máximo",
+            "36 unidades de búsqueda como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+          "consultado": "2026-10-15",
+          "instancias_max": 36,
+          "razones_subida": [
+            {
+              "id": "almacenamiento",
+              "tipo": "umbral",
+              "campo": "volumetria",
+              "unidad": [
+                "gigabytes"
+              ],
+              "limite": 45,
+              "fuente": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+              "texto": "Basic: 15 GB por partición y 3 particiones como máximo (45 GB); con más datos citados, S1 (160 GB por partición)",
+              "unidad_corta": [
+                "GB"
+              ]
+            },
+            {
+              "id": "privado_red",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "todo privado",
+                "punto de conexión privado",
+                "puntos de conexión privados",
+                "private endpoint",
+                "private link",
+                "conexiones privadas"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+              "texto": "Learn (nota 1 de las conexiones privadas compartidas): «On Basic services, private connections to a Microsoft Foundry resource are unsupported»; S1 creado desde abril de 2024 sí",
+              "campo": "red_privada"
+            },
+            {
+              "id": "privado_alcance",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "todo privado",
+                "punto de conexión privado",
+                "puntos de conexión privados",
+                "private endpoint",
+                "private link",
+                "conexiones privadas"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+              "texto": "Learn (nota 1 de las conexiones privadas compartidas): «On Basic services, private connections to a Microsoft Foundry resource are unsupported»; S1 creado desde abril de 2024 sí"
+            },
+            {
+              "id": "sla_replicas",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "alta disponibilidad",
+                "SLA",
+                "acuerdo de nivel de servicio"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+              "texto": "Learn: «Service-level agreements (SLAs) apply to billable services that have two or more replicas for query workloads, or three or more replicas for query and indexing workloads»"
+            },
+            {
+              "id": "particiones_almacenamiento",
+              "tipo": "umbral",
+              "campo": "volumetria",
+              "unidad": [
+                "gigabytes"
+              ],
+              "unidad_corta": [
+                "GB"
+              ],
+              "limite": 160,
+              "por_instancia": 160,
+              "fuente": "https://learn.microsoft.com/azure/search/search-limits-quotas-capacity",
+              "texto": "Learn: S1, 160 GB de almacenamiento por partición: con más de 160 GB citados, una partición por cada 160 GB"
+            }
+          ]
+        }
+      ],
+      "nivel_por_defecto": {
+        "nivel": "Basic",
+        "fuente": "https://learn.microsoft.com/azure/search/search-sku-tier",
+        "motivo": "Learn: «Basic supports production workloads and can meet SLA requirements with up to three replicas». Free no admite escalado ni SLA. El SLA de consultas pide réplicas: con 1 réplica, sin requisito de alta disponibilidad citado",
+        "consultado": "2026-10-15"
+      }
+    },
+    {
+      "id": "az-bot-service",
+      "nombre_oficial": "Azure AI Bot Service",
+      "capa": "usuarios_canales",
+      "service_name_precios": "Azure Bot Service",
+      "referencia_url": "https://learn.microsoft.com/azure/bot-service/bot-overview",
+      "referencia_titulo": "Choose the right chatbot solution for your use case",
+      "producto_precios": "Azure Bot Service",
+      "region_ue": "westeurope",
+      "region_precio": "Global",
+      "plantillas_precio": [
+        {
+          "id": "canales-estandar",
+          "filtro": "serviceName eq 'Azure Bot Service' and productName eq 'Azure Bot Service' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Free Standard Channel Messages'",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "bot.mensajes_por_consulta",
+          "concepto": "Free Standard Channel Messages"
+        },
+        {
+          "id": "canales-premium",
+          "filtro": "serviceName eq 'Azure Bot Service' and productName eq 'Azure Bot Service' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'S1 Premium Channel Messages'",
+          "impulsor": "volumen",
+          "divisor": 1000,
+          "factor_estandar": "bot.mensajes_por_consulta",
+          "concepto": "S1 Premium Channel Messages"
+        }
+      ]
+    },
+    {
+      "id": "az-app-service",
+      "nombre_oficial": "Azure App Service",
+      "capa": "aplicacion_integracion",
+      "service_name_precios": "Azure App Service",
+      "referencia_url": "https://learn.microsoft.com/azure/app-service/overview",
+      "referencia_titulo": "App Service overview",
+      "region_ue": "swedencentral",
+      "plantillas_precio": [
+        {
+          "id": "b1-linux",
+          "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'B1'",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "concepto": "B1 (Azure App Service Basic Plan - Linux)"
+        },
+        {
+          "id": "p0v3-linux",
+          "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and armSkuName eq 'Azure_App_Service_Premium_v3_Plan_Linux_P0_v3' and meterName eq 'P0v3 App'",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "concepto": "P0v3 App"
+        }
+      ],
+      "niveles": [
+        {
+          "nivel": "B1",
+          "plantillas": [
+            "b1-linux"
+          ],
+          "limites": [
+            "Basic: 3 instancias dedicadas como máximo",
+            "Basic: 10 GB de almacenamiento por plan, para todas sus apps (nota 5 de Learn)",
+            "Basic: copias de seguridad programadas cada 2 horas, 12 al día como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits",
+          "consultado": "2026-10-15",
+          "instancias_max": 3,
+          "razones_subida": [
+            {
+              "id": "alta_disponibilidad",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "alta disponibilidad",
+                "tolerancia a fallos"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/reliability/reliability-app-service",
+              "texto": "Learn: «Deploy multiple instances in your plan … To mitigate these effects, deploy multiple instances of your App Service plan»"
+            }
+          ]
+        },
+        {
+          "nivel": "P0v3",
+          "plantillas": [
+            "p0v3-linux"
+          ],
+          "limites": [
+            "Premium v3: 30 instancias dedicadas como máximo",
+            "Premium: 250 GB de almacenamiento por plan, para todas sus apps (nota 5 de Learn)",
+            "Premium: copias de seguridad programadas cada hora, 50 al día como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits",
+          "consultado": "2026-10-15",
+          "instancias_max": 30,
+          "razones_subida": [
+            {
+              "id": "ranuras",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "ranuras de implementación",
+                "ranuras de despliegue",
+                "deployment slots"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/app-service/deploy-staging-slots",
+              "texto": "Learn: las ranuras de implementación exigen «the Standard, Premium, or Isolated tier»"
+            },
+            {
+              "id": "redundancia_zona",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "redundancia de zona",
+                "zonas de disponibilidad"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/reliability/reliability-app-service",
+              "texto": "Learn: «For Premium v2 to v4 tiers, you can configure App Service as zone redundant» (con dos instancias como mínimo)"
+            },
+            {
+              "id": "escalado_automatico",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "escalado automático",
+                "autoescalado"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/app-service/manage-automatic-scaling",
+              "texto": "Learn: el escalado automático por reglas es de Standard en adelante y el automático de Premium v2 a v4; Basic escala a mano"
+            },
+            {
+              "id": "nivel_nombrado",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "P0v3"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/app-service/overview-hosting-plans",
+              "texto": "Los requisitos nombran el nivel"
+            }
+          ]
+        },
+        {
+          "nivel": "P1v3",
+          "plantillas": [
+            "p1v3-linux"
+          ],
+          "limites": [
+            "Premium v3: 30 instancias dedicadas como máximo",
+            "Premium: 250 GB de almacenamiento por plan, para todas sus apps (nota 5 de Learn)",
+            "Premium: copias de seguridad programadas cada hora, 50 al día como máximo"
+          ],
+          "fuente_url": "https://learn.microsoft.com/azure/azure-resource-manager/management/azure-subscription-service-limits",
+          "consultado": "2026-10-15",
+          "instancias_max": 30,
+          "razones_subida": [
+            {
+              "id": "nivel_nombrado",
+              "tipo": "caracteristica",
+              "palabras_clave": [
+                "P1v3"
+              ],
+              "fuente": "https://learn.microsoft.com/azure/app-service/overview-hosting-plans",
+              "texto": "Los requisitos nombran el nivel; las funciones de Premium v3 ya las da P0v3"
+            }
+          ]
+        }
+      ],
+      "nivel_por_defecto": {
+        "nivel": "B1",
+        "fuente": "https://learn.microsoft.com/azure/app-service/overview-hosting-plans",
+        "motivo": "Cómputo por defecto del catálogo (arquitectura básica de chat con Foundry de Learn). Basic es el menor nivel con máquinas dedicadas; Free y Shared comparten recursos",
+        "consultado": "2026-10-15"
+      }
+    },
+    {
+      "id": "az-entra-id",
+      "nombre_oficial": "Microsoft Entra ID",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": null,
+      "referencia_url": "https://learn.microsoft.com/entra/fundamentals/what-is-entra",
+      "referencia_titulo": "What is Microsoft Entra?"
+    },
+    {
+      "id": "az-private-link",
+      "nombre_oficial": "Azure Private Link",
+      "capa": "identidad_seguridad_red",
+      "service_name_precios": "Virtual Network",
+      "referencia_url": "https://learn.microsoft.com/azure/private-link/private-link-overview",
+      "referencia_titulo": "What is Azure Private Link?",
+      "producto_precios": "Virtual Network Private Link",
+      "region_ue": "global",
+      "region_precio": "Global",
+      "plantillas_precio": [
+        {
+          "id": "punto-conexion",
+          "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Private Endpoint'",
+          "impulsor": "tiempo",
+          "divisor": 1,
+          "concepto": "Standard Private Endpoint"
+        }
+      ]
+    },
+    {
+      "id": "az-monitor",
+      "nombre_oficial": "Azure Monitor",
+      "capa": "operacion_observabilidad",
+      "service_name_precios": "Azure Monitor",
+      "referencia_url": "https://learn.microsoft.com/azure/azure-monitor/overview",
+      "referencia_titulo": "Azure Monitor overview"
+    }
+  ]
+}

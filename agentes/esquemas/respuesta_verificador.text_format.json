@@ -1,0 +1,137 @@
+{
+  "type": "json_schema",
+  "name": "respuesta_verificador",
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "agente",
+      "consolidado_id",
+      "entrada_recibida_inicio",
+      "elementos",
+      "resumen",
+      "herramientas_usadas"
+    ],
+    "properties": {
+      "agente": {
+        "type": "string",
+        "enum": [
+          "preventa-verificador"
+        ]
+      },
+      "consolidado_id": {
+        "type": "string"
+      },
+      "entrada_recibida_inicio": {
+        "type": "string"
+      },
+      "elementos": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "tipo",
+            "veredicto",
+            "campo",
+            "detalle",
+            "valor_correcto",
+            "fuente_url"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "tipo": {
+              "type": "string",
+              "enum": [
+                "referencia",
+                "componente"
+              ]
+            },
+            "veredicto": {
+              "type": "string",
+              "enum": [
+                "OK",
+                "DISCREPA",
+                "OBSERVACION",
+                "NO VERIFICABLE"
+              ]
+            },
+            "campo": {
+              "type": "string",
+              "enum": [
+                "ninguno",
+                "url",
+                "titulo",
+                "nombre",
+                "sku",
+                "region",
+                "referencia",
+                "cantidad",
+                "motivo"
+              ]
+            },
+            "detalle": {
+              "type": "string"
+            },
+            "valor_correcto": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "fuente_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      },
+      "resumen": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ok",
+          "discrepa",
+          "observacion",
+          "no_verificable"
+        ],
+        "properties": {
+          "ok": {
+            "type": "number"
+          },
+          "discrepa": {
+            "type": "number"
+          },
+          "observacion": {
+            "type": "number"
+          },
+          "no_verificable": {
+            "type": "number"
+          }
+        }
+      },
+      "herramientas_usadas": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "microsoft_docs_search",
+          "microsoft_docs_fetch"
+        ],
+        "properties": {
+          "microsoft_docs_search": {
+            "type": "number"
+          },
+          "microsoft_docs_fetch": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
+  "strict": true
+}

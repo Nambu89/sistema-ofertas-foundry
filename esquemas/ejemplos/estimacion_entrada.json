@@ -1,0 +1,145 @@
+{
+  "codigo": "OF-KELVARA-001-A",
+  "cliente": "Kelvara Ensayos Industriales, S.A.",
+  "titulo": "Asistente de consulta técnica con IA sobre informes de ensayo",
+  "fecha": "2026-10-08",
+  "duracion_semanas": 4,
+  "fases": [
+    "F0 - Arranque y análisis",
+    "F1 - Construcción",
+    "F2 - Pruebas y piloto",
+    "Gestión de proyecto"
+  ],
+  "tareas": [
+    {
+      "id": "T-01",
+      "fase": "F0 - Arranque y análisis",
+      "tarea": "Análisis de requisitos y arquitectura detallada",
+      "perfil": "AI Architect / Tech Lead",
+      "tecnicas_h": 24,
+      "reuniones_h": 6,
+      "descripcion": "Análisis de requisitos y arquitectura detallada, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de análisis de requisitos y arquitectura detallada"
+    },
+    {
+      "id": "T-02",
+      "fase": "F1 - Construcción",
+      "tarea": "Ingesta e indexación de informes y procedimientos",
+      "perfil": "Senior AI / Foundry Engineer",
+      "tecnicas_h": 40,
+      "reuniones_h": 2,
+      "descripcion": "Ingesta e indexación de informes y procedimientos, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de ingesta e indexación de informes y procedimientos"
+    },
+    {
+      "id": "T-03",
+      "fase": "F1 - Construcción",
+      "tarea": "Agente de consulta con citas, resumen y comparación",
+      "perfil": "Senior AI / Foundry Engineer",
+      "tecnicas_h": 56,
+      "reuniones_h": 4,
+      "descripcion": "Agente de consulta con citas, resumen y comparación, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de agente de consulta con citas, resumen y comparación"
+    },
+    {
+      "id": "T-04",
+      "fase": "F1 - Construcción",
+      "tarea": "Publicación en Microsoft Teams y red privada",
+      "perfil": "AI Engineer / Tech Lead",
+      "tecnicas_h": 24,
+      "reuniones_h": 2,
+      "descripcion": "Publicación en Microsoft Teams y red privada, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de publicación en microsoft teams y red privada"
+    },
+    {
+      "id": "T-05",
+      "fase": "F2 - Pruebas y piloto",
+      "tarea": "Batería de pruebas de calidad de respuesta",
+      "perfil": "Consultor Junior",
+      "tecnicas_h": 32,
+      "reuniones_h": 0,
+      "descripcion": "Batería de pruebas de calidad de respuesta, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de batería de pruebas de calidad de respuesta"
+    },
+    {
+      "id": "T-06",
+      "fase": "F2 - Pruebas y piloto",
+      "tarea": "Piloto con usuarios, ajustes y traspaso",
+      "perfil": "AI Architect / Tech Lead",
+      "tecnicas_h": 16,
+      "reuniones_h": 8,
+      "descripcion": "Piloto con usuarios, ajustes y traspaso, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de piloto con usuarios, ajustes y traspaso"
+    },
+    {
+      "id": "PM-01",
+      "fase": "Gestión de proyecto",
+      "tarea": "Coordinación, seguimiento y reporting",
+      "perfil": "Project Manager",
+      "tecnicas_h": 29,
+      "reuniones_h": 4,
+      "descripcion": "Planificación, seguimiento del avance, gestión de riesgos y reporting al cliente.",
+      "entregable": "Informes de seguimiento"
+    }
+  ],
+  "hitos": [
+    {
+      "nombre": "Hito 1 - Kick-off y Discovery completado",
+      "porcentaje": 25
+    },
+    {
+      "nombre": "Hito 2 - Entregable principal en entorno dev",
+      "porcentaje": 25
+    },
+    {
+      "nombre": "Hito 3 - Piloto/MVP en producción controlada",
+      "porcentaje": 25
+    },
+    {
+      "nombre": "Hito 4 - Evaluación final y cierre",
+      "porcentaje": 25
+    }
+  ],
+  "gantt": [
+    {
+      "fase": "F0 - Arranque y análisis",
+      "contenido": "Análisis de requisitos y arquitectura detallada",
+      "semanas": [
+        1
+      ]
+    },
+    {
+      "fase": "F1 - Construcción",
+      "contenido": "Ingesta e indexación de informes y procedimientos; Agente de consulta con citas, resumen y comparación; Publicación en Microsoft Teams y red privada",
+      "semanas": [
+        2,
+        3
+      ]
+    },
+    {
+      "fase": "F2 - Pruebas y piloto",
+      "contenido": "Batería de pruebas de calidad de respuesta; Piloto con usuarios, ajustes y traspaso",
+      "semanas": [
+        4
+      ]
+    },
+    {
+      "fase": "Gestión de proyecto",
+      "contenido": "Coordinación y seguimiento",
+      "semanas": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "asunciones": [
+    "El cliente concede acceso de lectura a las bibliotecas documentales antes de la construcción."
+  ],
+  "exclusiones": [
+    "Integración con el LIMS, el sistema de gestión del laboratorio",
+    "Integración con SAP"
+  ],
+  "ajuste_comercial_eur": 0
+}

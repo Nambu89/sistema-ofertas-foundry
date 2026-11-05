@@ -1,0 +1,313 @@
+{
+  "brief_recibido": "BRIEF-PREVENTA/1\nbrief_id: BRF-OF-KELVARA-001-A-AZ-R1\nexperto: preventa-experto-azure\nronda: 1\nperfiles_permitidos: AI Architect / Tech Lead; Senior AI / Foundry Engineer; Integration Engineer / Salesforce; Data & BI Engineer; AI Engineer / Tech Lead; Project Manager; Consultor Junior\n---\n## Necesidad\nObjetivo: Asistente de IA que responda en lenguaje natural a los técnicos y cite siempre el informe o la norma de origen\nNubes: Azure\n## Alcance funcional\n- Búsqueda en informes de ensayo y procedimientos internos con cita al documento y a la página\n- Resumen de un informe largo en un párrafo comprensible para el equipo comercial\n- Comparación de dos ensayos del mismo material indicando qué ha cambiado\n- Respuesta explícita cuando no encuentra la información, sin inventar\n## Canales e integraciones\n- Microsoft Teams\n## Usuarios y marco normativo\nUbicación de los usuarios finales: España (laboratorios de [SENSIBLE] y [SENSIBLE])\nMarco normativo: RGPD, con datos en la Unión Europea\n## Contexto\nVolumetría: entre 100 y 500 técnicos usuarios y unos 20.000 documentos (informes, procedimientos y normas) [ASUMIDO, confianza baja]\nIdentidad y permisos del origen: Documentos en SharePoint Online del tenant del cliente, con permisos por grupos de Entra ID que se respetan en las respuestas [ASUMIDO, confianza baja]\nRed privada: Servicios sin exposición a internet, con acceso privado y puntos de conexión privados donde se pueda\nTipo de suscripción: Enterprise Agreement directo con Microsoft\nPlazo: Piloto funcionando en unos tres meses desde el arranque\nPresupuesto orientativo: Entre cuarenta y cincuenta mil euros para el piloto, sin consumo de Azure\nIdioma de la oferta: Castellano\n## Fuera de alcance\n- Integración con el LIMS, el sistema de gestión del laboratorio\n- Integración con SAP",
+  "brief_id": "BRF-OF-KELVARA-001-A-AZ-R1",
+  "agente": "preventa-experto-azure",
+  "arquitectura_id": "foundry-chat-base",
+  "referencias": [
+    {
+      "id": "REF-01",
+      "url": "https://learn.microsoft.com/azure/architecture/ai-ml/architecture/baseline-microsoft-foundry-chat",
+      "titulo": "Arquitectura de referencia de chat con Microsoft Foundry",
+      "fecha_consulta": "2026-10-08"
+    },
+    {
+      "id": "REF-02",
+      "url": "https://learn.microsoft.com/azure/search/search-what-is-azure-search",
+      "titulo": "Qué es Azure AI Search",
+      "fecha_consulta": "2026-10-08"
+    },
+    {
+      "id": "REF-03",
+      "url": "https://learn.microsoft.com/azure/bot-service/bot-overview",
+      "titulo": "Qué es Azure AI Bot Service",
+      "fecha_consulta": "2026-10-08"
+    },
+    {
+      "id": "REF-04",
+      "url": "https://learn.microsoft.com/azure/private-link/private-link-overview",
+      "titulo": "Qué es Azure Private Link",
+      "fecha_consulta": "2026-10-08"
+    },
+    {
+      "id": "REF-05",
+      "url": "https://learn.microsoft.com/azure/foundry/what-is-foundry",
+      "titulo": "Qué es Microsoft Foundry",
+      "fecha_consulta": "2026-10-08"
+    },
+    {
+      "id": "REF-06",
+      "url": "https://learn.microsoft.com/azure/app-service/overview",
+      "titulo": "Información general de Azure App Service",
+      "fecha_consulta": "2026-10-08"
+    },
+    {
+      "id": "REF-07",
+      "url": "https://learn.microsoft.com/entra/fundamentals/what-is-entra",
+      "titulo": "Qué es Microsoft Entra",
+      "fecha_consulta": "2026-10-08"
+    }
+  ],
+  "componentes": [
+    {
+      "id": "C-01",
+      "catalogo_id": "az-foundry",
+      "servicio": "Microsoft Foundry",
+      "capa": "ia",
+      "sku": "gpt-6-luna DataZoneStandard",
+      "region": "swedencentral",
+      "cantidad": 1,
+      "unidad": "despliegue",
+      "referencia_id": null,
+      "desviacion_justificada": null,
+      "motivo_no_valoracion": "depende_del_volumen",
+      "existente_del_cliente": null,
+      "incluido_en": null,
+      "justificacion_nivel": null
+    },
+    {
+      "id": "C-02",
+      "catalogo_id": "az-ai-search",
+      "servicio": "Azure AI Search",
+      "capa": "datos_conocimiento",
+      "sku": "Standard S1",
+      "region": "francecentral",
+      "cantidad": 1,
+      "unidad": "unidad de búsqueda",
+      "referencia_id": null,
+      "desviacion_justificada": null,
+      "motivo_no_valoracion": "no_aplica",
+      "existente_del_cliente": null,
+      "incluido_en": null,
+      "justificacion_nivel": {
+        "nivel": "S1",
+        "razon": "privado_red",
+        "cita": "Servicios sin exposición a internet, con acceso privado y puntos de conexión privados donde se pueda"
+      }
+    },
+    {
+      "id": "C-03",
+      "catalogo_id": "az-bot-service",
+      "servicio": "Azure AI Bot Service",
+      "capa": "usuarios_canales",
+      "sku": "Estándar",
+      "region": "westeurope",
+      "cantidad": 1,
+      "unidad": "bot",
+      "referencia_id": null,
+      "desviacion_justificada": null,
+      "motivo_no_valoracion": "depende_del_volumen",
+      "existente_del_cliente": null,
+      "incluido_en": null,
+      "justificacion_nivel": null
+    },
+    {
+      "id": "C-04",
+      "catalogo_id": "az-app-service",
+      "servicio": "Azure App Service",
+      "capa": "aplicacion_integracion",
+      "sku": "B1",
+      "region": "swedencentral",
+      "cantidad": 1,
+      "unidad": "instancia",
+      "referencia_id": null,
+      "desviacion_justificada": null,
+      "motivo_no_valoracion": "no_aplica",
+      "existente_del_cliente": null,
+      "incluido_en": null,
+      "justificacion_nivel": null
+    },
+    {
+      "id": "C-05",
+      "catalogo_id": "az-entra-id",
+      "servicio": "Microsoft Entra ID",
+      "capa": "identidad_seguridad_red",
+      "sku": "Incluido en el tenant",
+      "region": "global",
+      "cantidad": 1,
+      "unidad": "tenant",
+      "referencia_id": null,
+      "desviacion_justificada": null,
+      "motivo_no_valoracion": "no_aplica",
+      "existente_del_cliente": null,
+      "incluido_en": null,
+      "justificacion_nivel": null
+    },
+    {
+      "id": "C-06",
+      "catalogo_id": "az-private-link",
+      "servicio": "Azure Private Link",
+      "capa": "identidad_seguridad_red",
+      "sku": "Punto de conexión privado",
+      "region": "swedencentral",
+      "cantidad": 4,
+      "unidad": "punto de conexión",
+      "referencia_id": null,
+      "desviacion_justificada": null,
+      "motivo_no_valoracion": "no_aplica",
+      "existente_del_cliente": null,
+      "incluido_en": null,
+      "justificacion_nivel": null
+    }
+  ],
+  "flujos": [
+    {
+      "origen": "C-03",
+      "destino": "C-04",
+      "descripcion": "Teams entrega la pregunta a la aplicación"
+    },
+    {
+      "origen": "C-04",
+      "destino": "C-01",
+      "descripcion": "La aplicación invoca el agente"
+    },
+    {
+      "origen": "C-01",
+      "destino": "C-02",
+      "descripcion": "El agente recupera fragmentos citables"
+    },
+    {
+      "origen": "C-05",
+      "destino": "C-04",
+      "descripcion": "Autenticación del usuario"
+    }
+  ],
+  "decisiones": [
+    "Región Sweden Central con despliegue Data Zone UE para cumplir la residencia de datos en la UE; Azure AI Search en France Central, porque Sweden Central no admite servicios de búsqueda nuevos."
+  ],
+  "alternativas_descartadas": [
+    "Interfaz web propia: el cliente pidió explícitamente Microsoft Teams."
+  ],
+  "supuestos": [
+    {
+      "id": "S-01",
+      "texto": "El cliente concede acceso de lectura a las bibliotecas documentales antes de la construcción.",
+      "confianza": "MEDIA",
+      "hechos": [
+        "R-identidad_acl_origen",
+        "C-02"
+      ]
+    }
+  ],
+  "riesgos": [
+    {
+      "id": "RG-01",
+      "texto": "La calidad de las respuestas depende de la calidad y vigencia de los informes de origen.",
+      "mitigacion": "Batería de preguntas de prueba validada por calidad antes del piloto.",
+      "hechos": [
+        "R-alcance_funcional",
+        "C-01"
+      ]
+    }
+  ],
+  "preguntas": [
+    "Confirmar el número de técnicos usuarios y el volumen de documentos."
+  ],
+  "tareas_propuestas": [
+    {
+      "id": "T-01",
+      "fase": "F0 - Arranque y análisis",
+      "tarea": "Análisis de requisitos y arquitectura detallada",
+      "perfil": "AI Architect / Tech Lead",
+      "horas_base": 24,
+      "reuniones_h": 6,
+      "descripcion": "Análisis de requisitos y arquitectura detallada, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de análisis de requisitos y arquitectura detallada"
+    },
+    {
+      "id": "T-02",
+      "fase": "F1 - Construcción",
+      "tarea": "Ingesta e indexación de informes y procedimientos",
+      "perfil": "Senior AI / Foundry Engineer",
+      "horas_base": 40,
+      "reuniones_h": 2,
+      "descripcion": "Ingesta e indexación de informes y procedimientos, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de ingesta e indexación de informes y procedimientos"
+    },
+    {
+      "id": "T-03",
+      "fase": "F1 - Construcción",
+      "tarea": "Agente de consulta con citas, resumen y comparación",
+      "perfil": "Senior AI / Foundry Engineer",
+      "horas_base": 56,
+      "reuniones_h": 4,
+      "descripcion": "Agente de consulta con citas, resumen y comparación, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de agente de consulta con citas, resumen y comparación"
+    },
+    {
+      "id": "T-04",
+      "fase": "F1 - Construcción",
+      "tarea": "Publicación en Microsoft Teams y red privada",
+      "perfil": "AI Engineer / Tech Lead",
+      "horas_base": 24,
+      "reuniones_h": 2,
+      "descripcion": "Publicación en Microsoft Teams y red privada, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de publicación en microsoft teams y red privada"
+    },
+    {
+      "id": "T-05",
+      "fase": "F2 - Pruebas y piloto",
+      "tarea": "Batería de pruebas de calidad de respuesta",
+      "perfil": "Consultor Junior",
+      "horas_base": 32,
+      "reuniones_h": 0,
+      "descripcion": "Batería de pruebas de calidad de respuesta, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de batería de pruebas de calidad de respuesta"
+    },
+    {
+      "id": "T-06",
+      "fase": "F2 - Pruebas y piloto",
+      "tarea": "Piloto con usuarios, ajustes y traspaso",
+      "perfil": "AI Architect / Tech Lead",
+      "horas_base": 16,
+      "reuniones_h": 8,
+      "descripcion": "Piloto con usuarios, ajustes y traspaso, con revisión del resultado junto al equipo del cliente.",
+      "entregable": "Entregable de piloto con usuarios, ajustes y traspaso"
+    }
+  ],
+  "precios": [
+    {
+      "id": "P-01",
+      "componente_id": "C-02",
+      "plantilla_id": "s1",
+      "instancias": null,
+      "base_volumen": null,
+      "factor_override": null
+    },
+    {
+      "id": "P-02",
+      "componente_id": "C-04",
+      "plantilla_id": "b1-linux",
+      "instancias": null,
+      "base_volumen": null,
+      "factor_override": null
+    },
+    {
+      "id": "P-03",
+      "componente_id": "C-06",
+      "plantilla_id": "punto-conexion",
+      "instancias": 4,
+      "base_volumen": null,
+      "factor_override": null
+    },
+    {
+      "id": "P-04",
+      "componente_id": "C-01",
+      "plantilla_id": "gpt-6-luna-entrada",
+      "instancias": null,
+      "base_volumen": null,
+      "factor_override": null
+    },
+    {
+      "id": "P-05",
+      "componente_id": "C-03",
+      "plantilla_id": "canales-estandar",
+      "instancias": null,
+      "base_volumen": null,
+      "factor_override": null
+    }
+  ],
+  "herramientas_usadas": {
+    "microsoft_docs_search": 3,
+    "microsoft_docs_fetch": 2
+  }
+}

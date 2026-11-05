@@ -1,0 +1,22 @@
+{
+  "_estado": "BORRADOR: no se despliega. La definición final la monta agentes/definiciones.py en la integración multinube (instrucciones leídas del fichero y text.format generado desde el esquema de respuesta común).",
+  "nombre": "preventa-experto-aws",
+  "kind": "prompt",
+  "model": "gpt-6-luna",
+  "instructions_fichero": "agentes/aws/instrucciones_experto_aws.md",
+  "tools": [
+    {
+      "type": "mcp",
+      "server_label": "awsknowledge",
+      "server_url": "https://knowledge-mcp.global.api.aws",
+      "allowed_tools": {"tool_names": ["aws___search_documentation", "aws___read_documentation", "aws___get_regional_availability"]},
+      "require_approval": "never"
+    }
+  ],
+  "text_format_fichero": "agentes/esquemas/respuesta_experto.text_format.json",
+  "fuentes": {
+    "mcp": "https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server",
+    "forma_tool_mcp": "agentes/definiciones.py (MCP_LEARN): misma forma que el experto de Azure",
+    "consultado": "2026-11-04"
+  }
+}

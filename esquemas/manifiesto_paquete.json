@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:manifiesto_paquete:1",
+  "title": "manifiesto_paquete.json dentro del ZIP del paquete",
+  "description": "Lo escribe paquete.construir (D). Lista el SHA-256 y los bytes de los otros ocho ficheros del ZIP (no se incluye a sí mismo) y, si el paquete es de la opción B, también los de procedencia_a2a.json (I1.4 · P1). Es el ancla externa que usa restaurar. CONTRATOS.md §8.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "codigo", "version", "estado", "hash_contenido", "estado_json_sha256", "ficheros", "montados", "generado_ts"],
+  "properties": {
+    "schema": {"const": "preventa-manifiesto-paquete/1"},
+    "codigo": {"type": "string", "pattern": "^OF-[A-Z0-9]{2,20}-[0-9]{3}-[A-Z]$"},
+    "version": {"type": "string", "pattern": "^[A-Z]$"},
+    "estado": {"enum": ["LISTA_PARA_REVISION", "EN_REVISION_PREVENTA", "EN_APROBACION_AREA", "APROBADA"]},
+    "hash_contenido": {"$ref": "#/$defs/hex64"},
+    "estado_json_sha256": {"$ref": "#/$defs/hex64"},
+    "ficheros": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["nombre", "sha256", "bytes"],
+        "properties": {
+          "nombre": {"type": "string", "pattern": "^(OF-[A-Z0-9]{2,20}-[0-9]{3}-[A-Z]-(Estimacion\\.xlsx|Anexo-Consumo\\.xlsx|Anexo-Consumo\\.json|Revision\\.pptx|Propuesta\\.pptx|Nota-Revision\\.docx)|estado\\.json|procedencia_a2a\\.json|mensaje_revisor\\.txt|mensaje_aprobador\\.txt)$"},
+          "sha256": {"$ref": "#/$defs/hex64"},
+          "bytes": {"type": "integer", "minimum": 1}
+        }
+      }
+    },
+    "montados": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rate_card_sha256", "generador_sha256", "plantilla_sha256", "catalogo_sha256"],
+      "properties": {
+        "rate_card_sha256": {"$ref": "#/$defs/hex64"},
+        "generador_sha256": {"$ref": "#/$defs/hex64"},
+        "plantilla_sha256": {"$ref": "#/$defs/hex64"},
+        "catalogo_sha256": {"$ref": "#/$defs/hex64"},
+        "precios_instantanea_sha256": {"$ref": "#/$defs/hex64", "description": "I1.7 (decisión 1): SHA-256 del fichero precios_instantanea.json montado, con el que el núcleo completó la respuesta del experto. Opcional en el esquema (los paquetes anteriores a I1.7 no lo traen); el núcleo lo escribe siempre y la puerta FALLA sin él."}
+      }
+    },
+    "generado_ts": {"type": "string", "minLength": 19, "maxLength": 40},
+    "pilar": {"enum": ["azure", "gcp", "aws"], "description": "Multinube (esquemas/MULTINUBE.md): el de carga.alta.pilar del estado. Sin la clave es azure (el paquete de Azure no la escribe); la puerta elige con él el catálogo y la instantánea de confianza y exige que coincida con el estado."},
+    "orquestador": {"enum": ["A", "B"], "description": "VER14-3 / REV-5 (I1.5): el de estado.json. La puerta exige procedencia_a2a.json si y solo si es B. Opcional: los paquetes anteriores a I1.5 no lo traen."}
+  },
+  "$defs": {
+    "hex64": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

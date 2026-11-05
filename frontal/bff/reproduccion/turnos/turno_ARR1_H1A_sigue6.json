@@ -1,0 +1,93 @@
+{
+  "turno": "ARR1_H1A_sigue6",
+  "serie": "h1",
+  "agente": "preventa-prueba-hosted",
+  "via": "endpoint",
+  "modo": "background",
+  "url": "https://recurso-ejemplo.services.ai.azure.com/api/projects/proyecto-ejemplo/agents/preventa-prueba-hosted/endpoint/protocols/openai/responses",
+  "mensaje": "SIGUE.txt",
+  "adjuntos": [],
+  "previa": {
+    "response_id": "caresp_ejemplo0000000000000000000000000000000000000000006",
+    "agent_session_id": "sesion-ejemplo-0001"
+  },
+  "inicio": "2026-10-18 02:12:40",
+  "inicio_utc": "2026-10-18T00:12:35Z",
+  "creada": {
+    "status": "in_progress",
+    "response_id": "caresp_ejemplo0000000000000000000000000000000000000000007",
+    "agent_session_id": "sesion-ejemplo-0001",
+    "latencia_s": 25.5
+  },
+  "sondeo": [
+    {
+      "n": 1,
+      "params": [
+        "api-version"
+      ],
+      "http": 200,
+      "status": "completed"
+    }
+  ],
+  "sondeo_variante": [
+    "api-version"
+  ],
+  "http": 200,
+  "latencia_s": 30.8,
+  "response_id": "caresp_ejemplo0000000000000000000000000000000000000000007",
+  "status": "completed",
+  "agent_session_id": "sesion-ejemplo-0001",
+  "usage": null,
+  "error": null,
+  "texto": "A2A SendMessage a preventa-verificador: HTTP 200 · 11.4 s · task_id resp_ejemplo0000000000000000000000000000000000000000006 · context_id ctxt_ejemplo0000000000000000000000006 · estado TASK_STATE_COMPLETED · enviado SHA-256 06e0b723d712069df8e68dcc0850f8b8b5b52483d8b73769c37e58cf7472252a · no bloqueante con 2 sondeo(s) GetTask\n\nRelectura GetTask de resp_ejemplo0000000000000000000000000000000000000000006: el texto coincide (SHA-256 b8cf46437a65a90d6d5b78433e61e77325d2f8453c0e76eb20614284a7a7f054).\n\n$ registrar-verificacion → rc 0\n```\nVERIFICACIÓN ronda 1: VERIFICADA · DISCREPA 0, NO VERIFICABLE 0, reparados 0\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: VERIFICADA\nversion: A\nhash_contenido: 754d3b55c5fa3c0a6d4f3ab62d904eb498fb4d71fba3755a0840bbe19e518420\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Terminar el turno. En el siguiente: anexo-consumo\n=== FIN ESTADO ===\n```\n\n$ anexo-consumo → rc 0\n```\nANEXO DE CONSUMO: 7 líneas · 85.55 EUR/mes · 1026.60 EUR/año (orientativo; fuente Azure Retail Prices)\n  salida/OF-HOSTELIA-001-A-Anexo-Consumo.xlsx SHA-256 cfb0010ccfa2f80abfb31aebafa0e40911f1bcc7f0a09837cddc45104b7ee1fd\n  salida/OF-HOSTELIA-001-A-Anexo-Consumo.json SHA-256 6eb48861a69444b0e180d6aece65f6fd7c499077099bdefb9e5aeb7a9cb59a94\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: VERIFICADA\nversion: A\nhash_contenido: 0cc73942505e02deb519247dac25dd6c095d056f826dc0cd7b075b960175bdba\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: estimar (el núcleo compone entrada/estimacion_entrada.json desde tareas_propuestas; no se escribe a mano)\n=== FIN ESTADO ===\n```\n\n$ estimar → rc 0\n```\nENTRADA DE ESTIMACIÓN compuesta por el núcleo desde tareas_propuestas: entrada/estimacion_entrada.json SHA-256 c2f407400fad9d3254f8636ee242132e8523c14da78ed73e1a6afc4e98a43511 · 7 tareas · 9 semanas\nESTIMACIÓN: precio cerrado 22776.25 EUR (IVA no incluido) · XLSX canónico salida/OF-HOSTELIA-001-A-Estimacion.xlsx SHA-256 5de28db734369f842f820edd903f3998c3a967b2c27f91189729262ac7fc4cc3\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: VERIFICADA\nversion: A\nhash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: paquete\n=== FIN ESTADO ===\n```\n\n$ paquete → rc 0\n```\nPAQUETE: OK salida/OF-HOSTELIA-001-A-Paquete.zip (127626 B, SHA-256 88506f38db19b39dd539e92c6877ed7f391cd49262aba1e4fea153e9744a050d)\nManifiesto: 9 ficheros · hash_contenido 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c · estado.json SHA-256 4e2d8a4003eb4d7570f84e6e88a3b2c5cba4d88da51647c09dbcd0fdd3dbf7b0\nDescargar el ZIP en este turno (el contenedor caduca a los 20 minutos) y citarlo en la respuesta.\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: LISTA_PARA_REVISION\nversion: A\nhash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION\n=== FIN ESTADO ===\n```\n\n```\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: LISTA_PARA_REVISION\nversion: A\nhash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION\n=== FIN ESTADO ===\n```\n\nPAQUETE: OF-HOSTELIA-001-A-Paquete.zip (127626 B, SHA-256 88506f38db19b39dd539e92c6877ed7f391cd49262aba1e4fea153e9744a050d), guardado en la carpeta persistente de la sesión (preventa/trabajo/salida/OF-HOSTELIA-001-A-Paquete.zip). Descárgalo en tu equipo con:\npython hosted/descargar_sesion.py descargar --sesion sesion-ejemplo-0001 --ruta preventa/trabajo/salida/OF-HOSTELIA-001-A-Paquete.zip\ny pasa verificar_paquete.py antes de enviar nada.\n\nSIGUIENTE PASO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION",
+  "respuesta": {
+    "metadata": {},
+    "previous_response_id": "caresp_ejemplo0000000000000000000000000000000000000000006",
+    "model": "",
+    "background": true,
+    "tools": [],
+    "id": "caresp_ejemplo0000000000000000000000000000000000000000007",
+    "object": "response",
+    "status": "completed",
+    "created_at": 1792282385,
+    "completed_at": 1792282385,
+    "error": null,
+    "incomplete_details": null,
+    "output": [
+      {
+        "type": "message",
+        "id": "msg_ejemplo0000000000000000000000000000000000000000006",
+        "agent_reference": {
+          "type": "agent_reference",
+          "name": "preventa-prueba-hosted",
+          "version": "18"
+        },
+        "response_id": "caresp_ejemplo0000000000000000000000000000000000000000007",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "output_text",
+            "text": "A2A SendMessage a preventa-verificador: HTTP 200 · 11.4 s · task_id resp_ejemplo0000000000000000000000000000000000000000006 · context_id ctxt_ejemplo0000000000000000000000006 · estado TASK_STATE_COMPLETED · enviado SHA-256 06e0b723d712069df8e68dcc0850f8b8b5b52483d8b73769c37e58cf7472252a · no bloqueante con 2 sondeo(s) GetTask\n\nRelectura GetTask de resp_ejemplo0000000000000000000000000000000000000000006: el texto coincide (SHA-256 b8cf46437a65a90d6d5b78433e61e77325d2f8453c0e76eb20614284a7a7f054).\n\n$ registrar-verificacion → rc 0\n```\nVERIFICACIÓN ronda 1: VERIFICADA · DISCREPA 0, NO VERIFICABLE 0, reparados 0\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: VERIFICADA\nversion: A\nhash_contenido: 754d3b55c5fa3c0a6d4f3ab62d904eb498fb4d71fba3755a0840bbe19e518420\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Terminar el turno. En el siguiente: anexo-consumo\n=== FIN ESTADO ===\n```\n\n$ anexo-consumo → rc 0\n```\nANEXO DE CONSUMO: 7 líneas · 85.55 EUR/mes · 1026.60 EUR/año (orientativo; fuente Azure Retail Prices)\n  salida/OF-HOSTELIA-001-A-Anexo-Consumo.xlsx SHA-256 cfb0010ccfa2f80abfb31aebafa0e40911f1bcc7f0a09837cddc45104b7ee1fd\n  salida/OF-HOSTELIA-001-A-Anexo-Consumo.json SHA-256 6eb48861a69444b0e180d6aece65f6fd7c499077099bdefb9e5aeb7a9cb59a94\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: VERIFICADA\nversion: A\nhash_contenido: 0cc73942505e02deb519247dac25dd6c095d056f826dc0cd7b075b960175bdba\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: estimar (el núcleo compone entrada/estimacion_entrada.json desde tareas_propuestas; no se escribe a mano)\n=== FIN ESTADO ===\n```\n\n$ estimar → rc 0\n```\nENTRADA DE ESTIMACIÓN compuesta por el núcleo desde tareas_propuestas: entrada/estimacion_entrada.json SHA-256 c2f407400fad9d3254f8636ee242132e8523c14da78ed73e1a6afc4e98a43511 · 7 tareas · 9 semanas\nESTIMACIÓN: precio cerrado 22776.25 EUR (IVA no incluido) · XLSX canónico salida/OF-HOSTELIA-001-A-Estimacion.xlsx SHA-256 5de28db734369f842f820edd903f3998c3a967b2c27f91189729262ac7fc4cc3\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: VERIFICADA\nversion: A\nhash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: paquete\n=== FIN ESTADO ===\n```\n\n$ paquete → rc 0\n```\nPAQUETE: OK salida/OF-HOSTELIA-001-A-Paquete.zip (127626 B, SHA-256 88506f38db19b39dd539e92c6877ed7f391cd49262aba1e4fea153e9744a050d)\nManifiesto: 9 ficheros · hash_contenido 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c · estado.json SHA-256 4e2d8a4003eb4d7570f84e6e88a3b2c5cba4d88da51647c09dbcd0fdd3dbf7b0\nDescargar el ZIP en este turno (el contenedor caduca a los 20 minutos) y citarlo en la respuesta.\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: LISTA_PARA_REVISION\nversion: A\nhash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION\n=== FIN ESTADO ===\n```\n\n```\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: LISTA_PARA_REVISION\nversion: A\nhash_contenido: 51a8e41988b8abb628da0959f0b39884f00f61ac3cf566936fb6d8158efc400c\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 1/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION\n=== FIN ESTADO ===\n```\n\nPAQUETE: OF-HOSTELIA-001-A-Paquete.zip (127626 B, SHA-256 88506f38db19b39dd539e92c6877ed7f391cd49262aba1e4fea153e9744a050d), guardado en la carpeta persistente de la sesión (preventa/trabajo/salida/OF-HOSTELIA-001-A-Paquete.zip). Descárgalo en tu equipo con:\npython hosted/descargar_sesion.py descargar --sesion sesion-ejemplo-0001 --ruta preventa/trabajo/salida/OF-HOSTELIA-001-A-Paquete.zip\ny pasa verificar_paquete.py antes de enviar nada.\n\nSIGUIENTE PASO: el comercial descarga el ZIP, ejecuta verificar_paquete.py en local y, con rc 0, envía mensaje_revisor.txt y registra DECISION … ENVIADA_REVISION",
+            "annotations": [],
+            "logprobs": []
+          }
+        ],
+        "status": "completed"
+      }
+    ],
+    "instructions": null,
+    "parallel_tool_calls": false,
+    "agent": {
+      "type": "agent_id",
+      "name": "preventa-prueba-hosted",
+      "version": "18"
+    },
+    "agent_session_id": "sesion-ejemplo-0001",
+    "agent_reference": {
+      "type": "agent_reference",
+      "name": "preventa-prueba-hosted",
+      "version": "18"
+    }
+  },
+  "fin": "2026-10-18 02:13:11"
+}

@@ -1,0 +1,30 @@
+BRIEF-PREVENTA/1
+brief_id: BRF-OF-KELVARA-001-A-AZ-R1
+experto: preventa-experto-azure
+ronda: 1
+perfiles_permitidos: AI Architect / Tech Lead; Senior AI / Foundry Engineer; Integration Engineer / Salesforce; Data & BI Engineer; AI Engineer / Tech Lead; Project Manager; Consultor Junior
+---
+## Necesidad
+Objetivo: Asistente de IA que responda en lenguaje natural a los técnicos y cite siempre el informe o la norma de origen
+Nubes: Azure
+## Alcance funcional
+- Búsqueda en informes de ensayo y procedimientos internos con cita al documento y a la página
+- Resumen de un informe largo en un párrafo comprensible para el equipo comercial
+- Comparación de dos ensayos del mismo material indicando qué ha cambiado
+- Respuesta explícita cuando no encuentra la información, sin inventar
+## Canales e integraciones
+- Microsoft Teams
+## Usuarios y marco normativo
+Ubicación de los usuarios finales: España (laboratorios de [SENSIBLE] y [SENSIBLE])
+Marco normativo: RGPD, con datos en la Unión Europea
+## Contexto
+Volumetría: entre 100 y 500 técnicos usuarios y unos 20.000 documentos (informes, procedimientos y normas) [ASUMIDO, confianza baja]
+Identidad y permisos del origen: Documentos en SharePoint Online del tenant del cliente, con permisos por grupos de Entra ID que se respetan en las respuestas [ASUMIDO, confianza baja]
+Red privada: Servicios sin exposición a internet, con acceso privado y puntos de conexión privados donde se pueda
+Tipo de suscripción: Enterprise Agreement directo con Microsoft
+Plazo: Piloto funcionando en unos tres meses desde el arranque
+Presupuesto orientativo: Entre cuarenta y cincuenta mil euros para el piloto, sin consumo de Azure
+Idioma de la oferta: Castellano
+## Fuera de alcance
+- Integración con el LIMS, el sistema de gestión del laboratorio
+- Integración con SAP

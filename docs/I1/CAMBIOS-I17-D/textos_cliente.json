@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:textos_cliente:1",
+  "title": "Lo que ve el cliente (carga.textos_cliente)",
+  "description": "Lo compone textos_cliente.componer (C) a partir de hechos; cada frase cita sus hechos (LES-G-094). hash_hechos ata el texto a los hechos que comprobó (CONTRATOS.md §9.4). Las frases que no pasan el barrido de §9.3 van a 'excluidas' y nunca a una diapositiva.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "codigo", "hash_hechos", "portada", "necesidad", "arquitectura", "alcance", "fuera_de_alcance", "supuestos", "precio", "consumo", "riesgos", "condiciones", "excluidas"],
+  "properties": {
+    "schema": {"const": "preventa-textos-cliente/1"},
+    "codigo": {"type": "string", "pattern": "^OF-[A-Z0-9]{2,20}-[0-9]{3}-[A-Z]$"},
+    "hash_hechos": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "portada": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["titulo", "cliente", "codigo", "fecha", "subtitulo"],
+      "properties": {
+        "titulo": {"type": "string", "minLength": 5, "maxLength": 160},
+        "cliente": {"type": "string", "minLength": 2, "maxLength": 120},
+        "codigo": {"type": "string", "pattern": "^OF-[A-Z0-9]{2,20}-[0-9]{3}-[A-Z]$"},
+        "fecha": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "subtitulo": {"type": "string", "pattern": "^Propuesta para revisión interna · versión [A-Z]$"}
+      }
+    },
+    "necesidad": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"$ref": "#/$defs/frase"}},
+    "arquitectura": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capas", "flujos", "referencias"],
+      "properties": {
+        "capas": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["capa", "titulo", "componentes"],
+            "properties": {
+              "capa": {"enum": ["usuarios_canales", "aplicacion_integracion", "ia", "datos_conocimiento", "identidad_seguridad_red", "operacion_observabilidad"]},
+              "titulo": {"enum": ["Usuarios y canales", "Aplicación e integración", "Inteligencia artificial", "Datos y conocimiento", "Identidad, seguridad y red", "Operación y observabilidad"]},
+              "componentes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["id", "nombre"],
+                  "properties": {
+                    "id": {"type": "string", "pattern": "^C-[0-9]{2}$"},
+                    "nombre": {"type": "string", "minLength": 3, "maxLength": 80}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "flujos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["origen", "destino"],
+            "properties": {
+              "origen": {"type": "string", "pattern": "^C-[0-9]{2}$"},
+              "destino": {"type": "string", "pattern": "^C-[0-9]{2}$"}
+            }
+          }
+        },
+        "referencias": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "titulo", "url"],
+            "properties": {
+              "id": {"type": "string", "pattern": "^REF-[0-9]{2}$"},
+              "titulo": {"type": "string", "minLength": 5, "maxLength": 200},
+              "url": {"type": "string", "pattern": "^https://learn\\.microsoft\\.com/"}
+            }
+          }
+        }
+      }
+    },
+    "alcance": {"type": "array", "minItems": 1, "maxItems": 15, "items": {"$ref": "#/$defs/frase"}},
+    "fuera_de_alcance": {"type": "array", "minItems": 1, "maxItems": 15, "items": {"$ref": "#/$defs/frase"}},
+    "supuestos": {
+      "type": "array",
+      "maxItems": 25,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "texto", "hechos", "nivel"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^TX-SUP-[0-9]{2}$"},
+          "texto": {"type": "string", "minLength": 10, "maxLength": 400},
+          "hechos": {"$ref": "#/$defs/hechos"},
+          "nivel": {"enum": ["Confianza alta", "Confianza media", "Confianza baja"]}
+        }
+      }
+    },
+    "precio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["precio_cerrado_eur", "iva", "duracion_semanas", "hitos"],
+      "properties": {
+        "precio_cerrado_eur": {"$ref": "#/$defs/importe"},
+        "iva": {"const": "IVA no incluido"},
+        "duracion_semanas": {"type": "integer", "minimum": 1, "maximum": 104},
+        "hitos": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["nombre", "porcentaje", "importe_eur"],
+            "properties": {
+              "nombre": {"type": "string", "minLength": 3, "maxLength": 160},
+              "porcentaje": {"type": "number", "exclusiveMinimum": 0, "maximum": 100},
+              "importe_eur": {"$ref": "#/$defs/importe"}
+            }
+          }
+        }
+      }
+    },
+    "consumo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lineas", "total_mensual_eur", "total_anual_eur", "fuente", "aviso"],
+      "properties": {
+        "lineas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["servicio", "concepto", "coste_mensual_eur"],
+            "properties": {
+              "servicio": {"type": "string", "minLength": 3, "maxLength": 120},
+              "concepto": {"type": "string", "minLength": 3, "maxLength": 160},
+              "coste_mensual_eur": {"$ref": "#/$defs/importe"}
+            }
+          }
+        },
+        "total_mensual_eur": {"$ref": "#/$defs/importe"},
+        "total_anual_eur": {"$ref": "#/$defs/importe"},
+        "fuente": {"type": "string", "pattern": "^Azure Retail Prices \\(prices\\.azure\\.com\\)(, regi(ón|ones) .+: precios consultados el [0-9]{4}-[0-9]{2}-[0-9]{2}, vigentes desde [0-9]{4}-[0-9]{2}-[0-9]{2}|: ningún componente tiene precio de consumo en esta propuesta \\(precios consultados el [0-9]{4}-[0-9]{2}-[0-9]{2}\\))$"},
+        "aviso": {"const": "Orientativo. No incluido en el precio cerrado; lo asume el cliente."}
+      }
+    },
+    "riesgos": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/frase"}},
+    "condiciones": {"type": "array", "minItems": 3, "maxItems": 10, "items": {"$ref": "#/$defs/frase"}},
+    "excluidas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["origen", "texto", "motivo"],
+        "properties": {
+          "origen": {"type": "string", "minLength": 2, "maxLength": 40},
+          "texto": {"type": "string", "maxLength": 600},
+          "motivo": {"type": "string", "minLength": 5, "maxLength": 300}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "frase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "texto", "hechos"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^TX-[A-Z]{3}-[0-9]{2}$"},
+        "texto": {"type": "string", "minLength": 5, "maxLength": 400},
+        "hechos": {"$ref": "#/$defs/hechos"}
+      }
+    },
+    "hechos": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"type": "string", "pattern": "^(R-[a-z_]+|REF-[0-9]{2}|C-[0-9]{2}|P-[0-9]{2}|S-[0-9]{2}|RG-[0-9]{2}|ALTA|TARIFA|ESTIMACION|ANEXO|FIJO-[A-Z]+)$"}},
+    "importe": {"type": "string", "pattern": "^-?[0-9]+\\.[0-9]{2}$"}
+  }
+}

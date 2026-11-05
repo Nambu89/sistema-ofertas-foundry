@@ -1,0 +1,8 @@
+Alta de solicitud nueva. Adjunto la transcripción transcripcion_sintetica_I1.txt (reunión de descubrimiento del 08-10-2026).
+
+- Cliente: Kelvara Ensayos Industriales, S.A.
+- Código de cliente: KELVARA · SEQOF: 001 (código de oferta OF-KELVARA-001, versión A)
+- Título: Asistente de consulta técnica con IA sobre informes de ensayo
+- Términos sensibles: Kelvara Ensayos Industriales; Kelvara; Marta Olmedo; Iker Salaverri; Nuria Castells; Zaragoza; Tarragona
+- Confirmo que el NDA con el cliente permite tratar esta información con IA en nuestro entorno de Microsoft Foundry.
+- Idioma de la oferta: castellano.

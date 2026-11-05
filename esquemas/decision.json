@@ -1,0 +1,322 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:preventa:esquemas:decision:2",
+  "title": "Decisión registrada en estado.decisiones[]",
+  "description": "La crea decision.registrar a partir de la línea literal 'DECISION | revisor | TIPO | AAAA-MM-DD | hash_contenido | comentarios'. CONTRATOS.md §10.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "linea",
+    "revisor",
+    "tipo",
+    "fecha",
+    "hash_citado",
+    "comentarios",
+    "version",
+    "estado_antes",
+    "estado_despues",
+    "registrada_ts"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^D-[0-9]{3}$"
+    },
+    "linea": {
+      "type": "string",
+      "pattern": "^DECISION \\| .+ \\| [A-Z_]+ \\| [0-9]{4}-[0-9]{2}-[0-9]{2} \\| [0-9a-f]{64} \\| .*$",
+      "maxLength": 2000
+    },
+    "revisor": {
+      "enum": [
+        "Responsable comercial",
+        "Responsable de preventa",
+        "Responsable de área"
+      ]
+    },
+    "tipo": {
+      "enum": [
+        "ENVIADA_REVISION",
+        "APROBADA",
+        "DEVUELTA",
+        "CONFIRMA_STOP",
+        "AJUSTE_COMERCIAL",
+        "DESBLOQUEAR"
+      ]
+    },
+    "fecha": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "hash_citado": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "comentarios": {
+      "type": "string",
+      "maxLength": 1500
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[A-Z]$"
+    },
+    "estado_antes": {
+      "$ref": "#/$defs/estado"
+    },
+    "estado_despues": {
+      "$ref": "#/$defs/estado"
+    },
+    "registrada_ts": {
+      "type": "string",
+      "minLength": 19,
+      "maxLength": 40
+    },
+    "version_devuelta": {
+      "description": "VER16-5 (I1.7): solo en una DEVUELTA. Lo que se devolvió, calculado por el código al registrarla (decision.resumen_version): componentes, consumo por efecto, consumo mensual y precio cerrado. La versión siguiente lo compara con la suya para la sección «Cambios pedidos en la revisión anterior» de la nota y del PPTX. Opcional: las DEVUELTA anteriores a I1.7 no lo llevan. I1.9: lleva además la estimación (VA18-3).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "componentes",
+        "precios",
+        "consumo_mensual_eur",
+        "precio_cerrado_eur"
+      ],
+      "properties": {
+        "componentes": {
+          "type": "array",
+          "maxItems": 40,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "clave",
+              "sku",
+              "region"
+            ],
+            "properties": {
+              "clave": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "sku": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 120
+              },
+              "region": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 60
+              }
+            }
+          }
+        },
+        "precios": {
+          "type": "array",
+          "maxItems": 60,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "clave",
+              "cantidad_mensual"
+            ],
+            "properties": {
+              "clave": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2100
+              },
+              "cantidad_mensual": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "consumo_mensual_eur": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 40
+        },
+        "precio_cerrado_eur": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 40
+        },
+        "estimacion": {
+          "description": "VA18-3 (I1.9): la estimación de la versión devuelta (nota_revision.resumen_estimacion), para que la nota de la versión siguiente diga qué cambia en duración, horas, perfiles, fases y tareas. Opcional: las DEVUELTA anteriores a I1.9 o sin estimación no la llevan.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "duracion_semanas",
+            "horas_total",
+            "por_perfil",
+            "por_fase",
+            "tareas"
+          ],
+          "properties": {
+            "duracion_semanas": {
+              "type": [
+                "number",
+                "string",
+                "null"
+              ],
+              "maxLength": 40
+            },
+            "horas_total": {
+              "type": [
+                "number",
+                "string",
+                "null"
+              ],
+              "maxLength": 40
+            },
+            "por_perfil": {
+              "type": "array",
+              "maxItems": 40,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "perfil",
+                  "horas"
+                ],
+                "properties": {
+                  "perfil": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 200
+                  },
+                  "horas": {
+                    "type": [
+                      "number",
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 40
+                  }
+                }
+              }
+            },
+            "por_fase": {
+              "type": "array",
+              "maxItems": 40,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "fase",
+                  "horas"
+                ],
+                "properties": {
+                  "fase": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 200
+                  },
+                  "horas": {
+                    "type": [
+                      "number",
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 40
+                  }
+                }
+              }
+            },
+            "tareas": {
+              "type": "array",
+              "maxItems": 200,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "fase",
+                  "tarea",
+                  "perfil",
+                  "tecnicas_h",
+                  "reuniones_h"
+                ],
+                "properties": {
+                  "fase": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 200
+                  },
+                  "tarea": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 400
+                  },
+                  "perfil": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 200
+                  },
+                  "tecnicas_h": {
+                    "type": [
+                      "number",
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 40
+                  },
+                  "reuniones_h": {
+                    "type": [
+                      "number",
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 40
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "estado": {
+      "enum": [
+        "BORRADOR",
+        "INFORMACION_INSUFICIENTE",
+        "EN_ANALISIS",
+        "EN_VERIFICACION",
+        "VERIFICADA",
+        "STOP_PRESUPUESTO",
+        "LISTA_PARA_REVISION",
+        "EN_REVISION_PREVENTA",
+        "EN_APROBACION_AREA",
+        "APROBADA",
+        "DEVUELTA_CON_COMENTARIOS",
+        "BLOQUEADA"
+      ]
+    }
+  }
+}

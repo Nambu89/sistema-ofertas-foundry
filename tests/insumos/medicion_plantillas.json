@@ -1,0 +1,2247 @@
+{
+  "fecha": "2026-10-11",
+  "consultas": 3,
+  "tipo_eur_usd_implicito": 0.8799999999999999,
+  "reintentos": [
+    "DNS gaierror(11001, 'getaddrinfo failed'); reintento único tras 3 s: serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Doc-PII Redaction Pages'"
+  ],
+  "fallos": 0,
+  "resultados": [
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5-entrada",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Inpt DZone 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          718,
+          718,
+          718
+        ],
+        "medidor": "GPT 5 Inpt DZone 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          1.21
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          1.21,
+          1.375
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5-entrada-cache",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 cchd Inpt DZone 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          733,
+          733,
+          733
+        ],
+        "medidor": "GPT 5 cchd Inpt DZone 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          0.121
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.121,
+          0.1375
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5-salida",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 outpt DZone 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          721,
+          721,
+          721
+        ],
+        "medidor": "GPT 5 outpt DZone 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          9.6797
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          9.6797,
+          11.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5-mini-entrada",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Mini Inpt DZone 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          733,
+          733,
+          733
+        ],
+        "medidor": "GPT 5 Mini Inpt DZone 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          0.242
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.242,
+          0.275
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5-mini-salida",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Mini outpt DZone 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          736,
+          736,
+          736
+        ],
+        "medidor": "GPT 5 Mini outpt DZone 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          1.9359
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          1.9359,
+          2.2
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5-nano-entrada",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Nano Inpt DZone 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          733,
+          733,
+          733
+        ],
+        "medidor": "GPT 5 Nano Inpt DZone 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          0.0484
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0484,
+          0.055
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5-nano-salida",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'GPT 5 Nano outpt DZone 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          736,
+          736,
+          736
+        ],
+        "medidor": "GPT 5 Nano outpt DZone 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          0.3872
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.3872,
+          0.44
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5.4-entrada",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '5.4 inp Dz 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          699,
+          699,
+          699
+        ],
+        "medidor": "5.4 inp Dz 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          2.4199
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          2.4199,
+          2.75
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry",
+      "plantilla": "gpt-5.4-salida",
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '5.4 opt Dz 1M Tokens'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          701,
+          701,
+          701
+        ],
+        "medidor": "5.4 opt Dz 1M Tokens",
+        "producto": "Azure OpenAI GPT5",
+        "unidad": "1M",
+        "precios_eur": [
+          14.5195
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          14.5195,
+          16.5
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry-agent-service",
+      "plantilla": "hosted-vcpu",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Foundry Agents' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Hosted vCPU Usage'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          694,
+          694,
+          694
+        ],
+        "medidor": "Hosted vCPU Usage",
+        "producto": "Foundry Agents",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0962
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0962,
+          0.10934
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry-agent-service",
+      "plantilla": "hosted-memoria",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Foundry Agents' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Hosted Memory Usage'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          696,
+          696,
+          696
+        ],
+        "medidor": "Hosted Memory Usage",
+        "producto": "Foundry Agents",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0114
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0114,
+          0.01298
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-foundry-agent-service",
+      "plantilla": "memoria-corto-plazo",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Foundry Agents' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Short Term Memory Events Stored'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          721,
+          721,
+          721
+        ],
+        "medidor": "Short Term Memory Events Stored",
+        "producto": "Foundry Agents",
+        "unidad": "1K",
+        "precios_eur": [
+          0.242
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.242,
+          0.275
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-ai-search",
+      "plantilla": "basic",
+      "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Basic Unit'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          668,
+          668,
+          668
+        ],
+        "medidor": "Basic Unit",
+        "producto": "Azure AI Search",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0889
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0889,
+          0.101
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-ai-search",
+      "plantilla": "s1",
+      "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Standard S1 Unit'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          680,
+          680,
+          680
+        ],
+        "medidor": "Standard S1 Unit",
+        "producto": "Azure AI Search",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.2957
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.2957,
+          0.336
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-ai-search",
+      "plantilla": "ranking-semantico",
+      "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Semantic Ranker queries'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          686,
+          686,
+          686
+        ],
+        "medidor": "Semantic Ranker queries",
+        "producto": "Azure AI Search",
+        "unidad": "1K",
+        "precios_eur": [
+          0.88
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.88,
+          1.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-content-understanding",
+      "plantilla": "extraccion-contenido-estandar",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Content Understanding' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Doc Content Extraction Standard Pages'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          768,
+          768,
+          768
+        ],
+        "medidor": "Doc Content Extraction Standard Pages",
+        "producto": "Azure Content Understanding",
+        "unidad": "1K",
+        "precios_eur": [
+          4.3999
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          4.3999,
+          5.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-content-understanding",
+      "plantilla": "extraccion-campos-documento",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Content Understanding' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Document Field Extraction Pages'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          752,
+          752,
+          752
+        ],
+        "medidor": "Document Field Extraction Pages",
+        "producto": "Azure Content Understanding",
+        "unidad": "1K",
+        "precios_eur": [
+          17.5994
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          17.5994,
+          20.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-document-intelligence",
+      "plantilla": "lectura",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Document Intelligence' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S0 Read Pages'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 2,
+        "bytes": [
+          1247,
+          1247,
+          1247
+        ],
+        "medidor": "S0 Read Pages",
+        "producto": "Azure Document Intelligence",
+        "unidad": "1K",
+        "precios_eur": [
+          1.32,
+          0.528
+        ],
+        "tramos": [
+          0.0,
+          1000.0
+        ]
+      },
+      "ratios": [
+        [
+          1.32,
+          1.5
+        ],
+        [
+          0.528,
+          0.6
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-document-intelligence",
+      "plantilla": "precompilado",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Document Intelligence' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S0 Pre-built Pages'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          690,
+          690,
+          690
+        ],
+        "medidor": "S0 Pre-built Pages",
+        "producto": "Azure Document Intelligence",
+        "unidad": "1K",
+        "precios_eur": [
+          8.7997
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          8.7997,
+          10.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-document-intelligence",
+      "plantilla": "personalizado",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Document Intelligence' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S0 Custom Pages'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          689,
+          689,
+          689
+        ],
+        "medidor": "S0 Custom Pages",
+        "producto": "Azure Document Intelligence",
+        "unidad": "1K",
+        "precios_eur": [
+          26.3992
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          26.3992,
+          30.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-speech",
+      "plantilla": "voz-a-texto",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Speech' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S1 Speech To Text'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          678,
+          678,
+          678
+        ],
+        "medidor": "S1 Speech To Text",
+        "producto": "Azure Speech",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.88
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.88,
+          1.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-speech",
+      "plantilla": "texto-a-voz-neural",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Speech' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S1 Neural Text To Speech Characters'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          694,
+          694,
+          694
+        ],
+        "medidor": "S1 Neural Text To Speech Characters",
+        "producto": "Azure Speech",
+        "unidad": "1M",
+        "precios_eur": [
+          13.1996
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          13.1996,
+          15.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-speech",
+      "plantilla": "traduccion-voz",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Speech' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'S1 Speech Translation'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          682,
+          682,
+          682
+        ],
+        "medidor": "S1 Speech Translation",
+        "producto": "Azure Speech",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          2.1999
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          2.1999,
+          2.5
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-language",
+      "plantilla": "resumen",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Summarization Text Records'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          700,
+          700,
+          700
+        ],
+        "medidor": "Standard Summarization Text Records",
+        "producto": "Azure Language",
+        "unidad": "1K",
+        "precios_eur": [
+          1.7599
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          1.7599,
+          2.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-language",
+      "plantilla": "clu",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard CLU Text Records'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          690,
+          690,
+          690
+        ],
+        "medidor": "Standard CLU Text Records",
+        "producto": "Azure Language",
+        "unidad": "1K",
+        "precios_eur": [
+          1.7599
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          1.7599,
+          2.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-language",
+      "plantilla": "preguntas-respuestas",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard QA Text Records'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 2,
+        "bytes": [
+          1257,
+          1257,
+          1257
+        ],
+        "medidor": "Standard QA Text Records",
+        "producto": "Azure Language",
+        "unidad": "1K",
+        "precios_eur": [
+          1.32,
+          0.88
+        ],
+        "tramos": [
+          0.0,
+          2500.0
+        ]
+      },
+      "ratios": [
+        [
+          1.32,
+          1.5
+        ],
+        [
+          0.88,
+          1.00005
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-language",
+      "plantilla": "redaccion-pii-documentos",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Azure Language' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Doc-PII Redaction Pages'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          725,
+          725,
+          725
+        ],
+        "medidor": "Doc-PII Redaction Pages",
+        "producto": "Azure Language",
+        "unidad": "1K",
+        "precios_eur": [
+          8.7997
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          8.7997,
+          10.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-content-safety",
+      "plantilla": "texto",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Content Safety' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Text Records'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          693,
+          693,
+          693
+        ],
+        "medidor": "Standard Text Records",
+        "producto": "Content Safety",
+        "unidad": "1K",
+        "precios_eur": [
+          0.33
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.33,
+          0.375
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-content-safety",
+      "plantilla": "imagenes",
+      "filtro": "serviceName eq 'Foundry Tools' and productName eq 'Content Safety' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Images'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          687,
+          687,
+          687
+        ],
+        "medidor": "Standard Images",
+        "producto": "Content Safety",
+        "unidad": "1K",
+        "precios_eur": [
+          0.66
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.66,
+          0.75
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-storage",
+      "plantilla": "hot-lrs-datos",
+      "filtro": "serviceName eq 'Storage' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BPH7' and meterName eq 'Hot LRS Data Stored'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 3,
+        "bytes": [
+          1795,
+          1795,
+          1795
+        ],
+        "medidor": "Hot LRS Data Stored",
+        "producto": "General Block Blob v2",
+        "unidad": "1 GB/Month",
+        "precios_eur": [
+          0.0162,
+          0.0155,
+          0.0149
+        ],
+        "tramos": [
+          0.0,
+          51200.0,
+          512000.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0162,
+          0.0184
+        ],
+        [
+          0.0155,
+          0.017664
+        ],
+        [
+          0.0149,
+          0.016928
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-storage",
+      "plantilla": "hot-lrs-escrituras",
+      "filtro": "serviceName eq 'Storage' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BPH7' and meterName eq 'Hot LRS Write Operations'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          676,
+          676,
+          676
+        ],
+        "medidor": "Hot LRS Write Operations",
+        "producto": "General Block Blob v2",
+        "unidad": "10K",
+        "precios_eur": [
+          0.044
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.044,
+          0.05
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-storage",
+      "plantilla": "hot-lrs-lecturas",
+      "filtro": "serviceName eq 'Storage' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and productId eq 'DZH318Z0BPH7' and skuName eq 'Hot LRS' and meterName eq 'Hot Read Operations'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          671,
+          671,
+          671
+        ],
+        "medidor": "Hot Read Operations",
+        "producto": "General Block Blob v2",
+        "unidad": "10K",
+        "precios_eur": [
+          0.0035
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0035,
+          0.004
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-cosmos-db",
+      "plantilla": "sin-servidor-ru",
+      "filtro": "serviceName eq 'Azure Cosmos DB' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '1M RUs'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          667,
+          667,
+          667
+        ],
+        "medidor": "1M RUs",
+        "producto": "Azure Cosmos DB serverless",
+        "unidad": "1M",
+        "precios_eur": [
+          0.2684
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.2684,
+          0.305
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-cosmos-db",
+      "plantilla": "aprovisionado-100ru",
+      "filtro": "serviceName eq 'Azure Cosmos DB' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and skuName eq 'RUs' and meterName eq '100 RU/s'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          662,
+          662,
+          662
+        ],
+        "medidor": "100 RU/s",
+        "producto": "Azure Cosmos DB",
+        "unidad": "1/Hour",
+        "precios_eur": [
+          0.007
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.007,
+          0.008
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-cosmos-db",
+      "plantilla": "almacenamiento",
+      "filtro": "serviceName eq 'Azure Cosmos DB' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and skuName eq 'RUs' and meterName eq 'Data Stored'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          669,
+          669,
+          669
+        ],
+        "medidor": "Data Stored",
+        "producto": "Azure Cosmos DB",
+        "unidad": "1 GB/Month",
+        "precios_eur": [
+          0.22
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.22,
+          0.25
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-app-service",
+      "plantilla": "b1-linux",
+      "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'B1'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          676,
+          676,
+          676
+        ],
+        "medidor": "B1",
+        "producto": "Azure App Service Basic Plan - Linux",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0158
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0158,
+          0.018
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-app-service",
+      "plantilla": "p0v3-linux",
+      "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and armSkuName eq 'Azure_App_Service_Premium_v3_Plan_Linux_P0_v3' and meterName eq 'P0v3 App'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          734,
+          734,
+          734
+        ],
+        "medidor": "P0v3 App",
+        "producto": "Azure App Service Premium v3 Plan - Linux",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0783
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0783,
+          0.089
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-app-service",
+      "plantilla": "p1v3-linux",
+      "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and armSkuName eq 'Azure_App_Service_Premium_v3_Plan_Linux_P1_v3' and meterName eq 'P1 v3 App'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          736,
+          736,
+          736
+        ],
+        "medidor": "P1 v3 App",
+        "producto": "Azure App Service Premium v3 Plan - Linux",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.1566
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.1566,
+          0.178
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-container-apps",
+      "plantilla": "dedicado-vcpu",
+      "filtro": "serviceName eq 'Azure Container Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Dedicated vCPU Usage'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          688,
+          688,
+          688
+        ],
+        "medidor": "Dedicated vCPU Usage",
+        "producto": "Azure Container Apps",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0502
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0502,
+          0.057077
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-container-apps",
+      "plantilla": "dedicado-memoria",
+      "filtro": "serviceName eq 'Azure Container Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Dedicated Memory Usage'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          690,
+          690,
+          690
+        ],
+        "medidor": "Dedicated Memory Usage",
+        "producto": "Azure Container Apps",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0044
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0044,
+          0.004978
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-container-apps",
+      "plantilla": "dedicado-gestion",
+      "filtro": "serviceName eq 'Azure Container Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Dedicated Plan Management'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          693,
+          693,
+          693
+        ],
+        "medidor": "Dedicated Plan Management",
+        "producto": "Azure Container Apps",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.088
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.088,
+          0.1
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-container-apps",
+      "plantilla": "peticiones",
+      "filtro": "serviceName eq 'Azure Container Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Requests'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          680,
+          680,
+          680
+        ],
+        "medidor": "Standard Requests",
+        "producto": "Azure Container Apps",
+        "unidad": "1M",
+        "precios_eur": [
+          0.352
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.352,
+          0.4
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-functions",
+      "plantilla": "premium-vcpu",
+      "filtro": "serviceName eq 'Functions' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Premium vCPU Duration'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          673,
+          673,
+          673
+        ],
+        "medidor": "Premium vCPU Duration",
+        "producto": "Premium Functions",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.1487
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.1487,
+          0.169
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-functions",
+      "plantilla": "premium-memoria",
+      "filtro": "serviceName eq 'Functions' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Premium Memory Duration'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          679,
+          679,
+          679
+        ],
+        "medidor": "Premium Memory Duration",
+        "producto": "Premium Functions",
+        "unidad": "1 GiB Hour",
+        "precios_eur": [
+          0.0106
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0106,
+          0.0121
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-api-management",
+      "plantilla": "developer",
+      "filtro": "serviceName eq 'API Management' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Developer Unit'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          679,
+          679,
+          679
+        ],
+        "medidor": "Developer Unit",
+        "producto": "API Management",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0579
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0579,
+          0.0658
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-api-management",
+      "plantilla": "basic-v2",
+      "filtro": "serviceName eq 'API Management' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Basic v2 Unit'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          684,
+          684,
+          684
+        ],
+        "medidor": "Basic v2 Unit",
+        "producto": "API Management",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.2376
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.2376,
+          0.27
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-api-management",
+      "plantilla": "standard-v2",
+      "filtro": "serviceName eq 'API Management' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard v2 Unit'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          693,
+          693,
+          693
+        ],
+        "medidor": "Standard v2 Unit",
+        "producto": "API Management",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          1.1
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          1.1,
+          1.25
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-api-management",
+      "plantilla": "consumo-llamadas",
+      "filtro": "serviceName eq 'API Management' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Consumption Calls'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 2,
+        "bytes": [
+          1232,
+          1232,
+          1232
+        ],
+        "medidor": "Consumption Calls",
+        "producto": "API Management",
+        "unidad": "10K",
+        "precios_eur": [
+          0.0,
+          0.0308
+        ],
+        "tramos": [
+          0.0,
+          100.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0308,
+          0.035
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-logic-apps",
+      "plantilla": "standard-vcpu",
+      "filtro": "serviceName eq 'Logic Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard vCPU Duration'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          681,
+          681,
+          681
+        ],
+        "medidor": "Standard vCPU Duration",
+        "producto": "Logic Apps",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.1735
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.1735,
+          0.1972
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-logic-apps",
+      "plantilla": "standard-memoria",
+      "filtro": "serviceName eq 'Logic Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard Memory Duration'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          687,
+          687,
+          687
+        ],
+        "medidor": "Standard Memory Duration",
+        "producto": "Logic Apps",
+        "unidad": "1 GiB Hour",
+        "precios_eur": [
+          0.0124
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0124,
+          0.0141
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-logic-apps",
+      "plantilla": "consumo-conector-empresarial",
+      "filtro": "serviceName eq 'Logic Apps' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Consumption Enterprise Connector Actions'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          689,
+          689,
+          689
+        ],
+        "medidor": "Consumption Enterprise Connector Actions",
+        "producto": "Logic Apps",
+        "unidad": "1",
+        "precios_eur": [
+          0.0009
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0009,
+          0.001
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-bot-service",
+      "plantilla": "canales-estandar",
+      "filtro": "serviceName eq 'Azure Bot Service' and productName eq 'Azure Bot Service' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Free Standard Channel Messages'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          680,
+          680,
+          680
+        ],
+        "medidor": "Free Standard Channel Messages",
+        "producto": "Azure Bot Service",
+        "unidad": "1K",
+        "precios_eur": [
+          0.0
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-bot-service",
+      "plantilla": "canales-premium",
+      "filtro": "serviceName eq 'Azure Bot Service' and productName eq 'Azure Bot Service' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'S1 Premium Channel Messages'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          681,
+          681,
+          681
+        ],
+        "medidor": "S1 Premium Channel Messages",
+        "producto": "Azure Bot Service",
+        "unidad": "1K",
+        "precios_eur": [
+          0.44
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.44,
+          0.5
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-key-vault",
+      "plantilla": "operaciones",
+      "filtro": "serviceName eq 'Key Vault' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and skuName eq 'Standard' and meterName eq 'Operations'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          654,
+          654,
+          654
+        ],
+        "medidor": "Operations",
+        "producto": "Key Vault",
+        "unidad": "10K",
+        "precios_eur": [
+          0.0264
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0264,
+          0.03
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-defender-cloud",
+      "plantilla": "servidores-p1",
+      "filtro": "serviceName eq 'Microsoft Defender for Cloud' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard P1 Node'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          706,
+          706,
+          706
+        ],
+        "medidor": "Standard P1 Node",
+        "producto": "Microsoft Defender for Servers",
+        "unidad": "1/Hour",
+        "precios_eur": [
+          0.0059
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0059,
+          0.00672
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-defender-cloud",
+      "plantilla": "servidores-p2",
+      "filtro": "serviceName eq 'Microsoft Defender for Cloud' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard P2 Node'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          706,
+          706,
+          706
+        ],
+        "medidor": "Standard P2 Node",
+        "producto": "Microsoft Defender for Servers",
+        "unidad": "1/Hour",
+        "precios_eur": [
+          0.0176
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0176,
+          0.02
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-defender-cloud",
+      "plantilla": "almacenamiento-malware",
+      "filtro": "serviceName eq 'Microsoft Defender for Cloud' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Malware Scanning Data Ingested'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          743,
+          743,
+          743
+        ],
+        "medidor": "Malware Scanning Data Ingested",
+        "producto": "Microsoft Defender for Storage",
+        "unidad": "1 GB",
+        "precios_eur": [
+          0.132
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.132,
+          0.15
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-purview",
+      "plantilla": "gobierno-basico",
+      "filtro": "serviceName eq 'Microsoft Purview' and armRegionName eq 'westeurope' and priceType eq 'Consumption' and meterName eq 'Data Management Basic Data Governance Processing Unit'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          756,
+          756,
+          756
+        ],
+        "medidor": "Data Management Basic Data Governance Processing Unit",
+        "producto": "Microsoft Purview Data Governance",
+        "unidad": "1",
+        "precios_eur": [
+          13.1996
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          13.1996,
+          15.0
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-purview",
+      "plantilla": "catalogo-activos",
+      "filtro": "serviceName eq 'Microsoft Purview' and armRegionName eq 'westeurope' and priceType eq 'Consumption' and meterName eq 'Data Catalog Standard Asset'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          732,
+          732,
+          732
+        ],
+        "medidor": "Data Catalog Standard Asset",
+        "producto": "Microsoft Purview Data Governance",
+        "unidad": "1/Day",
+        "precios_eur": [
+          0.0145
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0145,
+          0.0165
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-virtual-network",
+      "plantilla": "ip-publica-estandar",
+      "filtro": "serviceName eq 'Virtual Network' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Standard IPv4 Static Public IP'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          688,
+          688,
+          688
+        ],
+        "medidor": "Standard IPv4 Static Public IP",
+        "producto": "IP Addresses",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0044
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0044,
+          0.005
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-private-link",
+      "plantilla": "punto-conexion",
+      "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Private Endpoint'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          687,
+          687,
+          687
+        ],
+        "medidor": "Standard Private Endpoint",
+        "producto": "Virtual Network Private Link",
+        "unidad": "1 Hour",
+        "precios_eur": [
+          0.0088
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0088,
+          0.01
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-private-link",
+      "plantilla": "datos-entrada",
+      "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Data Processed - Ingress'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 3,
+        "bytes": [
+          1843,
+          1843,
+          1843
+        ],
+        "medidor": "Standard Data Processed - Ingress",
+        "producto": "Virtual Network Private Link",
+        "unidad": "1 GB",
+        "precios_eur": [
+          0.0088,
+          0.0053,
+          0.0035
+        ],
+        "tramos": [
+          0.0,
+          1000000.0,
+          5000000.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0088,
+          0.01
+        ],
+        [
+          0.0053,
+          0.006
+        ],
+        [
+          0.0035,
+          0.004
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-private-link",
+      "plantilla": "datos-salida",
+      "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Data Processed - Egress'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 3,
+        "bytes": [
+          1840,
+          1840,
+          1840
+        ],
+        "medidor": "Standard Data Processed - Egress",
+        "producto": "Virtual Network Private Link",
+        "unidad": "1 GB",
+        "precios_eur": [
+          0.0088,
+          0.0053,
+          0.0035
+        ],
+        "tramos": [
+          0.0,
+          1000000.0,
+          5000000.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0088,
+          0.01
+        ],
+        [
+          0.0053,
+          0.006
+        ],
+        [
+          0.0035,
+          0.004
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-monitor",
+      "plantilla": "registros-basicos",
+      "filtro": "serviceName eq 'Azure Monitor' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Basic Logs Data Ingestion'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          696,
+          696,
+          696
+        ],
+        "medidor": "Basic Logs Data Ingestion",
+        "producto": "Azure Monitor",
+        "unidad": "1 GB",
+        "precios_eur": [
+          0.5676
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.5676,
+          0.645
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-monitor",
+      "plantilla": "alertas-metricas",
+      "filtro": "serviceName eq 'Azure Monitor' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Alerts Resource Monitored at 5 Minute Frequency'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          718,
+          718,
+          718
+        ],
+        "medidor": "Alerts Resource Monitored at 5 Minute Frequency",
+        "producto": "Azure Monitor",
+        "unidad": "1/Month",
+        "precios_eur": [
+          0.132
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.132,
+          0.15
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-app-insights",
+      "plantilla": "retencion",
+      "filtro": "serviceName eq 'Application Insights' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and skuName eq 'Basic' and meterName eq 'Data Retention'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          700,
+          700,
+          700
+        ],
+        "medidor": "Data Retention",
+        "producto": "Application Insights",
+        "unidad": "1 GB/Month",
+        "precios_eur": [
+          0.088
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.088,
+          0.1
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-log-analytics",
+      "plantilla": "ingesta",
+      "filtro": "serviceName eq 'Log Analytics' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Analytics Logs Data Ingestion'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 2,
+        "bytes": [
+          1278,
+          1278,
+          1278
+        ],
+        "medidor": "Analytics Logs Data Ingestion",
+        "producto": "Log Analytics",
+        "unidad": "1 GB",
+        "precios_eur": [
+          0.0,
+          2.6311
+        ],
+        "tramos": [
+          0.0,
+          5.0
+        ]
+      },
+      "ratios": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.6311,
+          2.99
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    },
+    {
+      "componente": "az-log-analytics",
+      "plantilla": "retencion",
+      "filtro": "serviceName eq 'Log Analytics' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'Analytics Logs Data Retention'",
+      "comprobacion": {
+        "fecha": "2026-10-11",
+        "consultas": 3,
+        "articulos": 1,
+        "bytes": [
+          710,
+          710,
+          710
+        ],
+        "medidor": "Analytics Logs Data Retention",
+        "producto": "Log Analytics",
+        "unidad": "1 GB/Month",
+        "precios_eur": [
+          0.1144
+        ],
+        "tramos": [
+          0.0
+        ]
+      },
+      "ratios": [
+        [
+          0.1144,
+          0.13
+        ]
+      ],
+      "http_usd": 200,
+      "errores": []
+    }
+  ]
+}

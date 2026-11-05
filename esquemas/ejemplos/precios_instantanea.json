@@ -1,0 +1,93 @@
+{
+  "schema": "preventa-precios-instantanea/1",
+  "fecha_consulta": "2026-10-08T07:30:00Z",
+  "moneda": "EUR",
+  "fuente": "https://prices.azure.com/api/retail/prices?currencyCode='EUR'",
+  "plantillas": {
+    "az-foundry/gpt-6-luna-entrada": {
+      "filtro": "serviceName eq 'Foundry Models' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq '6-luna ShortCo Inp Std DZ 1M Tokens'",
+      "precio_unitario": 0.1056,
+      "unidad": "1M",
+      "effectiveStartDate": "2026-09-01T00:00:00Z",
+      "meterName": "6-luna ShortCo Inp Std DZ 1M Tokens",
+      "productName": "Foundry Models",
+      "skuName": "6-luna",
+      "armRegionName": "swedencentral",
+      "articulos_devueltos": 1,
+      "sha256_articulo": "5320cb999decae01fb324ea376f73c47335b7d789550b1b9a13a51ebfb3482c5"
+    },
+    "az-ai-search/s1": {
+      "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Standard S1 Unit'",
+      "precio_unitario": 0.3426,
+      "unidad": "1 Hour",
+      "effectiveStartDate": "2024-11-01",
+      "meterName": "Standard S1 Unit",
+      "productName": "Azure AI Search",
+      "skuName": "Standard",
+      "armRegionName": "francecentral",
+      "articulos_devueltos": 1,
+      "sha256_articulo": "d4972c926a6326781e3d1458283bd1b223509b31140265d9abcba2d2cee3e006"
+    },
+    "az-bot-service/canales-estandar": {
+      "filtro": "serviceName eq 'Azure Bot Service' and productName eq 'Azure Bot Service' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Free Standard Channel Messages'",
+      "precio_unitario": 0.0,
+      "unidad": "1K",
+      "effectiveStartDate": "2017-12-13T00:00:00Z",
+      "meterName": "Free Standard Channel Messages",
+      "productName": "Azure Bot Service",
+      "skuName": "Free",
+      "armRegionName": "Global",
+      "articulos_devueltos": 1,
+      "sha256_articulo": "25cba16b27888b524427fd73270e654fb66ac3a9f287b8b4f45a40829d900a04"
+    },
+    "az-bot-service/canales-premium": {
+      "filtro": "serviceName eq 'Azure Bot Service' and productName eq 'Azure Bot Service' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'S1 Premium Channel Messages'",
+      "precio_unitario": 0.44,
+      "unidad": "1K",
+      "effectiveStartDate": "2017-12-13T00:00:00Z",
+      "meterName": "S1 Premium Channel Messages",
+      "productName": "Azure Bot Service",
+      "skuName": "S1",
+      "armRegionName": "Global",
+      "articulos_devueltos": 1,
+      "sha256_articulo": "5afdee6ca3c087dfe83d2d2ef73650284f4f2584caf5a0b5762a64b7cee96beb"
+    },
+    "az-app-service/b1-linux": {
+      "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'B1'",
+      "precio_unitario": 0.0158,
+      "unidad": "1 Hour",
+      "effectiveStartDate": "2021-06-08T00:00:00Z",
+      "meterName": "B1 (Azure App Service Basic Plan - Linux)",
+      "productName": "Azure App Service",
+      "skuName": "B1",
+      "armRegionName": "swedencentral",
+      "articulos_devueltos": 1,
+      "sha256_articulo": "606e32fd8504dae79dc7c6cf6f0b2dc850ff291316872cb2e22b8647f2819bc5"
+    },
+    "az-app-service/p0v3-linux": {
+      "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and armSkuName eq 'Azure_App_Service_Premium_v3_Plan_Linux_P0_v3' and meterName eq 'P0v3 App'",
+      "precio_unitario": 0.0864,
+      "unidad": "1 Hour",
+      "effectiveStartDate": "2024-06-01",
+      "meterName": "P0v3 App",
+      "productName": "Azure App Service",
+      "skuName": "P0v3",
+      "armRegionName": "swedencentral",
+      "articulos_devueltos": 1,
+      "sha256_articulo": "f18ac88fec7ba8e19e1552ca8ebba29f5f225666df4044cab11885e087a19539"
+    },
+    "az-private-link/punto-conexion": {
+      "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Private Endpoint'",
+      "precio_unitario": 0.0088,
+      "unidad": "1 Hour",
+      "effectiveStartDate": "2020-02-01T00:00:00Z",
+      "meterName": "Standard Private Endpoint",
+      "productName": "Virtual Network Private Link",
+      "skuName": "Standard",
+      "armRegionName": "Global",
+      "articulos_devueltos": 1,
+      "sha256_articulo": "84230515e4e849309eec915d126eacb951fff09c7d9dd2aa01dc3c390dfcaad5"
+    }
+  },
+  "sha256": "75ead59c9befafee561986814e4e69c09abd79103d6a1549fc698fead07113cf"
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "preventa-anexo-consumo/1",
+  "codigo": "OF-KELVARA-001-A",
+  "moneda": "EUR",
+  "fuente": {
+    "nombre": "Azure Retail Prices",
+    "url": "https://prices.azure.com/api/retail/prices",
+    "consultado_el": "2026-10-08"
+  },
+  "lineas": [
+    {
+      "precio_id": "P-01",
+      "componente_id": "C-02",
+      "servicio": "Azure AI Search",
+      "concepto": "Standard S1 Unit",
+      "region": "francecentral",
+      "filtro": "serviceName eq 'Azure Cognitive Search' and productName eq 'Azure AI Search' and armRegionName eq 'francecentral' and priceType eq 'Consumption' and meterName eq 'Standard S1 Unit'",
+      "precio_unitario": 0.3426,
+      "unidad": "1 Hour",
+      "cantidad_mensual": 730,
+      "supuesto_cantidad": "1 instancia(s) × 730 h al mes",
+      "effectiveStartDate": "2024-11-01",
+      "coste_mensual_eur": "250.10",
+      "verificacion": "OK"
+    },
+    {
+      "precio_id": "P-02",
+      "componente_id": "C-04",
+      "servicio": "Azure App Service",
+      "concepto": "B1 (Azure App Service Basic Plan - Linux)",
+      "region": "swedencentral",
+      "filtro": "serviceName eq 'Azure App Service' and armRegionName eq 'swedencentral' and priceType eq 'Consumption' and meterName eq 'B1'",
+      "precio_unitario": 0.0158,
+      "unidad": "1 Hour",
+      "cantidad_mensual": 730,
+      "supuesto_cantidad": "1 instancia(s) × 730 h al mes",
+      "effectiveStartDate": "2021-06-08T00:00:00Z",
+      "coste_mensual_eur": "11.53",
+      "verificacion": "OK"
+    },
+    {
+      "precio_id": "P-03",
+      "componente_id": "C-06",
+      "servicio": "Azure Private Link",
+      "concepto": "Standard Private Endpoint",
+      "region": "swedencentral",
+      "filtro": "serviceName eq 'Virtual Network' and productName eq 'Virtual Network Private Link' and armRegionName eq 'Global' and priceType eq 'Consumption' and meterName eq 'Standard Private Endpoint'",
+      "precio_unitario": 0.0088,
+      "unidad": "1 Hour",
+      "cantidad_mensual": 2920,
+      "supuesto_cantidad": "4 instancia(s) × 730 h al mes",
+      "effectiveStartDate": "2020-02-01T00:00:00Z",
+      "coste_mensual_eur": "25.70",
+      "verificacion": "OK"
+    }
+  ],
+  "total_mensual_eur": "287.33",
+  "total_anual_eur": "3447.96",
+  "avisos": [
+    "Microsoft fija en USD el precio de todos los servicios de Azure: los importes en EUR de Azure Retail Prices son orientativos y solo sirven para estimar el presupuesto; el único precio de referencia es el USD.",
+    "Microsoft Foundry: no valorado. A valorar con el volumen real, así que no suma en el total orientativo.",
+    "Azure AI Bot Service: no valorado. A valorar con el volumen real, así que no suma en el total orientativo.",
+    "Microsoft Entra ID: no valorado. Se licencia aparte, no se factura por Azure, así que no suma en el total orientativo.",
+    "Precios consultados el 2026-10-08 en Azure Retail Prices (instantánea descargada por el código al desplegar).",
+    "El total solo suma los conceptos valorados: 3 componentes quedan como «No valorado»."
+  ],
+  "nota_fija": "Orientativo. No incluido en el precio cerrado; lo asume el cliente."
+}

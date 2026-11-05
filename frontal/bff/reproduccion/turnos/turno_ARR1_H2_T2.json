@@ -1,0 +1,93 @@
+{
+  "turno": "ARR1_H2_T2",
+  "serie": "h2",
+  "agente": "preventa-prueba-hosted",
+  "via": "endpoint",
+  "modo": "background",
+  "url": "https://recurso-ejemplo.services.ai.azure.com/api/projects/proyecto-ejemplo/agents/preventa-prueba-hosted/endpoint/protocols/openai/responses",
+  "mensaje": "H_asumir.txt",
+  "adjuntos": [],
+  "previa": {
+    "response_id": "caresp_ejemplo0000000000000000000000000000000000000000016",
+    "agent_session_id": "sesion-ejemplo-0002"
+  },
+  "inicio": "2026-10-18 03:13:40",
+  "inicio_utc": "2026-10-18T01:13:35Z",
+  "creada": {
+    "status": "in_progress",
+    "response_id": "caresp_ejemplo0000000000000000000000000000000000000000009",
+    "agent_session_id": "sesion-ejemplo-0002",
+    "latencia_s": 68.3
+  },
+  "sondeo": [
+    {
+      "n": 1,
+      "params": [
+        "api-version"
+      ],
+      "http": 200,
+      "status": "completed"
+    }
+  ],
+  "sondeo_variante": [
+    "api-version"
+  ],
+  "http": 200,
+  "latencia_s": 73.6,
+  "response_id": "caresp_ejemplo0000000000000000000000000000000000000000009",
+  "status": "completed",
+  "agent_session_id": "sesion-ejemplo-0002",
+  "usage": null,
+  "error": null,
+  "texto": "$ asumir → rc 0\n```\nASUMIDO [BAJA]: red_privada = No, acceso público con autenticación\nSUFICIENCIA: INCOMPLETA. Faltan: tipo_suscripcion, presupuesto_orientativo\n=== PREGUNTAS PARA EL COMERCIAL ===\ntipo_suscripcion: ¿Qué tipo de suscripción de Azure tiene el cliente?\n  a) Enterprise Agreement o MCA-E directo\n  b) CSP a través de un revendedor\n  c) Pago por uso\n  d) otra: indicarla (ASUMIR: tipo_suscripcion = valor)\npresupuesto_orientativo: ¿Hay un presupuesto orientativo?\n  a) Menos de 25.000 euros\n  b) Entre 25.000 y 60.000 euros\n  c) Más de 60.000 euros\n  d) otra: indicarla (ASUMIR: presupuesto_orientativo = valor)\n=== FIN PREGUNTAS ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: INFORMACION_INSUFICIENTE\nversion: A\nhash_contenido: c19672f101b210e09612339ff3331d831533615c9a3ccc17e401d09c72c437a2\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...\n=== FIN ESTADO ===\n```\n\n$ asumir → rc 0\n```\nASUMIDO [BAJA]: tipo_suscripcion = Enterprise Agreement o MCA-E directo\nSUFICIENCIA: INCOMPLETA. Faltan: presupuesto_orientativo\n=== PREGUNTAS PARA EL COMERCIAL ===\npresupuesto_orientativo: ¿Hay un presupuesto orientativo?\n  a) Menos de 25.000 euros\n  b) Entre 25.000 y 60.000 euros\n  c) Más de 60.000 euros\n  d) otra: indicarla (ASUMIR: presupuesto_orientativo = valor)\n=== FIN PREGUNTAS ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: INFORMACION_INSUFICIENTE\nversion: A\nhash_contenido: 9ec2bbf8c141faaa6021f95c8aafab79ac84bb77ac5b79cf08ecd5b0a8202a4f\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...\n=== FIN ESTADO ===\n```\n\n$ asumir → rc 0\n```\nASUMIDO [BAJA]: presupuesto_orientativo = Entre 25.000 y 60.000 euros\nSUFICIENCIA: COMPLETA\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_ANALISIS\nversion: A\nhash_contenido: 4e1f229d0c853cce8c0a6cc04a6266a6c1c677c78db555870c7b8c2399a0bd33\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: enrutar\n=== FIN ESTADO ===\n```\n\n$ enrutar → rc 0\n```\nBrief BRF-OF-HOSTELIA-001-A-AZ-R1 (ronda 1, SHA-256 2fc135529942888e048ac95c086f30749cb0b8eabefb5b42554df031a63d3c50) en briefs/BRF-OF-HOSTELIA-001-A-AZ-R1.txt\n=== BRIEF PARA preventa-experto-azure ===\n[2789 bytes, SHA-256 2fc135529942888e048ac95c086f30749cb0b8eabefb5b42554df031a63d3c50; lo envía el código tal cual]\n=== FIN BRIEF ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_ANALISIS\nversion: A\nhash_contenido: 548b33ed91caed8c536ee40c23d613b0592fa5ff0b12bd32638594a9b0cdd9c8\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=BRIEF_ENVIADO\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el brief BRF-OF-HOSTELIA-001-A-AZ-R1 a preventa-experto-azure por A2A, guardar su respuesta literal en entrada/respuesta_experto_AZ_R1.json y ejecutar registrar-experto\n=== FIN ESTADO ===\n```\n\nA2A SendMessage a preventa-experto-azure: HTTP 200 · 62.2 s · task_id resp_ejemplo0000000000000000000000000000000000000000016 · context_id ctxt_ejemplo0000000000000000000000014 · estado TASK_STATE_COMPLETED · enviado SHA-256 2fc135529942888e048ac95c086f30749cb0b8eabefb5b42554df031a63d3c50 · no bloqueante con 11 sondeo(s) GetTask\n\nRelectura GetTask de resp_ejemplo0000000000000000000000000000000000000000016: el texto coincide (SHA-256 18d1079559436a453ba9245b83ddf801466d0b3642946c1bc057d53471e5a567).\n\n$ registrar-experto → rc 0\n```\nEXPERTO: VÁLIDA para BRF-OF-HOSTELIA-001-A-AZ-R1 · 10 referencias, 11 componentes, 7 precios, 5 tareas propuestas\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_ANALISIS\nversion: A\nhash_contenido: d91c34b7b497865ac1abd34c2fabe80ac49683419e642cc8b31c5fdb4e9babab\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Terminar el turno. En el siguiente: consolidar\n=== FIN ESTADO ===\n```\n\n$ consolidar → rc 0\n```\nConsolidado CNS-OF-HOSTELIA-001-A-R1 (21 elementos, SHA-256 60b4126db1d68b06c2ac558efeecaedd008463b7d93e8d0f41a9e083fb3be0ec) en consolidados/CNS-OF-HOSTELIA-001-A-R1.txt\n=== CONSOLIDADO PARA preventa-verificador ===\n[4769 bytes, SHA-256 60b4126db1d68b06c2ac558efeecaedd008463b7d93e8d0f41a9e083fb3be0ec; lo envía el código tal cual]\n=== FIN CONSOLIDADO ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_VERIFICACION\nversion: A\nhash_contenido: c98a567e627b95e9cdcd0103cb5586a70f1d3656fc5422e1444559ded99605fd\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L1 (1 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L1.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L1, CNS-OF-HOSTELIA-001-A-R1-L2, CNS-OF-HOSTELIA-001-A-R1-L3, CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== FIN ESTADO ===\n```\n\nSiguiente: verificación por A2A. Escribe SIGUE para lanzarla.\n\n```\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_VERIFICACION\nversion: A\nhash_contenido: c98a567e627b95e9cdcd0103cb5586a70f1d3656fc5422e1444559ded99605fd\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L1 (1 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L1.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L1, CNS-OF-HOSTELIA-001-A-R1-L2, CNS-OF-HOSTELIA-001-A-R1-L3, CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== FIN ESTADO ===\n```\n\nSIGUIENTE PASO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L1 (1 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L1.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L1, CNS-OF-HOSTELIA-001-A-R1-L2, CNS-OF-HOSTELIA-001-A-R1-L3, CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6",
+  "respuesta": {
+    "metadata": {},
+    "previous_response_id": "caresp_ejemplo0000000000000000000000000000000000000000016",
+    "model": "",
+    "background": true,
+    "tools": [],
+    "id": "caresp_ejemplo0000000000000000000000000000000000000000009",
+    "object": "response",
+    "status": "completed",
+    "created_at": 1792286088,
+    "completed_at": 1792286088,
+    "error": null,
+    "incomplete_details": null,
+    "output": [
+      {
+        "type": "message",
+        "id": "msg_ejemplo0000000000000000000000000000000000000000016",
+        "agent_reference": {
+          "type": "agent_reference",
+          "name": "preventa-prueba-hosted",
+          "version": "19"
+        },
+        "response_id": "caresp_ejemplo0000000000000000000000000000000000000000009",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "output_text",
+            "text": "$ asumir → rc 0\n```\nASUMIDO [BAJA]: red_privada = No, acceso público con autenticación\nSUFICIENCIA: INCOMPLETA. Faltan: tipo_suscripcion, presupuesto_orientativo\n=== PREGUNTAS PARA EL COMERCIAL ===\ntipo_suscripcion: ¿Qué tipo de suscripción de Azure tiene el cliente?\n  a) Enterprise Agreement o MCA-E directo\n  b) CSP a través de un revendedor\n  c) Pago por uso\n  d) otra: indicarla (ASUMIR: tipo_suscripcion = valor)\npresupuesto_orientativo: ¿Hay un presupuesto orientativo?\n  a) Menos de 25.000 euros\n  b) Entre 25.000 y 60.000 euros\n  c) Más de 60.000 euros\n  d) otra: indicarla (ASUMIR: presupuesto_orientativo = valor)\n=== FIN PREGUNTAS ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: INFORMACION_INSUFICIENTE\nversion: A\nhash_contenido: c19672f101b210e09612339ff3331d831533615c9a3ccc17e401d09c72c437a2\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...\n=== FIN ESTADO ===\n```\n\n$ asumir → rc 0\n```\nASUMIDO [BAJA]: tipo_suscripcion = Enterprise Agreement o MCA-E directo\nSUFICIENCIA: INCOMPLETA. Faltan: presupuesto_orientativo\n=== PREGUNTAS PARA EL COMERCIAL ===\npresupuesto_orientativo: ¿Hay un presupuesto orientativo?\n  a) Menos de 25.000 euros\n  b) Entre 25.000 y 60.000 euros\n  c) Más de 60.000 euros\n  d) otra: indicarla (ASUMIR: presupuesto_orientativo = valor)\n=== FIN PREGUNTAS ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: INFORMACION_INSUFICIENTE\nversion: A\nhash_contenido: 9ec2bbf8c141faaa6021f95c8aafab79ac84bb77ac5b79cf08ecd5b0a8202a4f\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Presentar al comercial las preguntas a/b/c/d y terminar el turno. Con su respuesta: asumir --campo CAMPO --valor VALOR o suficiencia --requisitos ... --aclaracion ...\n=== FIN ESTADO ===\n```\n\n$ asumir → rc 0\n```\nASUMIDO [BAJA]: presupuesto_orientativo = Entre 25.000 y 60.000 euros\nSUFICIENCIA: COMPLETA\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_ANALISIS\nversion: A\nhash_contenido: 4e1f229d0c853cce8c0a6cc04a6266a6c1c677c78db555870c7b8c2399a0bd33\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=PENDIENTE\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: enrutar\n=== FIN ESTADO ===\n```\n\n$ enrutar → rc 0\n```\nBrief BRF-OF-HOSTELIA-001-A-AZ-R1 (ronda 1, SHA-256 2fc135529942888e048ac95c086f30749cb0b8eabefb5b42554df031a63d3c50) en briefs/BRF-OF-HOSTELIA-001-A-AZ-R1.txt\n=== BRIEF PARA preventa-experto-azure ===\n[2789 bytes, SHA-256 2fc135529942888e048ac95c086f30749cb0b8eabefb5b42554df031a63d3c50; lo envía el código tal cual]\n=== FIN BRIEF ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_ANALISIS\nversion: A\nhash_contenido: 548b33ed91caed8c536ee40c23d613b0592fa5ff0b12bd32638594a9b0cdd9c8\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=BRIEF_ENVIADO\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el brief BRF-OF-HOSTELIA-001-A-AZ-R1 a preventa-experto-azure por A2A, guardar su respuesta literal en entrada/respuesta_experto_AZ_R1.json y ejecutar registrar-experto\n=== FIN ESTADO ===\n```\n\nA2A SendMessage a preventa-experto-azure: HTTP 200 · 62.2 s · task_id resp_ejemplo0000000000000000000000000000000000000000016 · context_id ctxt_ejemplo0000000000000000000000014 · estado TASK_STATE_COMPLETED · enviado SHA-256 2fc135529942888e048ac95c086f30749cb0b8eabefb5b42554df031a63d3c50 · no bloqueante con 11 sondeo(s) GetTask\n\nRelectura GetTask de resp_ejemplo0000000000000000000000000000000000000000016: el texto coincide (SHA-256 18d1079559436a453ba9245b83ddf801466d0b3642946c1bc057d53471e5a567).\n\n$ registrar-experto → rc 0\n```\nEXPERTO: VÁLIDA para BRF-OF-HOSTELIA-001-A-AZ-R1 · 10 referencias, 11 componentes, 7 precios, 5 tareas propuestas\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_ANALISIS\nversion: A\nhash_contenido: d91c34b7b497865ac1abd34c2fabe80ac49683419e642cc8b31c5fdb4e9babab\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Terminar el turno. En el siguiente: consolidar\n=== FIN ESTADO ===\n```\n\n$ consolidar → rc 0\n```\nConsolidado CNS-OF-HOSTELIA-001-A-R1 (21 elementos, SHA-256 60b4126db1d68b06c2ac558efeecaedd008463b7d93e8d0f41a9e083fb3be0ec) en consolidados/CNS-OF-HOSTELIA-001-A-R1.txt\n=== CONSOLIDADO PARA preventa-verificador ===\n[4769 bytes, SHA-256 60b4126db1d68b06c2ac558efeecaedd008463b7d93e8d0f41a9e083fb3be0ec; lo envía el código tal cual]\n=== FIN CONSOLIDADO ===\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_VERIFICACION\nversion: A\nhash_contenido: c98a567e627b95e9cdcd0103cb5586a70f1d3656fc5422e1444559ded99605fd\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L1 (1 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L1.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L1, CNS-OF-HOSTELIA-001-A-R1-L2, CNS-OF-HOSTELIA-001-A-R1-L3, CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== FIN ESTADO ===\n```\n\nSiguiente: verificación por A2A. Escribe SIGUE para lanzarla.\n\n```\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_VERIFICACION\nversion: A\nhash_contenido: c98a567e627b95e9cdcd0103cb5586a70f1d3656fc5422e1444559ded99605fd\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L1 (1 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L1.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L1, CNS-OF-HOSTELIA-001-A-R1-L2, CNS-OF-HOSTELIA-001-A-R1-L3, CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== FIN ESTADO ===\n```\n\nSIGUIENTE PASO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L1 (1 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L1.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L1.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L1, CNS-OF-HOSTELIA-001-A-R1-L2, CNS-OF-HOSTELIA-001-A-R1-L3, CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6",
+            "annotations": [],
+            "logprobs": []
+          }
+        ],
+        "status": "completed"
+      }
+    ],
+    "instructions": null,
+    "parallel_tool_calls": false,
+    "agent": {
+      "type": "agent_id",
+      "name": "preventa-prueba-hosted",
+      "version": "19"
+    },
+    "agent_session_id": "sesion-ejemplo-0002",
+    "agent_reference": {
+      "type": "agent_reference",
+      "name": "preventa-prueba-hosted",
+      "version": "19"
+    }
+  },
+  "fin": "2026-10-18 03:14:53"
+}

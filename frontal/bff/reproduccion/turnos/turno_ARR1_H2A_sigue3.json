@@ -1,0 +1,93 @@
+{
+  "turno": "ARR1_H2A_sigue3",
+  "serie": "h2",
+  "agente": "preventa-prueba-hosted",
+  "via": "endpoint",
+  "modo": "background",
+  "url": "https://recurso-ejemplo.services.ai.azure.com/api/projects/proyecto-ejemplo/agents/preventa-prueba-hosted/endpoint/protocols/openai/responses",
+  "mensaje": "SIGUE.txt",
+  "adjuntos": [],
+  "previa": {
+    "response_id": "caresp_ejemplo0000000000000000000000000000000000000000011",
+    "agent_session_id": "sesion-ejemplo-0002"
+  },
+  "inicio": "2026-10-18 03:16:22",
+  "inicio_utc": "2026-10-18T01:16:17Z",
+  "creada": {
+    "status": "in_progress",
+    "response_id": "caresp_ejemplo0000000000000000000000000000000000000000012",
+    "agent_session_id": "sesion-ejemplo-0002",
+    "latencia_s": 11.7
+  },
+  "sondeo": [
+    {
+      "n": 1,
+      "params": [
+        "api-version"
+      ],
+      "http": 200,
+      "status": "completed"
+    }
+  ],
+  "sondeo_variante": [
+    "api-version"
+  ],
+  "http": 200,
+  "latencia_s": 17.0,
+  "response_id": "caresp_ejemplo0000000000000000000000000000000000000000012",
+  "status": "completed",
+  "agent_session_id": "sesion-ejemplo-0002",
+  "usage": null,
+  "error": null,
+  "texto": "A2A SendMessage a preventa-verificador: HTTP 200 · 6.1 s · task_id resp_ejemplo0000000000000000000000000000000000000000011 · context_id ctxt_ejemplo0000000000000000000000010 · estado TASK_STATE_COMPLETED · enviado SHA-256 2db1c737edd5f06831bef095a97f990a71100b851c115c46f26a990fbd9307c4 · no bloqueante con 1 sondeo(s) GetTask\n\nRelectura GetTask de resp_ejemplo0000000000000000000000000000000000000000011: el texto coincide (SHA-256 f645e47812e2d07d974b32fe9677641bc9f9489ec84f6fa733a253b15a66f10c).\n\n$ registrar-verificacion → rc 0\n```\nLOTE CNS-OF-HOSTELIA-001-A-R1-L3 registrado. Faltan 3: CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_VERIFICACION\nversion: A\nhash_contenido: 38acbf77615a8acc5a106644441fb57bf99088c745e43bba170913d00048f18b\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L4 (4 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L4.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== FIN ESTADO ===\n```\n\nQuedan 3 envíos al verificador. Escribe SIGUE para continuar.\n\n```\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_VERIFICACION\nversion: A\nhash_contenido: 38acbf77615a8acc5a106644441fb57bf99088c745e43bba170913d00048f18b\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L4 (4 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L4.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== FIN ESTADO ===\n```\n\nSIGUIENTE PASO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L4 (4 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L4.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6",
+  "respuesta": {
+    "metadata": {},
+    "previous_response_id": "caresp_ejemplo0000000000000000000000000000000000000000011",
+    "model": "",
+    "background": true,
+    "tools": [],
+    "id": "caresp_ejemplo0000000000000000000000000000000000000000012",
+    "object": "response",
+    "status": "completed",
+    "created_at": 1792286193,
+    "completed_at": 1792286193,
+    "error": null,
+    "incomplete_details": null,
+    "output": [
+      {
+        "type": "message",
+        "id": "msg_ejemplo0000000000000000000000000000000000000000011",
+        "agent_reference": {
+          "type": "agent_reference",
+          "name": "preventa-prueba-hosted",
+          "version": "19"
+        },
+        "response_id": "caresp_ejemplo0000000000000000000000000000000000000000012",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "output_text",
+            "text": "A2A SendMessage a preventa-verificador: HTTP 200 · 6.1 s · task_id resp_ejemplo0000000000000000000000000000000000000000011 · context_id ctxt_ejemplo0000000000000000000000010 · estado TASK_STATE_COMPLETED · enviado SHA-256 2db1c737edd5f06831bef095a97f990a71100b851c115c46f26a990fbd9307c4 · no bloqueante con 1 sondeo(s) GetTask\n\nRelectura GetTask de resp_ejemplo0000000000000000000000000000000000000000011: el texto coincide (SHA-256 f645e47812e2d07d974b32fe9677641bc9f9489ec84f6fa733a253b15a66f10c).\n\n$ registrar-verificacion → rc 0\n```\nLOTE CNS-OF-HOSTELIA-001-A-R1-L3 registrado. Faltan 3: CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_VERIFICACION\nversion: A\nhash_contenido: 38acbf77615a8acc5a106644441fb57bf99088c745e43bba170913d00048f18b\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L4 (4 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L4.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== FIN ESTADO ===\n```\n\nQuedan 3 envíos al verificador. Escribe SIGUE para continuar.\n\n```\n=== ESTADO PREVENTA ===\ncodigo: OF-HOSTELIA-001-A\nestado: EN_VERIFICACION\nversion: A\nhash_contenido: 38acbf77615a8acc5a106644441fb57bf99088c745e43bba170913d00048f18b\nintentos: T1 0/3 · T2 0/3 · T3 0/3 · T4 0/3\nexpertos: azure=VALIDA\nverificacion: ronda 0/3\ndecisiones: 0\nSIGUIENTE PASO OBLIGATORIO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L4 (4 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L4.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6\n=== FIN ESTADO ===\n```\n\nSIGUIENTE PASO: Enviar el lote CNS-OF-HOSTELIA-001-A-R1-L4 (4 de 6 del consolidado CNS-OF-HOSTELIA-001-A-R1, ronda 1; texto en consolidados/CNS-OF-HOSTELIA-001-A-R1-L4.txt) a preventa-verificador por A2A, guardar su respuesta literal en entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json y ejecutar registrar-verificacion --respuesta entrada/respuesta_verificador_CNS-OF-HOSTELIA-001-A-R1-L4.json. Lotes pendientes: CNS-OF-HOSTELIA-001-A-R1-L4, CNS-OF-HOSTELIA-001-A-R1-L5, CNS-OF-HOSTELIA-001-A-R1-L6",
+            "annotations": [],
+            "logprobs": []
+          }
+        ],
+        "status": "completed"
+      }
+    ],
+    "instructions": null,
+    "parallel_tool_calls": false,
+    "agent": {
+      "type": "agent_id",
+      "name": "preventa-prueba-hosted",
+      "version": "19"
+    },
+    "agent_session_id": "sesion-ejemplo-0002",
+    "agent_reference": {
+      "type": "agent_reference",
+      "name": "preventa-prueba-hosted",
+      "version": "19"
+    }
+  },
+  "fin": "2026-10-18 03:16:39"
+}
